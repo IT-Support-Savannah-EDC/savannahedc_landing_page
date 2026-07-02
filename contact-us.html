@@ -43,7 +43,7 @@
                 <form id="contact-us-form" onsubmit="handleAppsScriptSubmission(event)" class="bg-white/80 dark:bg-slate-900/60 backdrop-blur-md border border-slate-200/60 dark:border-slate-800 p-6 md:p-8 rounded-3xl shadow-sm transition-colors space-y-6">
                     
                     <div class="border-b border-slate-100 dark:border-slate-800 pb-2">
-                        <h3 class="font-extrabold text-lg text-darkNavy dark:text-white tracking-tight">Interactive Intake Form</h3>
+                        <h3 class="font-extrabold text-lg text-darkNavy dark:text-white tracking-tight">Input your Data</h3>
                         <p class="text-xs text-slate-400 mt-0.5">All fields are required unless otherwise indicated.</p>
                     </div>
 
@@ -65,7 +65,7 @@
                     <div class="space-y-1.5">
                         <label for="email" class="text-xs font-bold text-slate-700 dark:text-slate-300">Email Address <span class="text-rose-500">*</span></label>
                         <input type="email" id="email" name="email" required placeholder="customer.name@example.com"
-                            pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
+                            pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}"
                             class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-3 text-xs font-semibold focus:outline-none focus:border-primary focus:border-2 dark:focus:border-secondary text-slate-800 dark:text-slate-100 transition-colors">
                         <p class="text-[10px] text-slate-400 dark:text-slate-500 italic">Must match valid universal email standard syntax rules.</p>
                     </div>
@@ -237,7 +237,7 @@
             
             // Disable button and show loading state
             submitBtn.disabled = true;
-            submitBtn.innerText = "Analyzing & Transmitting Telemetry...";
+            submitBtn.innerText = "Submitting...";
             submitBtn.classList.add('opacity-75');
 
             try {
@@ -255,7 +255,7 @@
                 const result = await response.json();
 
                 if (response.ok && result.success) {
-                    alert("Submission logged successfully! Our infrastructure processing matrix has mapped your ticket.");
+                    alert("Submission logged successfully! Thank you for reaching out to us. We will get back to you shortly.");
                     form.reset();
                 } else {
                     throw new Error(result.error || "Unknown error occurred.");
