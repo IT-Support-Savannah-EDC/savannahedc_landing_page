@@ -56,7 +56,7 @@ export async function onRequestPost(context) {
             `,
             attachments: attachmentsArray
         };
-
+        //
         // 5. Send the payload to the Resend API
         const resendRequest = await fetch("https://api.resend.com/emails", {
             method: "POST",
