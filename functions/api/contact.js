@@ -21,15 +21,25 @@ export async function onRequestPost(context) {
         const meterNumber = formData.get('meterNumber') || "N/A";
 
         // 3. Handle the optional file attachment
-        const file = formData.get('attachments');
+        const file = formData.get('attachments'); // or your specific input name
         let attachmentsArray = [];
 
         if (file && file.size > 0) {
-            // Convert the file into a format the Resend API accepts
             const arrayBuffer = await file.arrayBuffer();
-            // Cloudflare Workers use standard web APIs, so we convert the buffer to a base64 string here on the server
-            const base64String = btoa(String.fromCharCode(...new Uint8Array(arrayBuffer)));
             
+            // 1. Create a Uint8Array from the buffer
+            const bytes = new Uint8Array(arrayBuffer);
+            const len = bytes.byteLength;
+            let binary = '';
+            
+            // 2. Iterate safely without using the spread (...) operator
+            for (let i = 0; i < len; i++) {
+                binary += String.fromCharCode(bytes[i]);
+            }
+            
+            // 3. Convert to Base64
+            const base64String = btoa(binary);
+
             attachmentsArray.push({
                 filename: file.name,
                 content: base64String,
