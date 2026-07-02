@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Management Team | Savannah EDC</title>
+
+    <link rel="icon" type="image/png" href="assets/logo.png">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: { primary: '#004DC2', secondary: '#5DB922', darkNavy: '#0A1931' },
+                    fontFamily: { sans: ['Montserrat', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+    <script src="js/theme.js"></script>
+    <script src="js/layout.js"></script>
+</head>
+<body class="bg-[#F8FAFC] dark:bg-[#050C18] text-slate-900 dark:text-slate-100 min-h-screen flex flex-col relative overflow-x-hidden transition-colors duration-300">
+
+    <div id="universal-navbar"></div>
+
+    <main class="relative z-10 max-w-6xl mx-auto px-4 py-16 w-full space-y-12 flex-grow">
+        <section class="space-y-8">
+            <div class="text-center max-w-2xl mx-auto space-y-2">
+                <span class="text-xs font-bold tracking-widest text-primary dark:text-secondary uppercase">Leadership</span>
+                <h1 class="text-3xl md:text-5xl font-extrabold text-darkNavy dark:text-white">Executive Management</h1>
+                <p class="text-sm text-slate-500 dark:text-slate-400 font-medium">Meet the executives guiding our technical metrics.</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                
+                <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800/80 rounded-3xl overflow-hidden shadow-sm flex flex-col group">
+                    <div class="relative aspect-[4/5] bg-slate-100 dark:bg-slate-800 overflow-hidden">
+                        <img src="assets/exec-pictures/mr-abideen.jpg" alt="Executive MD" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    </div>
+                    <div class="p-6 space-y-4 flex flex-col flex-grow">
+                        <div class="space-y-1">
+                            <h3 class="text-xl font-black tracking-tight text-darkNavy dark:text-white">Mr. Abideen Olanrewaju Amusan</h3>
+                            <p class="text-xs font-bold text-primary dark:text-secondary uppercase tracking-wider">Managing Director/CEO</p>
+                        </div>
+                        <button onclick="openProfile('amusan')" class="mt-auto w-full bg-slate-50 dark:bg-slate-800 text-darkNavy dark:text-white hover:bg-primary hover:text-white border border-slate-100 dark:border-slate-700/50 font-bold py-3 px-4 rounded-xl text-xs tracking-wider transition">
+                            View Profile
+                        </button>
+                    </div>
+                </div>
+
+                <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800/80 rounded-3xl overflow-hidden shadow-sm flex flex-col group">
+                    <div class="relative aspect-[4/5] bg-slate-100 dark:bg-slate-800 overflow-hidden">
+                        <img src="assets/exec-pictures/mr-haladou.jpg" alt="Executive CTO" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    </div>
+                    <div class="p-6 space-y-4 flex flex-col flex-grow">
+                        <div class="space-y-1">
+                            <h3 class="text-xl font-black tracking-tight text-darkNavy dark:text-white">Mr. Haladou Zaneidou</h3>
+                            <p class="text-xs font-bold text-primary dark:text-secondary uppercase tracking-wider">Chief Technical Officer (CTO)</p>
+                        </div>
+                        <button onclick="openProfile('zaneidou')" class="mt-auto w-full bg-slate-50 dark:bg-slate-800 text-darkNavy dark:text-white hover:bg-primary hover:text-white border border-slate-100 dark:border-slate-700/50 font-bold py-3 px-4 rounded-xl text-xs tracking-wider transition">
+                            View Profile
+                        </button>
+                    </div>
+                </div>
+
+                <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800/80 rounded-3xl overflow-hidden shadow-sm flex flex-col group">
+                    <div class="relative aspect-[4/5] bg-slate-100 dark:bg-slate-800 overflow-hidden">
+                        <img src="assets/exec-pictures/mr-ahmed.jpeg" alt="Executive CTO" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    </div>
+                    <div class="p-6 space-y-4 flex flex-col flex-grow">
+                        <div class="space-y-1">
+                            <h3 class="text-xl font-black tracking-tight text-darkNavy dark:text-white">Mr. Abubakar Ahmed</h3>
+                            <p class="text-xs font-bold text-primary dark:text-secondary uppercase tracking-wider">Chief Corporate Services Officer (CCSO)</p>
+                        </div>
+                        <button onclick="openProfile('ahmed')" class="mt-auto w-full bg-slate-50 dark:bg-slate-800 text-darkNavy dark:text-white hover:bg-primary hover:text-white border border-slate-100 dark:border-slate-700/50 font-bold py-3 px-4 rounded-xl text-xs tracking-wider transition">
+                            View Profile
+                        </button>
+                    </div>
+                </div>
+
+                <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800/80 rounded-3xl overflow-hidden shadow-sm flex flex-col group">
+                    <div class="relative aspect-[4/5] bg-slate-100 dark:bg-slate-800 overflow-hidden">
+                        <img src="assets/exec-pictures/mr-saad.png" alt="Executive CTO" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    </div>
+                    <div class="p-6 space-y-4 flex flex-col flex-grow">
+                        <div class="space-y-1">
+                            <h3 class="text-xl font-black tracking-tight text-darkNavy dark:text-white">Mr. Biliyaminu Saad</h3>
+                            <p class="text-xs font-bold text-primary dark:text-secondary uppercase tracking-wider">Chief Commercial Officer (CCO)</p>
+                        </div>
+                        <button onclick="openProfile('saad')" class="mt-auto w-full bg-slate-50 dark:bg-slate-800 text-darkNavy dark:text-white hover:bg-primary hover:text-white border border-slate-100 dark:border-slate-700/50 font-bold py-3 px-4 rounded-xl text-xs tracking-wider transition">
+                            View Profile
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <div id="profile-modal" class="fixed inset-0 z-50 hidden opacity-0 transition-all duration-300 pointer-events-none grid place-items-center p-4">
+        <div onclick="closeProfile()" class="absolute inset-0 bg-darkNavy/40 dark:bg-black/60 backdrop-blur-sm"></div>
+        
+        <div class="bg-white dark:bg-slate-900 w-full max-w-xl max-h-[85vh] rounded-3xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-2xl relative z-10 transform scale-95 transition-transform duration-300 flex flex-col">
+            
+            <div class="p-6 space-y-5 overflow-y-auto flex-grow">
+                <div class="flex items-start justify-between gap-4">
+                    <div class="flex items-center gap-4">
+                        <img id="modal-img" src="" alt="Executive" class="w-16 h-16 rounded-2xl object-cover border border-slate-200 dark:border-slate-700 flex-shrink-0">
+                        <div>
+                            <h3 id="modal-name" class="text-xl font-black text-darkNavy dark:text-white leading-tight"></h3>
+                            <p id="modal-title" class="text-xs font-bold text-primary dark:text-secondary tracking-wide uppercase mt-0.5"></p>
+                        </div>
+                    </div>
+                    <button onclick="closeProfile()" class="p-2 rounded-xl bg-slate-50 dark:bg-slate-800 text-slate-400 hover:text-slate-600 dark:hover:text-white transition flex-shrink-0">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path></svg>
+                    </button>
+                </div>
+                <div class="border-t border-slate-100 dark:border-slate-800 pt-4">
+                    <div id="modal-bio" class="text-sm leading-relaxed text-slate-600 dark:text-slate-400 font-medium space-y-4"></div>
+                </div>
+            </div>
+            
+            <div class="p-4 bg-slate-50 dark:bg-slate-950 border-t border-slate-100 dark:border-slate-800/80 flex justify-end flex-shrink-0">
+                <button onclick="closeProfile()" class="bg-darkNavy dark:bg-slate-800 text-white font-bold py-2.5 px-5 rounded-xl text-xs transition">Close Profile Window</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Store your rich multi-paragraph bios easily using template literals ``
+        const teamProfiles = {
+            amusan: {
+                name: "Mr. Abideen Olanrewaju Amusan",
+                title: "Managing Director/CEO",
+                image: "assets/mr-amusan.jpg",
+                bio: `
+                    <p>Mr. Abideen Olanrewaju Amusan is the Deputy Managing Partner of GRM Consulting Limited, with about two decades experience in strategic finance, business transformation, financial reporting, treasury management, governance advisory, revenue assurance and institutional consulting.</p>
+                    <p>He provides leadership across GRM’s advisory engagements, supporting boards, executive management teams and business owners in finance transformation, tax advisory, business restructuring, performance improvement, investment analysis, operational optimisation and governance strengthening. His sector experience spans power and utilities, infrastructure, technology, FMCG, logistics, retail and public-sector-linked institutions.</p>
+                    <p>He has deep practical experience in Nigeria’s power sector, supporting electricity generation and distribution companies in IFRS-compliant reporting, concession accounting, revenue assurance, billing improvement, collection governance, and ATC&C loss-reduction initiatives. His experience includes oversight of multibillion-Naira operations, a US$170 million syndicated facility, and mobilisation of large field and operational teams across utility transformation mandates.</p>
+                    <p>He is a Fellow of ICAN, member of ACCA(UK), member of ATSWestAfrica, holds a BSc in Applied Accounting from Oxford Brookes University, and MBA in Finance and Investment from Ahmadu Bello University. He has also completed executive training in Artificial Intelligence for Business Leaders at the London Management Centre, United Kingdom.</p>
+                `
+            },
+            zaneidou: {
+                name: "Mr. Haladou Zaneidou",
+                title: "Chief Technical Officer (CTO)",
+                image: "assets/mr-zaneidou.jpg",
+                bio: `
+                    <p>Mr. Haladou Zaneidou is a seasoned engineer with professional experience across; electricity distribution operations, network maintenance, revenue protection, customer management, technical supervision and distribution network improvement. His career reflects deep practical exposure to HT/LT network operations, transformer and line monitoring, customer-facing distribution services, technical studies, network expansion and operational leadership across utility environments in Niger and Nigeria.</p>
+                    <p>He has held several senior technical and operational roles within NIGELEC, including State Director, State Technical Service Manager, Technical Section Head, Branch Head and District Head. In these capacities, he coordinated distribution activities across multiple regions.</p>
+                    <p>Mr. Zaneidou served in Nigeria with Yola Electricity Distribution Company, on secondment from NIGELEC, as Head of Network Operations and Maintenance, where he oversaw studies, new electrical network projects, and distribution network operations and maintenance. He later served as Team Lead under the GRM/JEDC Project OptimaPlus across the JEDC four states.</p>
+                    <p>His technical achievements include design and implementation of an application for monitoring and analysing transformer load measurements, development of solutions to address vandalism of earthing and grounding conductors, audit of recurring transformer failures, and supervision of international transmission line operations.</p>    
+                    <p>Mr. Zaneidou is recognised for his field-tested utility expertise, operational discipline, technical problem-solving capability and practical understanding of electricity distribution network performance.</p>
+                `
+            },
+            ahmed: {
+                name: "Mr. Abubakar Ahmed",
+                title: "Chief Corporate Services Officer (CCSO)",
+                image: "assets/mr-ahmed.jpeg",
+                bio: `
+                    <p>Mr. Abubakar Ahmed is a Chartered Accountant and finance professional with experience across financial reporting, audit, treasury management, internal controls, revenue assurance and business advisory. His professional background spans consulting, banking and corporate finance environments.</p>
+                    <p>Mr. Ahmed is currently a Principal Manager at GRM Consulting Limited, where he leads and coordinates multidisciplinary professionals on client engagements covering financial reporting, regulatory compliance, treasury and revenue assurance, business management, process improvement, corporate strategy and related advisory services. His sector experience includes construction, power, healthcare, education, investment and manufacturing.</p>
+                    <p>Prior to this role, he served as Head of Treasury and Revenue Assurance and Acting Head of Financial Reporting at MAG Group Limited, where he provided oversight on cash and liquidity management, revenue protection, IFRS-aligned financial reporting, internal controls, KPI analysis & external audit coordination. He also worked as an Audit Inspection Officer at Jaiz Bank Plc, supporting assurance reviews focused on control effectiveness, risk management, regulatory compliance and adherence to internal policies.</p>
+                    <p>Mr. Ahmed is a Chartered Accountant (ICAN), holds a Bachelor’s degree in Accounting from Gombe State University and a Master of Business Administration in Finance and Investment from Ahmadu Bello University. He is recognised for his financial reporting discipline, control awareness, treasury competence and practical understanding of assurance, compliance, revenue protection and institutional financial management.</p>
+                `
+            },
+            saad: {
+                name: "Mr. Biliyaminu Saad",
+                title: "Chief Commercial Officer (CCO)",
+                image: "assets/mr-saad.png",
+                bio: `
+                    <p>Biliyaminu Saad is an Electrical and Electronics Engineer and the Chief Commercial Officer of Savannah Electricity Distribution Company. He is an experienced power-sector professional with expertise in commercial operations, customer data management, distribution network digitalisation, billing systems, energy accounting, network asset management and field operations coordination.</p>
+                    <p>Before his appointment at Savannah EDC, he serves as the Team Lead of the Energy, Power and Utility Unit at GRM Consulting Limited, where he supervised and coordinated major power sector projects. His professional experience includes the digitalisation and geo-referencing of more than 4,000 kilometres of 11kV and 33kV distribution networks, over 10,000 kilometres of 0.415kV networks and over 6,000 distribution transformers. These initiatives produced accurate technical and commercial datasets that support network planning, operational efficiency, improved customer service and electricity-loss reduction.</p>
+                    <p>Biliyaminu holds a Bachelor of Engineering degree in Electrical and Electronics Engineering from Modibbo Adama University. He is a Member of the Nigerian Society of Engineers and a member of the Nigerian Institute of Management.</p>
+                `
+            }
+        };
+
+        const modal = document.getElementById('profile-modal');
+        const modalBody = modal.querySelector('.transform');
+        const modalName = document.getElementById('modal-name');
+        const modalTitle = document.getElementById('modal-title');
+        const modalImg = document.getElementById('modal-img');
+        const modalBio = document.getElementById('modal-bio');
+
+        function openProfile(id) {
+            const profile = teamProfiles[id];
+            
+            // If ID matches data array, load it dynamically
+            if (profile) {
+                modalName.innerText = profile.name;
+                modalTitle.innerText = profile.title;
+                modalImg.src = profile.image;
+                
+                // .innerHTML allows the multiple custom <p> tags to render beautifully
+                modalBio.innerHTML = profile.bio; 
+                
+                modal.classList.remove('hidden', 'pointer-events-none');
+                setTimeout(() => {
+                    modal.classList.add('opacity-100');
+                    modalBody.classList.remove('scale-95');
+                    modalBody.classList.add('scale-100');
+                }, 10);
+            }
+        }
+
+        function closeProfile() {
+            modal.classList.remove('opacity-100');
+            modalBody.classList.remove('scale-100');
+            modalBody.classList.add('scale-95');
+            setTimeout(() => { modal.classList.add('hidden', 'pointer-events-none'); }, 300);
+        }
+    </script>
+
+    <div id="universal-footer"></div>
+</body>
+</html>

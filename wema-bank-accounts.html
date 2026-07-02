@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wema Bank Accounts | Savannah EDC</title>
+
+    <link rel="icon" type="image/png" href="assets/logo.png">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: { primary: '#004DC2', secondary: '#5DB922', darkNavy: '#0A1931' },
+                    fontFamily: { sans: ['Montserrat', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+    <script src="js/theme.js"></script>
+    <script src="js/layout.js"></script>
+</head>
+<body class="bg-[#F8FAFC] dark:bg-[#050C18] text-slate-900 dark:text-slate-100 min-h-screen flex flex-col relative overflow-x-hidden transition-colors duration-300">
+
+    <div id="universal-navbar"></div>
+
+    <main class="relative z-10 max-w-4xl mx-auto px-4 py-16 w-full space-y-12 flex-grow">
+        <section class="space-y-6 center">
+            <div class="text-center max-w-3xl mx-auto space-y-2">
+                <span class="text-xs font-bold tracking-widest text-primary dark:text-secondary uppercase">Payment Gateways</span>
+                <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight text-darkNavy dark:text-white">
+                    Wema Bank Accounts
+                </h1>
+                <p class="text-sm text-slate-500 dark:text-slate-400 font-medium">Check your Accounts Wema Bank Account Number created for ease of payment processing.</p>
+            </div>
+            
+            <div>
+                <h4 class="font-bold text-base text-darkNavy dark:text-white">This page is a work in progress</h4>
+            </div>
+        </section>
+    </main>
+
+    <div id="universal-footer"></div>
+</body>
+</html>

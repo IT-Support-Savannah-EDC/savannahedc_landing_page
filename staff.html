@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Staff | Savannah EDC</title>
+
+    <link rel="icon" type="image/png" href="assets/logo.png">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: { primary: '#004DC2', secondary: '#5DB922', darkNavy: '#0A1931' },
+                    fontFamily: { sans: ['Montserrat', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+    <script src="js/theme.js"></script>
+    <script src="js/layout.js"></script>
+</head>
+<body class="bg-[#F8FAFC] dark:bg-[#050C18] text-slate-900 dark:text-slate-100 min-h-screen flex flex-col relative overflow-x-hidden transition-colors duration-300">
+
+    <div id="universal-navbar"></div>
+
+    <main class="relative z-10 max-w-4xl mx-auto px-4 py-16 w-full space-y-12 flex-grow">
+        <section class="space-y-6">
+            <div class="text-center max-w-2xl mx-auto space-y-2">
+                <span class="text-xs font-bold tracking-widest text-primary dark:text-secondary uppercase">Staff </span>
+                <h1 class="text-3xl md:text-5xl font-extrabold text-darkNavy dark:text-white">Staff Login</h1>
+                <p class="text-sm text-slate-500 dark:text-slate-400 font-medium">Log in to access your staff portal.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 rounded-2xl flex items-start gap-4">
+                    <div class="w-10 h-10 rounded-xl bg-primary/10 text-primary flex items-center justify-center flex-shrink-0">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h18v3H3V3z"></path></svg>
+                    </div>
+                    <div>
+                        <a href="https://central.savannahedc.com" class="font-bold text-base text-darkNavy dark:text-white hover:underline">
+                            Optima+ Central Login
+                        </a>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">
+                            Access Optima+ Central to view Live Dashboards, Monitor Field Data Collection, view HT & LT Networks and assets of Savannah EDC
+                        </p>
+                    </div>
+                </div>
+
+                <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 rounded-2xl flex items-start gap-4">
+                    <div class="w-10 h-10 rounded-xl bg-secondary/10 text-secondary flex items-center justify-center flex-shrink-0">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11.42 15.17L17.25 21A2.67 2.67 0 0021 17.25l-5.83-5.83m-4.25 4.25a4.5 4.5 0 01-6.36-6.36zM15.75 9a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z"></path></svg>
+                    </div>
+                    <div>
+                        <a href="https://savannahedc.com" class="font-bold text-base text-darkNavy dark:text-white hover:underline">
+                            Operations
+                        </a>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">
+                            Manage Daily operations of Savannah EDC
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div id="universal-footer"></div>
+</body>
+</html>

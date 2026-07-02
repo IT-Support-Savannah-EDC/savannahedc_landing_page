@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Payment Channels | Savannah EDC</title>
+
+    <link rel="icon" type="image/png" href="assets/logo.png">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: { primary: '#004DC2', secondary: '#5DB922', darkNavy: '#0A1931' },
+                    fontFamily: { sans: ['Montserrat', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+    <script src="js/theme.js"></script>
+    <script src="js/layout.js"></script>
+</head>
+<body class="bg-[#F8FAFC] dark:bg-[#050C18] text-slate-900 dark:text-slate-100 min-h-screen flex flex-col relative overflow-x-hidden transition-colors duration-300">
+
+    <div id="universal-navbar"></div>
+
+    <main class="relative z-10 max-w-4xl mx-auto px-4 py-16 w-full space-y-12 flex-grow">
+        <section class="space-y-6 center">
+            <div class="text-center max-w-3xl mx-auto space-y-2">
+                <span class="text-xs font-bold tracking-widest text-primary dark:text-secondary uppercase">Payment Gateways</span>
+                <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight text-darkNavy dark:text-white">
+                    E-Payment Channels
+                </h1>
+                <p class="text-sm text-slate-500 dark:text-slate-400 font-medium">Note that some payment channels/platforms may still display JED Plc</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                <!--Payment Channels Cards-->
+
+                <a href="https://buypower.ng" target="_blank" rel="noopener noreferrer" class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 rounded-2xl flex items-center gap-4 hover:border-primary dark:hover:border-secondary hover:shadow-md transition-all group">
+                    <img src="assets/buypower-icon.png" alt="Buy Power Logo" class="w-12 h-12 rounded-xl object-contain bg-slate-50 dark:bg-slate-800 p-1.5 flex-shrink-0 transition-transform group-hover:scale-105">
+                    
+                    <div class="min-w-0">
+                        <h4 class="font-bold text-base text-darkNavy dark:text-white group-hover:text-primary dark:group-hover:text-secondary transition-colors truncate">
+                            Buy Power
+                        </h4>
+                    </div>
+                </a>
+                <a href="https://quickteller.com/" target="_blank" rel="noopener noreferrer" class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 rounded-2xl flex items-center gap-4 hover:border-primary dark:hover:border-secondary hover:shadow-md transition-all group">
+                    <img src="assets/quickteller-icon.png" alt="QuickTeller Logo" class="w-12 h-12 rounded-xl object-contain bg-slate-50 dark:bg-slate-800 p-1.5 flex-shrink-0 transition-transform group-hover:scale-105">
+                    
+                    <div class="min-w-0">
+                        <h4 class="font-bold text-base text-darkNavy dark:text-white group-hover:text-primary dark:group-hover:text-secondary transition-colors truncate">
+                            QuickTeller
+                        </h4>
+                    </div>
+                </a>
+                <a href="https://www.opayweb.com/" target="_blank" rel="noopener noreferrer" class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 rounded-2xl flex items-center gap-4 hover:border-primary dark:hover:border-secondary hover:shadow-md transition-all group">
+                    <img src="assets/opay-icon.png" alt="Opay Logo" class="w-12 h-12 rounded-xl object-contain bg-slate-50 dark:bg-slate-800 p-1.5 flex-shrink-0 transition-transform group-hover:scale-105">
+                    
+                    <div class="min-w-0">
+                        <h4 class="font-bold text-base text-darkNavy dark:text-white group-hover:text-primary dark:group-hover:text-secondary transition-colors truncate">
+                            Opay
+                        </h4>
+                    </div>
+                </a>
+                <a href="https://gtbank.com/" target="_blank" rel="noopener noreferrer" class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 rounded-2xl flex items-center gap-4 hover:border-primary dark:hover:border-secondary hover:shadow-md transition-all group">
+                    <img src="assets/gtbank-icon.jpeg" alt="GT Bank Logo" class="w-12 h-12 rounded-xl object-contain bg-slate-50 dark:bg-slate-800 p-1.5 flex-shrink-0 transition-transform group-hover:scale-105">
+                    <div class="min-w-0">
+                        <h4 class="font-bold text-base text-darkNavy dark:text-white group-hover:text-primary dark:group-hover:text-secondary transition-colors truncate">
+                            GT Bank
+                        </h4>
+                    </div>
+                </a>
+                <a href="https://ibank.ubagroup.com/obng/AuthenticationController?FORMSGROUP_ID__=AuthenticationFG&__START_TRAN_FLAG__=Y&FG_BUTTONS__=LOAD&ACTION.LOAD=Y&AuthenticationFG.LOGIN_FLAG=1&BANK_ID=NG" target="_blank" rel="noopener noreferrer" class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 rounded-2xl flex items-center gap-4 hover:border-primary dark:hover:border-secondary hover:shadow-md transition-all group">
+                    <img src="assets/uba-icon.png" alt="GT Bank Logo" class="w-12 h-12 rounded-xl object-contain bg-slate-50 dark:bg-slate-800 p-1.5 flex-shrink-0 transition-transform group-hover:scale-105">
+                    <div class="min-w-0">
+                        <h4 class="font-bold text-base text-darkNavy dark:text-white group-hover:text-primary dark:group-hover:text-secondary transition-colors truncate">
+                            United Bank for Africa (UBA)
+                        </h4>
+                    </div>
+                </a>
+                <a href="https://ibank.zenithbank.com/InternetBanking/login" target="_blank" rel="noopener noreferrer" class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 rounded-2xl flex items-center gap-4 hover:border-primary dark:hover:border-secondary hover:shadow-md transition-all group">
+                    <img src="assets/zenithbank-icon.png" alt="Zenith Bank Logo" class="w-12 h-12 rounded-xl object-contain bg-slate-50 dark:bg-slate-800 p-1.5 flex-shrink-0 transition-transform group-hover:scale-105">
+                    <div class="min-w-0">
+                        <h4 class="font-bold text-base text-darkNavy dark:text-white group-hover:text-primary dark:group-hover:text-secondary transition-colors truncate">
+                            Zenith Bank
+                        </h4>
+                    </div>
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <div id="universal-footer"></div>
+</body>
+</html>
+                        </h4>
+                    </div>
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <div id="universal-footer"></div>
+</body>
+</html>

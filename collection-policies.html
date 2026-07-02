@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Collection Policies | Savannah EDC</title>
+
+    <link rel="icon" type="image/png" href="assets/logo.png">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: { primary: '#004DC2', secondary: '#5DB922', darkNavy: '#0A1931' },
+                    fontFamily: { sans: ['Montserrat', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+    <script src="js/theme.js"></script>
+    <script src="js/layout.js"></script>
+</head>
+<body class="bg-[#F8FAFC] dark:bg-[#050C18] text-slate-900 dark:text-slate-100 min-h-screen flex flex-col relative overflow-x-hidden transition-colors duration-300">
+
+    <div id="universal-navbar"></div>
+
+    <main class="relative z-10 max-w-4xl mx-auto px-4 py-16 w-full space-y-12 flex-grow">
+        <section class="space-y-6">
+            <div class="text-center max-w-3xl mx-auto space-y-2">
+                <span class="text-xs font-bold tracking-widest text-primary dark:text-secondary uppercase">Customer Service</span>
+                <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight text-darkNavy dark:text-white">
+                    Collection Policies
+                </h1>
+                <p class="text-sm text-slate-500 dark:text-slate-400 font-medium">Engineering the primary distribution systems across Gombe State.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 rounded-2xl flex items-start gap-4">
+                    <div>
+                        <h4 class="font-bold text-base text-darkNavy dark:text-white">Policies for existing customers</h4>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">
+                            A lightweight aluminum strand wrap built around a core of structural steel.
+                        </p;>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">
+                            Quality Standard (ASTM B232 / IEC 61089):  NEMSA dictates primary feeders must utilize a minimum size of 150mm².
+                        </p;>
+                    </div>
+                </div>
+
+                <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 rounded-2xl flex items-start gap-4">
+                    <div>
+                        <h4 class="font-bold text-base text-darkNavy dark:text-white">Policies for New Customers</h4>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">
+                            Oil-immersed or dry-type static electromagnetic devices stepping 33kV/11kV down to 400V (three-phase) or 230V (single-phase).
+                        </p;>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">
+                            Quality Standard: IEC 60076 (The ultimate international benchmark governing winding losses, insulation limits, sound dampening, and short-circuit withstand capabilities)
+                        </p;>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div id="universal-footer"></div>
+</body>
+</html>

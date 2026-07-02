@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Savannah EDC | Unified Hybrid Sandbox</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#004DC2',
+                        secondary: '#5DB922',
+                        darkNavy: '#0A1931'
+                    },
+                    fontFamily: { sans: ['Montserrat', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Forces the GPU to handle rendering to avoid browser freeze on blurs */
+        .accelerated-orb {
+            will-change: transform, opacity;
+            transform: translateZ(0);
+            backface-visibility: hidden;
+        }
+
+        /* Light Theme: Power Surge (Smooth Breathing Pulse) */
+        @keyframes powerSurge {
+            0%, 100% { 
+                transform: scale(1) translate3d(0, 0, 0); 
+                opacity: 0.12;
+            }
+            50% { 
+                transform: scale(1.35) translate3d(15px, -15px, 0); 
+                opacity: 0.22;
+            }
+        }
+        
+        /* Dark Theme: Flowing Current (Linear Drifting) */
+        @keyframes flowingCurrentLeft {
+            0%, 100% { transform: translate3d(0, 0, 0); }
+            50% { transform: translate3d(110px, 25px, 0); }
+        }
+        @keyframes flowingCurrentRight {
+            0%, 100% { transform: translate3d(0, 0, 0); }
+            50% { transform: translate3d(-110px, -25px, 0); }
+        }
+
+        /* Execution Hooks */
+        .animate-surge {
+            animation: powerSurge 8s ease-in-out infinite;
+        }
+        .animate-drift-left {
+            animation: flowingCurrentLeft 14s ease-in-out infinite;
+        }
+        .animate-drift-right {
+            animation: flowingCurrentRight 14s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body id="mainBody" class="text-slate-900 min-h-screen flex flex-col justify-between relative overflow-x-hidden font-sans transition-colors duration-500">
+
+    <div id="bgWrapper" class="absolute inset-0 z-0 pointer-events-none transition-all duration-500">
+        <div class="absolute inset-0 bg-gradient-to-br from-slate-50 via-slate-100 to-slate-200/80"></div>
+        <div class="absolute inset-0 bg-[radial-gradient(#0A1931_1px,transparent_1px)] [background-size:28px_28px] opacity-[0.08]"></div>
+        <div class="absolute top-[-10%] left-[-10%] w-[600px] h-[600px] rounded-full bg-primary/20 blur-[100px] accelerated-orb animate-surge"></div>
+        <div class="absolute bottom-[10%] right-[-10%] w-[650px] h-[650px] rounded-full bg-secondary/20 blur-[110px] accelerated-orb animate-surge"></div>
+    </div>
+
+    <div class="relative z-10 w-full flex-grow flex flex-col justify-between">
+        
+        <div id="controlPanel" class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-200 px-4 py-4 shadow-md transition-colors duration-500">
+            <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div>
+                    <p id="controlSub" class="text-[10px] font-bold text-primary uppercase tracking-widest">A/B Hybrid Interface Engine</p>
+                    <h3 id="controlTitle" class="text-sm font-extrabold text-darkNavy">Select Interface Variant:</h3>
+                </div>
+                <div class="flex flex-wrap gap-2">
+                    <button onclick="setTheme('light')" id="btn-light" class="px-5 py-2.5 text-xs font-bold rounded-xl transition-all shadow-sm bg-primary text-white ring-2 ring-primary/20">
+                        ☀️ Combined Light Theme
+                    </button>
+                    <button onclick="setTheme('dark')" id="btn-dark" class="px-5 py-2.5 text-xs font-bold rounded-xl transition-all bg-slate-100 text-slate-700 hover:bg-slate-200">
+                        🌙 Combined Dark Theme
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <main class="max-w-6xl mx-auto px-4 py-12 w-full flex-grow space-y-8">
+            
+            <header class="text-center space-y-3">
+                <div id="logoContainer" class="inline-block bg-white text-primary p-4 rounded-2xl shadow-sm border border-slate-100 font-black tracking-tighter text-xl transition-all duration-500">
+                    ⚡ SAVANNAH EDC
+                </div>
+                <h1 id="mainTitle" class="text-2xl md:text-5xl font-extrabold text-darkNavy tracking-tight transition-all duration-500">
+                    Savannah Electricity Distribution Co.
+                </h1>
+                <div class="inline-block">
+                    <p id="themeDescription" class="text-xs font-bold text-primary uppercase tracking-widest bg-blue-500/10 border border-blue-500/20 px-4 py-1.5 rounded-full transition-all duration-500">
+                        Active View: Light Theme — 'Power Surge' (Smooth Pulse)
+                    </p>
+                </div>
+            </header>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+                
+                <div class="lg:col-span-2 space-y-6">
+                    
+                    <section class="card-element bg-white p-6 md:p-8 rounded-3xl border border-slate-200/60 shadow-sm space-y-3 transition-all duration-500">
+                        <span class="text-xs font-bold text-primary uppercase tracking-widest">Corporate Mandate</span>
+                        <h2 class="text-xl font-extrabold text-darkNavy card-title transition-colors">Who We Are</h2>
+                        <p class="text-xs text-slate-600 card-text leading-relaxed transition-colors">
+                            Savannah Electricity Distribution Company (Savannah EDC) is the specialized utility operational vehicle managing electricity distribution within the Gombe franchise area. Operating as a tech-driven subsidiary of Jos Electricity Distribution Company (JEDC), we are focused on grid transparency, infrastructural stability, and modern billing automation.
+                        </p>
+                    </section>
+
+                    <section class="card-element bg-white p-6 md:p-8 rounded-3xl border border-slate-200/60 shadow-sm space-y-4 transition-all duration-500">
+                        <div>
+                            <span class="text-xs font-bold text-primary uppercase tracking-widest">Leadership Framework</span>
+                            <h2 class="text-xl font-extrabold text-darkNavy card-title transition-colors">Profile of Management</h2>
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                            <div class="subcard-element p-4 bg-slate-50 rounded-xl border border-slate-100 text-center space-y-2 transition-all duration-500">
+                                <div class="w-12 h-12 bg-primary/10 rounded-full mx-auto flex items-center justify-center font-bold text-primary text-sm">MD</div>
+                                <div>
+                                    <h4 class="font-bold text-xs text-darkNavy card-title transition-colors">Engr. A. B. Gombe</h4>
+                                    <p class="text-[10px] text-slate-400 font-medium">Managing Director / CEO</p>
+                                </div>
+                            </div>
+                            <div class="subcard-element p-4 bg-slate-50 rounded-xl border border-slate-100 text-center space-y-2 transition-all duration-500">
+                                <div class="w-12 h-12 bg-secondary/10 rounded-full mx-auto flex items-center justify-center font-bold text-secondary text-sm">ED</div>
+                                <div>
+                                    <h4 class="font-bold text-xs text-darkNavy card-title transition-colors">Mal. I. Yusuf</h4>
+                                    <p class="text-[10px] text-slate-400 font-medium">ED, Corporate Services</p>
+                                </div>
+                            </div>
+                            <div class="subcard-element p-4 bg-slate-50 rounded-xl border border-slate-100 text-center space-y-2 transition-all duration-500">
+                                <div class="w-12 h-12 bg-darkNavy/10 rounded-full mx-auto flex items-center justify-center font-bold text-darkNavy card-title transition-colors">HO</div>
+                                <div>
+                                    <h4 class="font-bold text-xs text-darkNavy card-title transition-colors">Engr. O. Okafor</h4>
+                                    <p class="text-[10px] text-slate-400 font-medium">Head, Grid Operations</p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="card-element bg-white p-6 md:p-8 rounded-3xl border border-slate-200/60 shadow-sm space-y-4 transition-all duration-500">
+                        <div>
+                            <span class="text-xs font-bold text-secondary uppercase tracking-widest">NEMSA Standards</span>
+                            <h2 class="text-xl font-extrabold text-darkNavy card-title transition-colors">Recommended Electricity Materials</h2>
+                        </div>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left text-xs border-collapse">
+                                <thead>
+                                    <tr id="tableHeader" class="border-b border-slate-100 bg-slate-50 text-slate-500 font-bold transition-all">
+                                        <th class="p-3">Material Classification</th>
+                                        <th class="p-3">Approved Specification Standard</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-slate-100/40 text-slate-600 card-text transition-colors">
+                                    <tr class="border-b border-slate-100/20">
+                                        <td class="p-3 font-semibold text-darkNavy card-title transition-colors">Inflow Distribution Cables</td>
+                                        <td class="p-3">16mm² Pure Copper single-core standards (Aluminum variants rejected)</td>
+                                    </tr>
+                                    <tr class="border-b border-slate-100/20">
+                                        <td class="p-3 font-semibold text-darkNavy card-title transition-colors">Circuit Breakers</td>
+                                        <td class="p-3">Certified single/three-phase surge mitigation breakers with DIN-rail mountings</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="p-3 font-semibold text-darkNavy card-title transition-colors">Meter Enclosure Boxes</td>
+                                        <td class="p-3">Heavy-duty galvanized polymers featuring transparent reading apertures</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <section class="card-element bg-white p-6 md:p-8 rounded-3xl border border-slate-200/60 shadow-sm space-y-4 transition-all duration-500">
+                        <div>
+                            <span class="text-xs font-bold text-primary uppercase tracking-widest">Regulatory Framework</span>
+                            <h2 class="text-xl font-extrabold text-darkNavy card-title transition-colors">NERC Compliant Collection Policies</h2>
+                        </div>
+                        <div class="space-y-2">
+                            <div class="subcard-element border border-slate-100 rounded-xl p-3.5 bg-slate-50/50 transition-all duration-500">
+                                <h4 class="font-bold text-xs text-darkNavy card-title flex items-center gap-2 transition-colors">
+                                    <span class="w-1.5 h-1.5 bg-primary rounded-full"></span>
+                                    Bill Dissemination & Settlement Timeline
+                                </h4>
+                                <p class="text-[11px] text-slate-500 card-text mt-1 pl-3.5 transition-colors">
+                                    Postpaid configuration invoices are presented systematically within the first week of cycles. Consumers retain a mandatory 12-day window from receipt window prior to default penalty evaluations.
+                                </p>
+                            </div>
+                            <div class="subcard-element border border-slate-100 rounded-xl p-3.5 bg-slate-50/50 transition-all duration-500">
+                                <h4 class="font-bold text-xs text-darkNavy card-title flex items-center gap-2 transition-colors">
+                                    <span class="w-1.5 h-1.5 bg-secondary rounded-full"></span>
+                                    Regulated Grid Disconnection Mandates
+                                </h4>
+                                <p class="text-[11px] text-slate-500 card-text mt-1 pl-3.5 transition-colors">
+                                    Physical power line isolations for non-payment are exclusively executed following explicit, written 24-hour statutory notice frames. Reconnections can only occur upon debt clearance and penalty payment.
+                                </p>
+                            </div>
+                        </div>
+                    </section>
+
+                </div>
+
+                <div class="space-y-6">
+                    
+                    <section class="bg-gradient-to-br from-darkNavy to-blue-950 text-white p-6 rounded-3xl border border-primary/20 shadow-md space-y-4">
+                        <div class="space-y-1">
+                            <span class="text-[10px] font-bold text-secondary uppercase tracking-widest px-2 py-0.5 bg-secondary/10 rounded-md border border-secondary/20 inline-block">Optima+ Central Sync</span>
+                            <h3 class="text-base font-extrabold">Data Audit & Consumer Information Intake</h3>
+                        </div>
+                        <p class="text-[11px] text-slate-300 leading-relaxed">
+                            To align your meter infrastructure configuration configurations with our central mainframe utility dashboard, execute your customer data verification form via the Enketo node.
+                        </p>
+                        <a href="https://central.optima-plus.example.com" target="_blank" rel="noopener noreferrer" class="group flex items-center justify-center gap-2 bg-secondary hover:bg-emerald-500 text-white font-bold text-xs py-3 px-4 rounded-xl transition-all shadow-sm">
+                            Launch Enketo Verification Webform
+                            <svg class="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"></path></svg>
+                        </a>
+                    </section>
+
+                    <section class="card-element bg-white p-5 rounded-2xl border border-slate-200/60 shadow-sm space-y-4 transition-all duration-500">
+                        <div class="flex items-center gap-2 border-b border-slate-100 pb-3">
+                            <span class="flex h-2 w-2 relative">
+                                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+                                <span class="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+                            </span>
+                            <h3 class="font-bold text-xs text-darkNavy card-title uppercase tracking-wider transition-colors">Dynamic Stream Indicators (KV)</h3>
+                        </div>
+                        <div class="subcard-element space-y-1 bg-slate-50 p-3 rounded-xl border border-slate-100 transition-all duration-500">
+                            <p class="text-[10px] font-bold text-slate-400 uppercase tracking-tight">Active Metering Rollout Status</p>
+                            <p id="kv-meter-status" class="text-xs font-semibold text-darkNavy card-title transition-colors">
+                                Phase 2 Smart Rollout currently active within Gombe Central Grid sectors. Band A & B priority allocation optimization enabled.
+                    </p>
+                        </div>
+                        <div class="subcard-element space-y-1 bg-slate-50 p-3 rounded-xl border border-slate-100 transition-all duration-500">
+                            <p class="text-[10px] font-bold text-slate-400 uppercase tracking-tight">Online Payment Gateways</p>
+                            <div id="kv-gateways" class="flex flex-wrap gap-1.5 pt-0.5">
+                                <span class="text-[9px] bg-blue-50 text-primary border border-blue-100 px-2 py-0.5 rounded-md font-bold uppercase tracking-wide">Access Bank API</span>
+                                <span class="text-[9px] bg-blue-50 text-primary border border-blue-100 px-2 py-0.5 rounded-md font-bold uppercase tracking-wide">JEDC Vendor Gateway</span>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="card-element bg-white p-5 rounded-2xl border border-slate-200/60 shadow-sm space-y-4 transition-all duration-500">
+                        <h3 class="font-bold text-xs text-darkNavy card-title uppercase tracking-wider transition-colors">Contact Us</h3>
+                        <div class="space-y-2 text-xs">
+                            <a href="tel:+2349069746636" class="subcard-element flex items-center gap-3 p-2.5 bg-slate-50 hover:bg-blue-50/50 rounded-xl border border-slate-100 transition group duration-500">
+                                <div class="text-primary group-hover:scale-110 transition-transform">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.622a2.25 2.25 0 01.659-1.59l1.87-1.87a2.25 2.25 0 013.182 0l2.909 2.909a2.25 2.25 0 010 3.182l-1.39 1.39a11.94 11.94 0 004.828 4.828l1.39-1.39a2.25 2.25 0 013.182 0l2.909 2.909a2.25 2.25 0 010 3.182l-1.87 1.87a2.25 2.25 0 01-1.59.659c-7.908 0-14.307-6.399-14.307-14.307 0-.58.046-1.154.135-1.714z"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <p class="font-bold text-slate-800 card-title text-[11px] transition-colors">Phone Hotline</p>
+                                    <p class="text-slate-500 card-text text-[10px] mt-0.5 transition-colors">+234 906 974 6636</p>
+                                </div>
+                            </a>
+                            <a href="mailto:customer.service@savannahedc.com" class="subcard-element flex items-center gap-3 p-2.5 bg-slate-50 hover:bg-green-50/50 rounded-xl border border-slate-100 transition group duration-500">
+                                <div class="text-secondary group-hover:scale-110 transition-transform">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <p class="font-bold text-slate-800 card-title text-[11px] transition-colors">Email Gateway</p>
+                                    <p class="text-slate-500 card-text text-[10px] mt-0.5 transition-colors">customer.service@savannahedc.com</p>
+                                </div>
+                            </a>
+                        </div>
+                    </section>
+
+                </div>
+
+            </div>
+        </main>
+
+        <footer id="mainFooter" class="bg-slate-900 text-slate-400 py-6 px-4 text-center text-xs border-t border-slate-800 transition-colors duration-500">
+            &copy; 2026 Savannah Electricity Distribution Company. Integrated Production UI Blueprint.
+        </footer>
+    </div>
+
+    <script>
+        function setTheme(themeName) {
+            const body = document.getElementById('mainBody');
+            const wrapper = document.getElementById('bgWrapper');
+            const desc = document.getElementById('themeDescription');
+            const title = document.getElementById('mainTitle');
+            const logo = document.getElementById('logoContainer');
+            const panel = document.getElementById('controlPanel');
+            const cTitle = document.getElementById('controlTitle');
+            const cSub = document.getElementById('controlSub');
+            const footer = document.getElementById('mainFooter');
+            const tHeader = document.getElementById('tableHeader');
+            
+            const cards = document.querySelectorAll('.card-element');
+            const subcards = document.querySelectorAll('.subcard-element');
+            const cardTitles = document.querySelectorAll('.card-title');
+            const cardTexts = document.querySelectorAll('.card-text');
+
+            ['light', 'dark'].forEach(t => {
+                document.getElementById(`btn-${t}`).className = "px-5 py-2.5 text-xs font-bold rounded-xl transition-all bg-slate-100 text-slate-700 hover:bg-slate-200";
+            });
+            document.getElementById(`btn-${themeName}`).className = "px-5 py-2.5 text-xs font-bold rounded-xl transition-all bg-primary text-white ring-2 ring-primary/30";
+
+            if (themeName === 'light') {
+                body.className = "text-slate-900 min-h-screen flex flex-col justify-between relative overflow-x-hidden font-sans transition-colors duration-500";
+                panel.className = "sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-200 px-4 py-4 shadow-md transition-colors duration-500";
+                footer.className = "bg-slate-900 text-slate-400 py-6 px-4 text-center text-xs border-t border-slate-800 transition-colors duration-500";
+                title.className = "text-2xl md:text-5xl font-extrabold text-darkNavy tracking-tight transition-colors duration-500";
+                logo.className = "inline-block bg-white text-primary p-4 rounded-2xl shadow-sm border border-slate-100 font-black tracking-tighter text-xl transition-all duration-500";
+                cTitle.className = "text-sm font-extrabold text-darkNavy";
+                cSub.className = "text-[10px] font-bold text-primary uppercase tracking-widest";
+                tHeader.className = "border-b border-slate-100 bg-slate-50 text-slate-500 font-bold";
+
+                // RE-INJECT FIXED LIGHT STRUCTURE
+                wrapper.innerHTML = `
+                    <div class="absolute inset-0 bg-gradient-to-br from-slate-50 via-slate-100 to-slate-200/80"></div>
+                    <div class="absolute inset-0 bg-[radial-gradient(#0A1931_1px,transparent_1px)] [background-size:28px_28px] opacity-[0.08]"></div>
+                    <div class="absolute top-[-10%] left-[-10%] w-[600px] h-[600px] rounded-full bg-primary/20 blur-[100px] accelerated-orb animate-surge"></div>
+                    <div class="absolute bottom-[10%] right-[-10%] w-[650px] h-[650px] rounded-full bg-secondary/20 blur-[110px] accelerated-orb animate-surge"></div>
+                `;
+
+                desc.className = "text-xs font-bold text-primary uppercase tracking-widest bg-blue-500/10 border border-blue-500/20 px-4 py-1.5 rounded-full transition-all duration-500";
+                desc.innerText = "Active View: Light Theme — 'Power Surge' (Smooth Pulse)";
+
+                cards.forEach(c => c.className = "card-element bg-white p-6 md:p-8 rounded-3xl border border-slate-200/60 shadow-sm space-y-4 transition-all duration-500");
+                subcards.forEach(s => s.className = "subcard-element p-4 bg-slate-50 rounded-xl border border-slate-100 transition-all duration-500");
+                cardTitles.forEach(t => t.className = t.className.replace('text-white', 'text-darkNavy'));
+                cardTexts.forEach(txt => txt.className = txt.className.replace('text-slate-400', 'text-slate-600'));
+            } 
+            else if (themeName === 'dark') {
+                body.className = "text-slate-100 min-h-screen flex flex-col justify-between relative overflow-x-hidden font-sans transition-colors duration-500";
+                panel.className = "sticky top-0 z-50 bg-slate-950/90 backdrop-blur-md border-b border-slate-800 px-4 py-4 shadow-xl transition-colors duration-500";
+                footer.className = "bg-slate-950 text-slate-500 py-6 px-4 text-center text-xs border-t border-slate-900 transition-colors duration-500";
+                title.className = "text-2xl md:text-5xl font-extrabold text-white tracking-tight transition-colors duration-500";
+                logo.className = "inline-block bg-slate-900 text-white p-4 rounded-2xl shadow-md border border-primary/40 font-black tracking-tighter text-xl transition-all duration-500";
+                cTitle.className = "text-sm font-extrabold text-slate-200";
+                cSub.className = "text-[10px] font-bold text-secondary uppercase tracking-widest";
+                tHeader.className = "border-b border-slate-800 bg-slate-900/50 text-slate-400 font-bold";
+
+                // RE-INJECT FIXED DARK STRUCTURE (Opacity increased to /35 for visible contrast)
+                wrapper.innerHTML = `
+                    <div class="absolute inset-0 bg-gradient-to-br from-[#050C18] via-[#0A1931] to-[#12233F]"></div>
+                    <div class="absolute inset-0 bg-[linear-gradient(to_right,#1E293B_1px,transparent_1px),linear-gradient(to_bottom,#1E293B_1px,transparent_1px)] bg-[size:32px_32px] opacity-25"></div>
+                    <div class="absolute top-[-5%] left-[-5%] w-[550px] h-[550px] rounded-full bg-primary/35 blur-[100px] accelerated-orb animate-drift-left"></div>
+                    <div class="absolute bottom-[5%] right-[-5%] w-[600px] h-[600px] rounded-full bg-secondary/30 blur-[110px] accelerated-orb animate-drift-right"></div>
+                `;
+
+                desc.className = "text-xs font-bold text-secondary uppercase tracking-widest bg-emerald-500/10 border border-emerald-500/20 px-4 py-1.5 rounded-full transition-all duration-500";
+                desc.innerText = "Active View: Dark Theme — 'Flowing Current' (Linear Drifting)";
+
+                cards.forEach(c => c.className = "card-element bg-slate-900/60 backdrop-blur-md p-6 md:p-8 rounded-3xl border border-slate-800 shadow-xl space-y-4 transition-all duration-500");
+                subcards.forEach(s => s.className = "subcard-element p-4 bg-slate-950/40 rounded-xl border border-slate-800/60 transition-all duration-500");
+                cardTitles.forEach(t => t.className = t.className.replace('text-darkNavy', 'text-white'));
+                cardTexts.forEach(txt => txt.className = txt.className.replace('text-slate-600', 'text-slate-400'));
+            }
+        }
+    </script>
+</body>
+</html>

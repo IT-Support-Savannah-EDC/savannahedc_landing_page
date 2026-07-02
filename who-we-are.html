@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Who We Are | Savannah EDC</title>
+
+    <link rel="icon" type="image/png" href="assets/logo.png">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: { primary: '#004DC2', secondary: '#5DB922', darkNavy: '#0A1931' },
+                    fontFamily: { sans: ['Montserrat', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+    <script src="js/theme.js"></script>
+    <script src="js/layout.js"></script>
+</head>
+<body class="bg-[#F8FAFC] dark:bg-[#050C18] text-slate-900 dark:text-slate-100 min-h-screen flex flex-col relative overflow-x-hidden transition-colors duration-300">
+
+    <div id="universal-navbar"></div>
+
+    <main class="relative z-10 max-w-4xl mx-auto px-4 py-16 w-full space-y-12 flex-grow">
+        <section class="space-y-6">
+            <div class="text-center max-w-3xl mx-auto space-y-2">
+                <span class="text-xs font-bold tracking-widest text-primary dark:text-secondary uppercase">Corporate Profile</span>
+                <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight text-darkNavy dark:text-white">
+                    Who We Are
+                </h1>
+                <p class="text-sm text-slate-500 dark:text-slate-400 font-medium">Engineering the primary distribution systems across Gombe State.</p>
+            </div>
+            
+            <div class="bg-white/60 dark:bg-slate-900/40 backdrop-blur-md p-8 rounded-3xl border border-slate-200/60 dark:border-slate-800/80 shadow-sm space-y-5 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+                <p>
+                    Savannah Electricity Distribution Company (Savannah EDC) operates at the vital core of north-eastern Nigeria's energy network system. Established to deliver transparent, smart, and safe distribution metrics, we manage high-capacity infrastructure directly servicing industrial, commercial, and residential operational nodes.
+                </p>
+                <p>
+                    Through strict adherence to NERC regulatory mandates, integration of structural data collection tools like our central Optima+ platforms, and alignment with national NEMSA standards, we remain dedicated to transforming volatile grid vectors into safe, dependable electrical assets.
+                </p>
+            </div>
+        </section>
+    </main>
+
+    <div id="universal-footer"></div>
+</body>
+</html>
