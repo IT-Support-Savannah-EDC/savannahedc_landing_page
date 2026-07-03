@@ -96,7 +96,7 @@ export async function onRequestPost(context) {
                     <td style="padding: 32px 40px 40px 40px; font-size: 15px; line-height: 1.65; color: #334155; font-family: 'Montserrat', sans-serif;" class="text-body-dark">
                       <p style="margin-top: 0; margin-bottom: 18px; font-weight: 700; color: #0A1931;" class="text-primary">${params.greeting}</p>
                       
-                      <div style="margin-bottom: 28px;">
+                      <div style="padding: 5px 5px; margin-bottom: 28px;">
                         ${params.contentBody}
                       </div>
 
@@ -104,7 +104,6 @@ export async function onRequestPost(context) {
                         <tr>
                           <td style="padding: 16px 20px; font-size: 13px; color: #475569; line-height: 1.6;" class="text-muted">
                             <strong style="color: #0A1931;" class="text-primary">Case Reference:</strong> #${ticketId}<br>
-                            <strong style="color: #0A1931;" class="text-primary">Category:</strong> ${subject}
                           </td>
                         </tr>
                       </table>
