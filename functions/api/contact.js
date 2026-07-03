@@ -72,7 +72,7 @@ export async function onRequestPost(context) {
                         <tr>
                           <td align="left" style="font-size: 13px; font-weight: 800; color: #004DC2; line-height: 1.4; font-family: 'Montserrat', sans-serif;" class="text-primary">
                             <!-- Ensure this image URL resolves to your actual Savannah EDC logo -->
-                            <img src="https://savannahedc.com/logo.png" alt="SEDC Logo" width="24" height="24" style="vertical-align: middle; margin-right: 8px; display: inline-block;">
+                            <img src="assets/logo.png" alt="SEDC Logo" width="24" height="24" style="vertical-align: middle; margin-right: 8px; display: inline-block;">
                             <span style="vertical-align: middle; letter-spacing: 0.5px; text-transform: uppercase;">Savannah Electricity Distribution Company</span>
                           </td>
                         </tr>
@@ -111,22 +111,47 @@ export async function onRequestPost(context) {
                   </tr>
                   <tr>
                     <td class="footer-section" style="padding: 36px 40px; background-color: #FFFFFF; border-top: 1px solid #E2E8F0; text-align: center; font-family: 'Montserrat', sans-serif;">
-                      <table role="presentation" width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-bottom: 24px;">
+                    <table role="presentation" width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-bottom: 24px;">
                         <tr>
                           <td style="font-size: 11px; color: #64748B; line-height: 1.7;" class="text-muted">
                             <strong style="color: #0A1931; font-size: 12px;" class="text-primary">Savannah Electricity Distribution Company Ltd.</strong><br>
-                            <span style="display: inline-block; margin-top: 4px; margin-bottom: 6px;">Abuja, Federal Capital Territory, Nigeria</span><br>
-                            <span style="white-space: nowrap;">Support: <a href="mailto:customer.service@savannahedc.com" style="color: #004DC2; text-decoration: none; font-weight: 600;" class="contact-link">customer.service@savannahedc.com</a></span><br>
+                            <span style="display: inline-block; margin-top: 4px; margin-bottom: 6px;"><p class="text-xs text-slate-600 dark:text-slate-400 font-medium leading-relaxed break-words"> Savannah EDC Headquarters, Bauchi Street Adjacent Ministry of Works, Gombe, Gombe State, Nigeria.</span><br>
+                            <span style="white-space: nowrap;">Support: <a href="mailto:customer.service@savannahedc.com" style="color: #004DC2; text-decoration: none; font-weight: 600;" class="contact-link">customer.service@savannahedc.com</a> | <a href="tel:+234123456789" style="color: #004DC2; text-decoration: none; font-weight: 600;" class="contact-link">+234 123 456 789</a></span><br>
                             <span style="white-space: nowrap; display: inline-block; margin-top: 4px;"><a href="https://savannahedc.com" style="color: #004DC2; text-decoration: none; font-weight: 600; letter-spacing: 0.3px;" class="contact-link">www.savannahedc.com</a></span>
                           </td>
                         </tr>
-                      </table>
+
+                        <table role="presentation" width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top: 16px;">
+                            <tr>
+                                <td style="padding: 0 12px;" align="center">
+                                    <a href="<?= socialFacebook ?>" target="_blank" style="text-decoration: none; display: inline-block;">
+                                    <img class="social-icon" src="https://img.icons8.com/?size=100&id=118497&format=png&color=000000" alt="Facebook" width="22" height="22" style="display: block; border: 0; width: 22px; height: 22px;">
+                                    </a>
+                                </td>
+                                <td style="padding: 0 12px;" align="center">
+                                    <a href="<?= socialX ?>" target="_blank" style="text-decoration: none; display: inline-block;">
+                                    <img class="social-icon" src="https://img.icons8.com/?size=100&id=ClbD5JTFM7FA&format=png&color=000000" alt="X" width="22" height="22" style="display: block; border: 0; width: 22px; height: 22px;">
+                                    </a>
+                                </td>
+                                <td style="padding: 0 12px;" align="center">
+                                    <a href="<?= socialInstagram ?>" target="_blank" style="text-decoration: none; display: inline-block;">
+                                    <img class="social-icon" src="https://img.icons8.com/?size=100&id=32323&format=png&color=000000" alt="Instagram" width="22" height="22" style="display: block; border: 0; width: 22px; height: 22px;">
+                                    </a>
+                                </td>
+                                <td style="padding: 0 12px;" align="center">
+                                    <a href="<?= socialWhatsApp ?>" target="_blank" style="text-decoration: none; display: inline-block;">
+                                    <img class="social-icon" src="https://img.icons8.com/?size=100&id=16713&format=png&color=000000" alt="WhatsApp" width="22" height="22" style="display: block; border: 0; width: 22px; height: 22px;">
+                                    </a>
+                                </td>
+                            </tr>
+                        </table>
+                    </table>
                       <table role="presentation" width="100%" border="0" cellspacing="0" cellpadding="0">
                         <tr>
                           <td style="font-size: 10px; line-height: 1.6; color: #94A3B8;" class="text-muted">
                             <p style="margin: 0 0 12px 0; font-weight: 500;">&copy; ${new Date().getFullYear()} Savannah Electricity Distribution Company Ltd. All rights reserved.</p>
                             <p style="margin: 0; font-style: italic; line-height: 1.5; max-width: 520px; display: inline-block;">
-                              <strong>AI System Disclaimer:</strong> This response was securely evaluated and structured by the Savannah EDC automated network engine to guarantee an immediate acknowledgement window. Your case file hash has been populated within our operational management board for direct engineering resolution.
+                              <strong>Disclaimer:</strong> This Email was sent from an automated system. Please do not reply directly to this email. If you have any questions or require further assistance, please contact our customer service team at <a href="mailto:customer.service@savannahedc.com" style="color: #004DC2; text-decoration: none; font-weight: 600;" class="contact-link">customer.service@savannahedc.com</a>
                             </p>
                           </td>
                         </tr>
