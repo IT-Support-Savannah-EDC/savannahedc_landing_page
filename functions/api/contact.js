@@ -194,7 +194,7 @@ export async function onRequestPost(context) {
 
         // 5. Build the Shared Details Block (Ensures ALL form fields are displayed)
         const detailsBlock = `
-            <table role="presentation" width="100%" style="background-color: #F8FAFC; border-radius: 8px; border: 1px solid #E2E8F0; margin: 16px 0; padding: 16px; font-size: 14px;">
+            <table role="presentation" width="100%" style="background-color: #F8FAFC; border-radius: 8px; border: 1px solid #E2E8F0; margin: 16px 16px; padding: 16px; font-size: 14px;">
                 <tr><td style="padding-bottom: 8px;"><strong>Name:</strong> ${name}</td></tr>
                 <tr><td style="padding-bottom: 8px;"><strong>Email:</strong> ${email}</td></tr>
                 <tr><td style="padding-bottom: 8px;"><strong>Phone:</strong> ${phone}</td></tr>
