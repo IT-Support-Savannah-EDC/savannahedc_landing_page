@@ -4,9 +4,10 @@ export async function onRequestPost(context) {
         const RESEND_API_KEY = context.env.RESEND_API_KEY;
 
         // 1. Extract Form Fields
-        const name = formData.get('name') || 'Customer';
+        const name = formData.get('fullName');
         const email = formData.get('email'); 
-        const phone = formData.get('phone') || 'Not Provided';
+        const phone = formData.get('phoneNumber');
+        const address = formData.get('address') || 'Not provided';
         const subject = formData.get('subject') || 'New Inquiry';
         const message = formData.get('message') || 'No message provided.';
         const file = formData.get('attachments'); 
@@ -172,6 +173,7 @@ export async function onRequestPost(context) {
                 <tr><td style="padding-bottom: 8px;"><strong>Name:</strong> ${name}</td></tr>
                 <tr><td style="padding-bottom: 8px;"><strong>Email:</strong> ${email}</td></tr>
                 <tr><td style="padding-bottom: 8px;"><strong>Phone:</strong> ${phone}</td></tr>
+                <tr><td style="padding-bottom: 8px;"><strong>Address:</strong> ${address}</td></tr>
                 <tr><td style="padding-bottom: 8px;"><strong>Subject:</strong> ${subject}</td></tr>
                 <tr><td><strong>Message:</strong><br><div style="white-space: pre-wrap; margin-top: 6px; color: #475569;">${message}</div></td></tr>
             </table>
@@ -182,9 +184,9 @@ export async function onRequestPost(context) {
             title: 'New Website Submission',
             statusColor: '#004DC2', // Blue
             statusLabel: 'NEW SUBMISSION',
-            greeting: 'Hello Support Team,',
+            greeting: 'Hello Customer Service Team,',
             contentBody: `
-                <p style="margin: 0;">A new customer inquiry has been submitted via the website contact form.</p>
+                <p style="margin: 0;">A new new form submission has been made via the website.</p>
                 ${detailsBlock}
                 <p style="margin: 0;">Please review and respond to the customer as soon as possible.</p>
             `
