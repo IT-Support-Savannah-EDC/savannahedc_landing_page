@@ -72,8 +72,8 @@ export async function onRequestPost(context) {
                       <table role="presentation" width="100%" border="0" cellspacing="0" cellpadding="0">
                         <tr>
                           <td align="left" style="font-size: 13px; font-weight: 800; color: #004DC2; line-height: 1.4; font-family: 'Montserrat', sans-serif;" class="text-primary">
-                            <!-- Ensure this image URL resolves to your actual Savannah EDC logo -->
-                            <img src="assets/logo.png" alt="SEDC Logo" width="24" height="24" style="vertical-align: middle; margin-right: 8px; display: inline-block;">
+                            
+                            <img src="https://savannahedc.com/assets/logo.png" alt="SEDC Logo" width="24" height="24" style="vertical-align: middle; margin-right: 8px; display: inline-block;">
                             <span style="vertical-align: middle; letter-spacing: 0.5px; text-transform: uppercase;">Savannah Electricity Distribution Company</span>
                           </td>
                         </tr>
@@ -117,6 +117,7 @@ export async function onRequestPost(context) {
                         <table role="presentation" width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-bottom: 20px;">
                             <tr>
                                 <td align="center" style="font-size: 12px; color: #64748B; line-height: 1.6;" class="text-muted">
+                                    <img src="https://savannahedc.com/assets/logo.png" alt="SEDC Logo" width="24" height="24" style="vertical-align: middle; margin-right: 8px; display: inline-block;">
                                     <strong style="color: #0A1931; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px;" class="text-primary">Savannah Electricity Distribution Company Ltd.</strong>
                                     <div style="margin-top: 8px;">Savannah EDC Headquarters, Bauchi Street Adjacent Ministry of Works, Gombe, Gombe State, Nigeria.</div>
                                 </td>
@@ -237,7 +238,7 @@ export async function onRequestPost(context) {
             from: `SEDC Website <${senderEmail}>`,
             to: ['customer.service@savannahedc.com'],
             reply_to: email, 
-            subject: `New Lead: ${subject}`,
+            subject: `New Lead: ${subject} [Ticket ID: ${ticketId}]`,
             html: internalHtml,
             attachments: attachmentsArray 
         };
@@ -245,7 +246,7 @@ export async function onRequestPost(context) {
         const customerPayload = {
             from: `Savannah EDC <${senderEmail}>`,
             to: [email],
-            subject: 'We have received your inquiry',
+            subject: `We have received your inquiry - [Ticket ID: ${ticketId}]`,
             html: customerHtml
         };
 
