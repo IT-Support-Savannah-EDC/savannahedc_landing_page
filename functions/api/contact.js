@@ -147,22 +147,22 @@ export async function onRequestPost(context) {
                                     <table role="presentation" border="0" cellspacing="0" cellpadding="0">
                                         <tr>
                                             <td style="padding: 0 10px;">
-                                                <a href="<?= socialFacebook ?>" target="_blank" style="text-decoration: none; display: inline-block;">
+                                                <a href="https://facebook.com/SavannahEDC" target="_blank" style="text-decoration: none; display: inline-block;">
                                                     <img class="social-icon" src="https://img.icons8.com/?size=100&id=118497&format=png&color=000000" alt="Facebook" width="24" height="24" style="display: block; border: 0;">
                                                 </a>
                                             </td>
                                             <td style="padding: 0 10px;">
-                                                <a href="<?= socialX ?>" target="_blank" style="text-decoration: none; display: inline-block;">
+                                                <a href="https://x.com/SavannahEDC" target="_blank" style="text-decoration: none; display: inline-block;">
                                                     <img class="social-icon" src="https://img.icons8.com/?size=100&id=ClbD5JTFM7FA&format=png&color=000000" alt="X" width="24" height="24" style="display: block; border: 0;">
                                                 </a>
                                             </td>
                                             <td style="padding: 0 10px;">
-                                                <a href="<?= socialInstagram ?>" target="_blank" style="text-decoration: none; display: inline-block;">
+                                                <a href="https://instagram.com/savannah_edc" target="_blank" style="text-decoration: none; display: inline-block;">
                                                     <img class="social-icon" src="https://img.icons8.com/?size=100&id=32323&format=png&color=000000" alt="Instagram" width="24" height="24" style="display: block; border: 0;">
                                                 </a>
                                             </td>
                                             <td style="padding: 0 10px;">
-                                                <a href="<?= socialWhatsApp ?>" target="_blank" style="text-decoration: none; display: inline-block;">
+                                                <a href="https://wa.me/2349000000000" target="_blank" style="text-decoration: none; display: inline-block;">
                                                     <img class="social-icon" src="https://img.icons8.com/?size=100&id=16713&format=png&color=000000" alt="WhatsApp" width="24" height="24" style="display: block; border: 0;">
                                                 </a>
                                             </td>
