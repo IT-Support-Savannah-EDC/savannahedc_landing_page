@@ -1,3 +1,20 @@
+// 1. Define the security headers to allow cross-domain requests
+const corsHeaders = {
+    "Access-Control-Allow-Origin": "*", // Allows any website to send data. (Can be restricted to "https://savannahedc.com" later)
+    "Access-Control-Allow-Methods": "POST, OPTIONS",
+    "Access-Control-Allow-Headers": "Content-Type",
+};
+
+// 2. Handle the Browser's "Preflight" Security Check
+export async function onRequestOptions() {
+
+    return new Response(null, { 
+        status: 204,
+        headers: corsHeaders 
+    });
+}
+
+// 3. Handle the POST Request from the Form Submission
 export async function onRequestPost(context) {
     try {
         const formData = await context.request.formData();
@@ -230,13 +247,19 @@ export async function onRequestPost(context) {
 
         return new Response(JSON.stringify({ success: true, message: 'Complaint filed successfully.' }), {
             status: 200,
-            headers: { 'Content-Type': 'application/json' }
+            headers: { 
+                'Content-Type': 'application/json',
+                ...corsHeaders
+            }
         });
 
     } catch (error) {
         return new Response(JSON.stringify({ success: false, error: error.message }), {
             status: 500,
-            headers: { 'Content-Type': 'application/json' }
+            headers: { 
+                'Content-Type': 'application/json',
+                ...corsHeaders
+            }
         });
     }
 }
