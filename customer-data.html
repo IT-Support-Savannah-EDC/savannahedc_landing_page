@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Data | Savannah EDC</title>
+
+    <link rel="icon" type="image/png" href="assets/logo.png">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: { primary: '#004DC2', secondary: '#5DB922', darkNavy: '#0A1931' },
+                    fontFamily: { sans: ['Montserrat', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+    <script src="js/theme.js"></script>
+    <script src="js/layout.js"></script>
+</head>
+<body class="bg-[#F8FAFC] dark:bg-[#050C18] text-slate-900 dark:text-slate-100 min-h-screen flex flex-col relative overflow-x-hidden transition-colors duration-300">
+
+    <main class="relative z-10 max-w-6xl mx-auto px-4 py-12 w-full flex-grow space-y-12">
+    
+        <section class="text-center max-w-3xl mx-auto space-y-2 pt-6">
+            <span class="text-xs font-bold tracking-widest text-primary dark:text-secondary uppercase">Customer Data</span>
+            <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight text-darkNavy dark:text-white">
+                Customer Data Form
+            </h1>
+            <p class="text-sm md:text-base text-slate-500 dark:text-slate-400 font-medium">
+                Please fill out the form below to submit your customer data.
+            </p>
+        </section>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+
+            <div class="lg:col-span-2 w-full">
+                <form id="contact-us-form" onsubmit="handleAppsScriptSubmission(event)" class="bg-white/80 dark:bg-slate-900/60 backdrop-blur-md border border-slate-200/60 dark:border-slate-800 p-6 md:p-8 rounded-3xl shadow-sm transition-colors space-y-8">
+                    
+                    <div class="border-b border-slate-100 dark:border-slate-800 pb-2">
+                        <h3 class="font-extrabold text-lg text-darkNavy dark:text-white tracking-tight">Fill the KYC form below to update your information</h3>
+                        <p class="text-xs text-slate-400 mt-0.5">All fields are required unless otherwise indicated.</p>
+                    </div>
+
+                    <div class="space-y-4">
+                        <h4 class="text-xs font-bold tracking-wider text-primary dark:text-secondary uppercase border-b border-slate-100 dark:border-slate-800 pb-1">1. Personal Details</h4>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="space-y-1.5">
+                                <label for="firstName" class="text-xs font-bold text-slate-700 dark:text-slate-300">Surname <span class="text-rose-500">*</span></label>
+                                <input type="text" id="firstName" name="firstName" required placeholder="Abdullahi"
+                                    class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-3 text-xs font-semibold focus:outline-none focus:border-primary focus:border-2 dark:focus:border-secondary text-slate-800 dark:text-slate-100 transition-colors">
+                            </div>
+
+                            <div class="space-y-1.5">
+                                <label for="lastName" class="text-xs font-bold text-slate-700 dark:text-slate-300">First Name <span class="text-rose-500">*</span></label>
+                                <input type="text" id="lastName" name="lastName" required placeholder="Saad"
+                                    class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-3 text-xs font-semibold focus:outline-none focus:border-primary focus:border-2 dark:focus:border-secondary text-slate-800 dark:text-slate-100 transition-colors">
+                            </div>
+
+                            <div class="space-y-1.5">
+                                <label for="middleName" class="text-xs font-bold text-slate-700 dark:text-slate-300">Middle Name <span class="text-rose-500">*</span></label>
+                                <input type="text" id="middleName" name="middleName" required placeholder="John"
+                                    class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-3 text-xs font-semibold focus:outline-none focus:border-primary focus:border-2 dark:focus:border-secondary text-slate-800 dark:text-slate-100 transition-colors">
+                            </div>
+
+                            <div class="space-y-1.5">
+                                <label for="DOB" class="text-xs font-bold text-slate-700 dark:text-slate-300">Date of Birth <span class="text-rose-500">*</span></label>
+                                <input type="date" id="DOB" name="DOB" required
+                                    class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-3 text-xs font-semibold focus:outline-none focus:border-primary focus:border-2 dark:focus:border-secondary text-slate-800 dark:text-slate-100 transition-colors">
+                            </div>
+
+                            <div class="space-y-1.5 md:col-span-2">
+                                <label for="occupation" class="text-xs font-bold text-slate-700 dark:text-slate-300">Customer Occupation<span class="text-rose-500">*</span></label>
+                                <input type="text" id="occupation" name="occupation" placeholder="Software Engineer"
+                                    class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-3 text-xs font-semibold focus:outline-none focus:border-primary focus:border-2 dark:focus:border-secondary text-slate-800 dark:text-slate-100 transition-colors">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="space-y-4">
+                        <h4 class="text-xs font-bold tracking-wider text-primary dark:text-secondary uppercase border-b border-slate-100 dark:border-slate-800 pb-1">2. Contact Information</h4>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="space-y-1.5">
+                                <label for="phoneNumber" class="text-xs font-bold text-slate-700 dark:text-slate-300">Phone Number <span class="text-rose-500">*</span></label>
+                                <input type="text" id="phoneNumber" name="phoneNumber" required placeholder="09069746636"
+                                    oninput="this.value = this.value.replace(/[^0-9]/g, '');"
+                                    class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-3 text-xs font-semibold focus:outline-none focus:border-primary focus:border-2 dark:focus:border-secondary text-slate-800 dark:text-slate-100 transition-colors">
+                            </div>
+
+                            <div class="space-y-1.5">
+                                <label for="email" class="text-xs font-bold text-slate-700 dark:text-slate-300">Email Address <span class="text-rose-500">*</span></label>
+                                <input type="email" id="email" name="email" required placeholder="customer.name@example.com"
+                                    pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}"
+                                    class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-3 text-xs font-semibold focus:outline-none focus:border-primary focus:border-2 dark:focus:border-secondary text-slate-800 dark:text-slate-100 transition-colors">
+                                <p class="text-[10px] text-slate-400 dark:text-slate-500 italic">Must match valid universal email standard syntax rules.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="space-y-4">
+                        <h4 class="text-xs font-bold tracking-wider text-primary dark:text-secondary uppercase border-b border-slate-100 dark:border-slate-800 pb-1">3. Residential Address</h4>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="space-y-1.5 md:col-span-2">
+                                <label for="address" class="text-xs font-bold text-slate-700 dark:text-slate-300">Address<span class="text-rose-500">*</span></label>
+                                <input type="text" id="address" name="address" placeholder="123 Main Street"
+                                    class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-3 text-xs font-semibold focus:outline-none focus:border-primary focus:border-2 dark:focus:border-secondary text-slate-800 dark:text-slate-100 transition-colors">
+                            </div>
+
+                            <div class="space-y-1.5">
+                                <label for="city" class="text-xs font-bold text-slate-700 dark:text-slate-300">Town/City<span class="text-rose-500">*</span></label>
+                                <input type="text" id="city" name="city" placeholder="Gombe"
+                                    class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-3 text-xs font-semibold focus:outline-none focus:border-primary focus:border-2 dark:focus:border-secondary text-slate-800 dark:text-slate-100 transition-colors">
+                            </div>
+
+                            <div class="space-y-1.5">
+                                <label for="local" class="text-xs font-bold text-slate-700 dark:text-slate-300">Local Government Area<span class="text-rose-500">*</span></label>
+                                <input type="text" id="local" name="local" placeholder="Akko LGA"
+                                    class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-3 text-xs font-semibold focus:outline-none focus:border-primary focus:border-2 dark:focus:border-secondary text-slate-800 dark:text-slate-100 transition-colors">
+                            </div>
+
+                            <div class="space-y-1.5 md:col-span-2">
+                                <label for="state" class="text-xs font-bold text-slate-700 dark:text-slate-300">State of Residence<span class="text-rose-500">*</span></label>
+                                <input type="text" id="state" name="state" placeholder="Gombe State"
+                                    class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-3 text-xs font-semibold focus:outline-none focus:border-primary focus:border-2 dark:focus:border-secondary text-slate-800 dark:text-slate-100 transition-colors">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="space-y-4">
+                        <h4 class="text-xs font-bold tracking-wider text-primary dark:text-secondary uppercase border-b border-slate-100 dark:border-slate-800 pb-1">4. Document Uploads</h4>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="space-y-2">
+                                <label class="text-xs font-bold text-slate-700 dark:text-slate-300">Signature<span class="text-rose-500">*</span></label>
+                                <div class="relative flex flex-col items-center justify-center border-2 border-dashed border-slate-200 dark:border-slate-800 rounded-2xl bg-slate-50/50 dark:bg-slate-950/40 p-4 transition-colors">
+                                    <input type="file" id="signature" name="signature" accept=".png, .jpg, .jpeg, .pdf" onchange="validateFileSize(this)"
+                                        class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-20">
+                                    <div class="text-center space-y-1 pointer-events-none z-10">
+                                        <p class="text-xs font-bold text-primary dark:text-secondary">Click to upload files or drag and drop</p>
+                                        <p class="text-[10px] text-slate-400">Accepted formats: PNG, JPG, PDF (Maximum data capacity: 10MB)</p>
+                                    </div>
+                                </div>
+                                <div id="size-warning" class="hidden text-rose-500 text-[11px] font-bold flex items-center gap-1.5 animate-pulse">
+                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                                    File too heavy! Selected document surpasses the maximum size of 10MB.
+                                </div>
+                            </div>
+
+                            <div class="space-y-2">
+                                <label class="text-xs font-bold text-slate-700 dark:text-slate-300">Passport Photograph<span class="text-rose-500">*</span></label>
+                                <div class="relative flex flex-col items-center justify-center border-2 border-dashed border-slate-200 dark:border-slate-800 rounded-2xl bg-slate-50/50 dark:bg-slate-950/40 p-4 transition-colors">
+                                    <input type="file" id="passport" name="passport" accept=".png, .jpg, .jpeg, .pdf" onchange="validateFileSize(this)"
+                                        class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-20">
+                                    <div class="text-center space-y-1 pointer-events-none z-10">
+                                        <p class="text-xs font-bold text-primary dark:text-secondary">Click to upload files or drag and drop</p>
+                                        <p class="text-[10px] text-slate-400">Accepted formats: PNG, JPG, PDF (Maximum data capacity: 10MB)</p>
+                                    </div>
+                                </div>
+                                <div id="size-warning" class="hidden text-rose-500 text-[11px] font-bold flex items-center gap-1.5 animate-pulse">
+                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                                    File too heavy! Selected document surpasses the maximum size of 10MB.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pt-2">
+                        <button type="submit" id="submit-btn" class="w-full bg-primary hover:bg-blue-700 dark:bg-secondary dark:hover:bg-emerald-600 text-white font-bold text-sm py-3.5 px-6 rounded-xl transition shadow-md flex items-center justify-center gap-2">
+                            <span>Submit</span>
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5"></path>
+                            </svg>
+                        </button>
+                    </div>
+
+                </form>
+            </div>
+
+            <div class="lg:col-span-1 flex flex-col space-y-6 w-full">
+                
+                <section class="bg-white/80 dark:bg-slate-900/60 backdrop-blur-md p-6 md:p-8 rounded-3xl border border-slate-200/60 dark:border-slate-800 shadow-sm space-y-5 transition-colors duration-300">
+                    <h3 class="font-extrabold text-xl text-darkNavy dark:text-white tracking-tight">Contact Us</h3>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-3">
+                        
+                        <a href="https://facebook.com/SavannahEDC" target="_blank" rel="noopener noreferrer" class="flex items-center gap-4 p-4 bg-slate-50 dark:bg-slate-800/80 hover:bg-[#1877F2]/5 dark:hover:bg-[#1877F2]/10 rounded-xl border border-slate-100 dark:border-slate-700 transition group min-w-0">
+                            <div class="text-[#1877F2] group-hover:scale-110 transition-transform flex-shrink-0">
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                            </div>
+                            <div class="min-w-0 flex-1">
+                                <p class="font-bold text-sm text-slate-800 dark:text-white truncate">Facebook</p>
+                                <p class="text-slate-500 dark:text-slate-400 text-xs mt-0.5 truncate">@SavannahEDC</p>
+                            </div>
+                        </a>
+
+                        <a href="https://x.com/SavannahEDC" target="_blank" rel="noopener noreferrer" class="flex items-center gap-4 p-4 bg-slate-50 dark:bg-slate-800/80 hover:bg-black/5 dark:hover:bg-white/5 rounded-xl border border-slate-100 dark:border-slate-700 transition group min-w-0">
+                            <div class="text-slate-900 dark:text-white group-hover:scale-110 transition-transform flex-shrink-0">
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                            </div>
+                            <div class="min-w-0 flex-1">
+                                <p class="font-bold text-sm text-slate-800 dark:text-white truncate">X (Twitter)</p>
+                                <p class="text-slate-500 dark:text-slate-400 text-xs mt-0.5 truncate">@SavannahEDC</p>
+                            </div>
+                        </a>
+
+                        <a href="https://instagram.com/savannah_edc" target="_blank" rel="noopener noreferrer" class="flex items-center gap-4 p-4 bg-slate-50 dark:bg-slate-800/80 hover:bg-[#E1306C]/5 dark:hover:bg-[#E1306C]/10 rounded-xl border border-slate-100 dark:border-slate-700 transition group min-w-0">
+                            <div class="text-[#E1306C] group-hover:scale-110 transition-transform flex-shrink-0">
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+                            </div>
+                            <div class="min-w-0 flex-1">
+                                <p class="font-bold text-sm text-slate-800 dark:text-white truncate">Instagram</p>
+                                <p class="text-slate-500 dark:text-slate-400 text-xs mt-0.5 truncate">@Savannah_EDC</p>
+                            </div>
+                        </a>
+
+                        <a href="https://wa.me/2349160277148" target="_blank" rel="noopener noreferrer" class="flex items-center gap-4 p-4 bg-slate-50 dark:bg-slate-800/80 hover:bg-[#25D366]/5 dark:hover:bg-[#25D366]/10 rounded-xl border border-slate-100 dark:border-slate-700 transition group min-w-0">
+                            <div class="text-[#25D366] group-hover:scale-110 transition-transform w-5 h-5 flex items-center justify-center overflow-visible">
+                                <svg class="w-6 h-6 text-[#25D366]" fill="currentColor" viewBox="0 0 24 24"><path d="M12.031 0C5.385 0 0 5.384 0 12.03c0 2.122.553 4.195 1.602 6.02L.266 24l6.09-1.602C8.136 23.36 10.057 23.93 12.025 23.93h.006C18.675 23.93 24 18.544 24 11.905 24 8.683 22.75 5.642 20.472 3.362 18.196 1.085 15.16 0 12.031 0zm.012 21.92h-.006c-1.782 0-3.528-.479-5.056-1.385l-.362-.215-3.757.985.999-3.666-.236-.376A9.972 9.972 0 011.996 11.9c0-5.518 4.492-10.009 10.019-10.009 2.673 0 5.184 1.042 7.075 2.934 1.89 1.892 2.93 4.402 2.93 7.075 0 5.515-4.49 10.006-10.008 10.019zM17.5 14.5c-.3-.15-1.78-.88-2.05-.98-.28-.1-.48-.15-.68.15-.2.3-.78.98-.95 1.18-.18.2-.35.23-.65.08-1.55-.78-2.78-1.73-3.83-3.15-.28-.38.28-.35.85-1.48.1-.2.05-.38-.03-.53-.08-.15-.68-1.63-.93-2.23-.25-.58-.5-.5-.68-.5-.18 0-.38-.03-.58-.03-.2 0-.53.08-.8.38-.28.3-1.05 1.03-1.05 2.5 0 1.48 1.08 2.9 1.23 3.1.15.2 2.1 3.2 5.1 4.5 1.8.8 2.45.88 3.35.78.9-.1 1.78-.73 2.05-1.43.28-.7.28-1.3.2-1.43-.08-.13-.28-.2-.58-.35z"/></svg>
+                            </div>
+                            <div class="min-w-0 flex-1">
+                                <p class="font-bold text-sm text-slate-800 dark:text-white truncate">WhatsApp</p>
+                                <p class="text-slate-500 dark:text-slate-400 text-xs mt-0.5 truncate">Instant message</p>
+                            </div>
+                        </a>
+
+                    </div>
+                </section>
+
+                <div class="bg-white/80 dark:bg-slate-900/60 backdrop-blur-md border border-slate-200/60 dark:border-slate-800 p-6 rounded-3xl shadow-sm transition-colors space-y-4 w-full">
+                    <div class="flex items-center gap-3 border-b border-slate-100 dark:border-slate-800 pb-3">
+                        <div class="p-2.5 rounded-xl bg-primary/5 text-primary dark:text-secondary flex-shrink-0">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h18v18H3V3z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="font-extrabold text-base text-darkNavy dark:text-white tracking-tight">Main Office Address</h3>
+                    </div>
+                    <p class="text-xs text-slate-600 dark:text-slate-400 font-medium leading-relaxed break-words">
+                        Savannah EDC Headquarters,<br>
+                        Bauchi Street Adjacent Ministry of Works,<br>
+                        Gombe, Gombe State,<br>
+                        Nigeria.
+                    </p>
+                </div>
+
+                <div class="bg-white/80 dark:bg-slate-900/60 backdrop-blur-md border border-slate-200/60 dark:border-slate-800 p-6 rounded-3xl shadow-sm transition-colors space-y-3 w-full">
+                    <div class="flex items-center gap-3 border-b border-slate-100 dark:border-slate-800 pb-3">
+                        <div class="p-2.5 rounded-xl bg-secondary/10 text-secondary flex-shrink-0">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15.182 15.182a4.5 4.5 0 01-6.364 0M21 12a9 9 0 11-18 0 9 9 0 0118 0zM9.75 9.75c0 .414-.168.75-.375.75S9 10.164 9 9.75s.168-.75.375-.75.375.336.375.75zm-.375 0h.008v.015h-.008V9.75zm5.625 0c0 .414-.168.75-.375.75s-.375-.336-.375-.75.168-.75.375-.75.375.336.375.75zm-.375 0h.008v.015h-.008V9.75z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="font-extrabold text-base text-darkNavy dark:text-white tracking-tight">Contact Service</h3>
+                    </div>
+                    <div class="space-y-2.5 text-xs min-w-0">
+                        <a href="tel:+2349160277148" class="flex items-center gap-3 text-slate-600 dark:text-slate-400 hover:text-primary dark:hover:text-white transition group min-w-0">
+                            <svg class="w-4 h-4 text-slate-400 group-hover:text-primary transition-colors flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.622a2.25 2.25 0 01.659-1.59l1.87-1.87a2.25 2.25 0 013.182 0l2.909 2.909a2.25 2.25 0 010 3.182l-1.39 1.39a11.94 11.94 0 004.828 4.828l1.39-1.39a2.25 2.25 0 013.182 0l2.909 2.909a2.25 2.25 0 010 3.182l-1.87 1.87a2.25 2.25 0 01-1.59.659c-7.908 0-14.307-6.399-14.307-14.307 0-.58.046-1.154.135-1.714z"></path>
+                            </svg>
+                            <span class="truncate flex-1">+234 916 027 7148</span>
+                        </a>
+                        <a href="mailto:customer.service@savannahedc.com" class="flex items-center gap-3 text-slate-600 dark:text-slate-400 hover:text-secondary dark:hover:text-white transition group min-w-0">
+                            <svg class="w-4 h-4 text-slate-400 group-hover:text-secondary transition-colors flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"></path>
+                            </svg>
+                            <span class="truncate flex-1">customer.service@savannahedc.com</span>
+                        </a>
+                    </div>
+                </div>
+
+            </div> 
+        </div>
+    </main>
+
+    <script>
+        function validateFileSize(inputElement) {
+            const warningBlock = document.getElementById('size-warning');
+            const submitBtn = document.getElementById('submit-btn');
+            const targetFile = inputElement.files[0];
+
+            if (targetFile) {
+                const calculatedMegaBytes = targetFile.size / (1024 * 1024);
+                if (calculatedMegaBytes > 10) {
+                    warningBlock.classList.remove('hidden');
+                    submitBtn.disabled = true;
+                    submitBtn.classList.add('opacity-50', 'cursor-not-allowed');
+                } else {
+                    warningBlock.classList.add('hidden');
+                    submitBtn.disabled = false;
+                    submitBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+                }
+            } else {
+                warningBlock.classList.add('hidden');
+                submitBtn.disabled = false;
+                submitBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+            }
+        }
+
+        async function handleAppsScriptSubmission(event) {
+            event.preventDefault();
+            const form = event.target;
+            const submitBtn = document.getElementById('submit-btn');
+            
+            // Disable button and show loading state
+            submitBtn.disabled = true;
+            submitBtn.innerText = "Submitting...";
+            submitBtn.classList.add('opacity-75');
+
+            try {
+                // Build FormData directly from the HTML form.
+                // This automatically captures all inputs, including the file attachment.
+                const payloadData = new FormData(form);
+                // Send the data to our new Cloudflare API endpoint
+                // Notice we do NOT need mode: 'no-cors' or specific Content-Type headers here
+                const response = await fetch('/api/contact', {
+                    method: 'POST',
+                    body: payloadData
+                });
+                const result = await response.json();
+
+                if (response.ok && result.success) {
+                    alert("Submission logged successfully! Thank you for reaching out to us. We will get back to you shortly.");
+                    form.reset();
+                } else {
+                    throw new Error(result.error || "Unknown error occurred.");
+                }
+
+            } catch (networkError) {
+                console.error("Critical submission delivery node issue tracked:", networkError);
+                alert("Transmission Error: We encountered an issue routing your request. Please check your connection and try again.");
+            } finally {
+                // Reset the button state
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = `
+                    <span>Submit</span>
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5"></path>
+                    </svg>
+                `;
+                submitBtn.classList.remove('opacity-75');
+            }
+        }
+    </script>
+</body>
+</html>
