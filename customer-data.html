@@ -48,6 +48,33 @@
                     </div>
 
                     <div class="space-y-4">
+
+                        <div class="space-y-1.5">
+                            <label class="text-xs font-bold text-slate-700 dark:text-slate-300">Are You a New Customer? <span class="text-rose-500">*</span></label>
+                            <div class="flex items-center gap-6 text-xs font-bold text-slate-800 dark:text-slate-100">
+                                <label class="flex items-center gap-2 cursor-pointer">
+                                    <input type="radio" name="newCustomer" value="Yes" checked onclick="toggleCustomerType('Yes')" class="w-4 h-4 text-primary dark:text-secondary focus:ring-0">
+                                    <span>Yes</span>
+                                </label>
+                                <label class="flex items-center gap-2 cursor-pointer">
+                                    <input type="radio" name="newCustomer" value="No" onclick="toggleCustomerType('No')" class="w-4 h-4 text-primary dark:text-secondary focus:ring-0">
+                                    <span>No</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div id="meter-account-fields" class="hidden grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="space-y-1.5">
+                                <label for="meterNumber" class="text-xs font-bold text-slate-700 dark:text-slate-300">Meter Number <span class="text-rose-500">*</span></label>
+                                <input type="text" id="meterNumber" name="meterNumber" placeholder="Enter Meter Number" oninput="this.value = this.value.replace(/[^0-9]/g, '');"
+                                    class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-3 text-xs font-semibold focus:outline-none focus:border-primary focus:border-2 dark:focus:border-secondary text-slate-800 dark:text-slate-100 transition-colors">
+                            </div>
+                            <div class="space-y-1.5">
+                                <label for="accountNumber" class="text-xs font-bold text-slate-700 dark:text-slate-300">Account Number <span class="text-rose-500">*</span></label>
+                                <input type="text" id="accountNumber" name="accountNumber" placeholder="Enter Account Number" oninput="this.value = this.value.replace(/[^0-9]/g, '');"
+                                    class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-3 text-xs font-semibold focus:outline-none focus:border-primary focus:border-2 dark:focus:border-secondary text-slate-800 dark:text-slate-100 transition-colors">
+                            </div>
+                        </div>
                         <h4 class="text-xs font-bold tracking-wider text-primary dark:text-secondary uppercase border-b border-slate-100 dark:border-slate-800 pb-1">1. Personal Details</h4>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div class="space-y-1.5">
@@ -277,6 +304,23 @@
     </main>
 
     <script>
+        function toggleCustomerType(value) {
+            const conditionalFields = document.getElementById('meter-account-fields');
+            const meterInput = document.getElementById('meterNumber');
+            const accountInput = document.getElementById('accountNumber');
+            if (value === 'No') {
+                conditionalFields.classList.remove('hidden');
+                meterInput.required = true;
+                accountInput.required = true;
+            } else {
+                conditionalFields.classList.add('hidden');
+                meterInput.required = false;
+                accountInput.required = false;
+                meterInput.value = '';
+                accountInput.value = '';
+            }
+        }
+        
         function validateFileSize(inputElement) {
             const warningBlock = document.getElementById('size-warning');
             const submitBtn = document.getElementById('submit-btn');
