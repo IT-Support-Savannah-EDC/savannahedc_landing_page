@@ -121,12 +121,10 @@ export async function onRequestPost(context) {
                             <table width="600" border="0" cellspacing="0" cellpadding="0" style="background-color: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);">
                                 <tr><td height="6" style="background-color: #004DC2;"></td></tr>
                                 <tr>
-                                  <td align="left" style="font-size: 13px; font-weight: 800; color: #004DC2; line-height: 1.4;">
-                                    <img src="https://savannahedc.com/assets/logo.png" alt="SEDC Logo" width="24" height="24" style="vertical-align: middle; margin-right: 8px; display: inline-block;">
-                                    <span style="vertical-align: middle; letter-spacing: 0.5px; text-transform: uppercase;">Savannah Electricity Distribution Company</span>
-                                  </td>
                                     <td style="padding: 30px 30px 15px 30px; border-bottom: 1px solid #F1F5F9;">
-                                        <h2 style="margin: 0; color: #0A1931; font-size: 20px; font-weight: 800;">${headerTitle}</h2>
+                                        <img src="https://savannahedc.com/assets/logo.png" alt="SEDC Logo" width="24" height="24" style="vertical-align: middle; margin-right: 8px; display: inline-block;">
+                                        <span style="vertical-align: middle; letter-spacing: 0.5px; text-transform: uppercase;">Savannah Electricity Distribution Company</span>
+                                        <h3 style="margin: 0; color: #0A1931; font-size: 20px; font-weight: 800;">${headerTitle}</h3>
                                         <p style="margin: 5px 0 0 0; font-size: 12px; font-weight: bold; color: #64748B;">Ticket Ref: ${ticketId}</p>
                                     </td>
                                 </tr>
