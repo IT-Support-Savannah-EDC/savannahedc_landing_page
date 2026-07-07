@@ -123,7 +123,7 @@ export async function onRequestPost(context) {
                                 <tr>
                                     <td style="padding: 30px 30px 15px 30px; border-bottom: 1px solid #F1F5F9;">
                                         <img src="https://savannahedc.com/assets/logo.png" alt="SEDC Logo" width="15" height="20" style="vertical-align: middle; margin-right: 8px; display: inline-block;">
-                                        <span style="vertical-align: middle; font-size: 20px; font-weight: 800; letter-spacing: 0.5px; text-transform: uppercase;">Savannah Electricity Distribution Company</span>
+                                        <span style="vertical-align: middle; font-size: 20px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase;">Savannah Electricity Distribution Company</span>
                                         <h3 style="margin: 5px 0 0 0; color: #004DC2; font-size: 15px; font-weight: 650;">${headerTitle}</h3>
                                         <p style="margin: 5px 0 0 0; font-size: 12px; font-weight: bold; color: #64748B;">Ticket Ref: ${ticketId}</p>
                                     </td>
@@ -143,6 +143,14 @@ export async function onRequestPost(context) {
                                 <tr>
                                     <td style="padding: 20px; background-color: #0A1931; text-align: center; font-size: 12px; color: #94A3B8;">
                                         &copy; ${new Date().getFullYear()} Savannah EDC. All rights reserved.
+                                    </td>
+                                    <td style="padding: 20px; background-color: #0A1931; text-align: center; font-size: 12px; color: #94A3B8;">
+                                        <a href="https://savannahedc.com" style="color: #94A3B8; text-decoration: none;">Visit our website</a>
+                                    </td>
+                                    <td style="padding: 20px; background-color: #0A1931; text-align: center; font-size: 12px; color: #94A3B8;">
+                                        <a href="mailto:customer.service@savannahedc.com" style="color: #94A3B8; text-decoration: none;">Contact us</a>
+                                        <span style="color: #CBD5E1; margin: 0 8px;">|</span>
+                                        <a href="tel:+2349160277148" style="color: #94A3B8; text-decoration: none;">+234 916 027 7148</a>
                                     </td>
                                 </tr>
                             </table>
