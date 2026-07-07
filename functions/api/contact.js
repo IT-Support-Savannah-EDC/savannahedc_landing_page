@@ -117,7 +117,7 @@ export async function onRequestPost(context) {
             <body style="margin: 0; padding: 0; background-color: #F8FAFC; font-family: 'Montserrat', Helvetica, Arial, sans-serif;">
                 <table width="100%" border="0" cellspacing="0" cellpadding="0" style="background-color: #F8FAFC; padding: 30px 10px;">
                     <tr>
-                        <td align="center">
+                      <td align="center">
                             <table width="600" border="0" cellspacing="0" cellpadding="0" style="background-color: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);">
                                 <tr><td height="6" style="background-color: #004DC2;"></td></tr>
                                 <tr>
@@ -145,9 +145,13 @@ export async function onRequestPost(context) {
                                       <td style="padding: 20px; text-align: center; font-size: 12px; color: #000000;">
                                           &copy; ${new Date().getFullYear()} Savannah EDC. All rights reserved.
                                       </td>
+                                    </tr>
+                                  <tr>
                                       <td style="padding: 20px; text-align: center; font-size: 12px; color: #000000;">
                                           <a href="https://savannahedc.com" style="color: #94A3B8; text-decoration: none;">Visit our website</a>
                                       </td>
+                                  </tr>
+                                  <tr>
                                       <td style="padding: 20px; text-align: center; font-size: 12px; color: #000000;">
                                           <a href="mailto:customer.service@savannahedc.com" style="color: #94A3B8; text-decoration: none;">Contact us</a>
                                           <span style="color: #CBD5E1; margin: 0 8px;">|</span>
