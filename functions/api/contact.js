@@ -122,9 +122,9 @@ export async function onRequestPost(context) {
                                 <tr><td height="6" style="background-color: #004DC2;"></td></tr>
                                 <tr>
                                     <td style="padding: 30px 30px 15px 30px; border-bottom: 1px solid #F1F5F9;">
-                                        <img src="https://savannahedc.com/assets/logo.png" alt="SEDC Logo" width="24" height="24" style="vertical-align: middle; margin-right: 8px; display: inline-block;">
-                                        <span style="vertical-align: middle; letter-spacing: 0.5px; text-transform: uppercase;">Savannah Electricity Distribution Company</span>
-                                        <h3 style="margin: 0; color: #0A1931; font-size: 20px; font-weight: 800;">${headerTitle}</h3>
+                                        <img src="https://savannahedc.com/assets/logo.png" alt="SEDC Logo" width="16" height="16" style="vertical-align: middle; margin-right: 8px; display: inline-block;">
+                                        <span style="vertical-align: middle; font-size: 20px; font-weight: 800; letter-spacing: 0.5px; text-transform: uppercase;">Savannah Electricity Distribution Company</span>
+                                        <h3 style="margin: 0; color: #0A1931; font-size: 15px; font-weight: 500;">${headerTitle}</h3>
                                         <p style="margin: 5px 0 0 0; font-size: 12px; font-weight: bold; color: #64748B;">Ticket Ref: ${ticketId}</p>
                                     </td>
                                 </tr>
