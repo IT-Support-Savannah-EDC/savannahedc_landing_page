@@ -27,8 +27,8 @@ export async function onRequestPost(context) {
     try {
         const formData = await context.request.formData();
         const RESEND_API_KEY = context.env.RESEND_API_KEY;
-        const senderEmail = context.env.SENDER_EMAIL || "no-reply@savannahedc.com";
-        const customerServiceEmail = context.env.CUSTOMER_SERVICE_EMAIL || "customercare@savannahedc.com";
+        const senderEmail = "no-reply@savannahedc.com";
+        const customerServiceEmail = "customer.service@savannahedc.com";
 
         // Dynamic storage for all extracted data
         let textData = {};
