@@ -143,7 +143,7 @@ export async function onRequestPost(context) {
                                 
                                 <tr>
                                     <td style="padding: 0;">
-                                        <table role="presentation" width="100%" border="0" cellspacing="0" cellpadding="0" style="background-color: #ebebeb; border-top: 1px solid #E2E8F0; text-align: center;">
+                                        <table role="presentation" width="100%" border="0" cellspacing="0" cellpadding="0" style="background-color: #ffffff; border-top: 1px solid #E2E8F0; text-align: center;">
                                             <tr>
                                                 <td align="center" style="padding: 30px 20px 15px 20px; font-size: 12px; color: #64748B; line-height: 1.6;">
                                                     <strong style="color: #0A1931; font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px;">Savannah Electricity Distribution Company Ltd.</strong>
