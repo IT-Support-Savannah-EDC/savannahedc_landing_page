@@ -122,7 +122,7 @@ export async function onRequestPost(context) {
                                 <tr><td height="6" style="background-color: #004DC2;"></td></tr>
                                 <tr>
                                     <td style="padding: 30px 30px 15px 30px; border-bottom: 1px solid #F1F5F9;">
-                                        <img src="https://savannahedc.com/assets/logo.png" alt="SEDC Logo" width="15" height="20" style="vertical-align: middle; margin-right: 8px; display: inline-block;">
+                                        <img src="https://savannahedc.com/assets/logo.png" alt="SEDC Logo" width="24" height="24" style="vertical-align: middle; margin-right: 8px; display: inline-block;">
                                         <a href="https://savannahedc.com" style="vertical-align: middle; font-size: 18px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; text-decoration: none; color: #0A1931;">Savannah Electricity Distribution Company</a>
                                         <h3 style="margin: 12px 0 0 0; color: #004DC2; font-size: 15px; font-weight: 600;">${headerTitle}</h3>
                                         <p style="margin: 5px 0 0 0; font-size: 12px; font-weight: bold; color: #64748B;">Ticket Ref: ${ticketId}</p>
@@ -185,21 +185,21 @@ export async function onRequestPost(context) {
         const customerPayload = {
             from: `Savannah EDC <${senderEmail}>`,
             to: [customerEmail],
-            subject: `Request Acknowledgement: ${formTitle} [${ticketId}]`,
+            subject: `Acknowledgement: ${formTitle} [${ticketId}]`,
             html: generateTemplate(
                 `${formTitle} Received`,
                 `Hello ${customerName},`,
-                `Thank you for contacting us. We have successfully received your submission and our support team will process it shortly. Below is a copy of the information you submitted:`
+                `Thank you for contacting us. We have successfully received your submission and our customer service team will process it accordingly. Below is a copy of the information you submitted:`
             )
         };
 
         const staffPayload = {
             from: `Savannah EDC Portal <${senderEmail}>`,
             to: [customerServiceEmail],
-            subject: `[NEW SUBMISSION] ${formTitle} - Ref: ${ticketId}`,
+            subject: `[New Customer Submission] ${formTitle} - Ref: ${ticketId}`,
             html: generateTemplate(
                 `Internal Notification: ${formTitle}`,
-                `Dear Support Team,`,
+                `Dear Customer Service,`,
                 `A new form has been submitted through the portal. Please review the extracted data points below:`
             ),
             attachments: attachmentsArray
