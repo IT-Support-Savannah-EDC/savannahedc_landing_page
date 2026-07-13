@@ -468,63 +468,41 @@
             });
         }
 
-        async function handleAppsScriptSubmission(event) {
+        // --- 2. FORM SUBMISSION TO CLOUDFLARE WORKER ---
+        const WORKER_ENDPOINT = "https://savannahedc-landing-page.pages.dev/api/contact";
+
+        async function submitToCloudflareWorker(event) {
             event.preventDefault();
             const form = event.target;
             const submitBtn = document.getElementById('submit-btn');
             
-            const dataPayload = {
-                pageSource: "Get a Meter",
-                newCustomer: document.getElementById('newCustomer').value,
-                accountNumber: document.getElementById('accountNumber')?.value || "N/A",
-                hadMeterBefore: document.getElementById('hadMeterBefore').value || "N/A",
-                meterNumber: document.getElementById('meterNumber')?.value || "N/A",
-                meterReason: document.getElementById('meterReason')?.value || "N/A",
-                otherReason: document.getElementById('otherReason')?.value || "N/A",
-                applicantType: document.getElementById('applicantType').value,
-                surname: document.getElementById('surname').value,
-                firstName: document.getElementById('firstName').value,
-                otherNames: document.getElementById('otherNames').value || "N/A",
-                address: document.getElementById('address').value,
-                lga: document.getElementById('lga').value,
-                townCity: document.getElementById('townCity').value,
-                stateResidence: document.getElementById('stateResidence').value,
-                telephone: document.getElementById('telephone').value,
-                telephone2: document.getElementById('telephone2').value || "N/A",
-                email: document.getElementById('email').value,
-                attachmentData: null
-            };
-
-            const selectedFile = document.getElementById('attachments').files[0];
+            // Build FormData exactly as contact.js expects it
+            const formData = new FormData(form);
 
             submitBtn.disabled = true;
-            submitBtn.innerText = "Analyzing & Transmitting Telemetry...";
+            submitBtn.innerText = "Transmitting to Support...";
             submitBtn.classList.add('opacity-75');
 
             try {
-                if (selectedFile) {
-                    dataPayload.attachmentData = await serializeAttachmentToBase64(selectedFile);
-                }
-
-                await fetch(GOOGLE_WEBAPP_ROUTING_ENDPOINT, {
+                const response = await fetch(WORKER_ENDPOINT, {
                     method: "POST",
-                    mode: "no-cors",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(dataPayload)
+                    body: formData 
+                    // Note: Do NOT set Content-Type header when sending FormData; 
+                    // the browser automatically sets it to multipart/form-data with the correct boundary.
                 });
 
-                alert("Submission logged successfully! Our infrastructure processing matrix has mapped your ticket. Check your email for an automated confirmation response.");
-                form.reset();
-                document.getElementById('file-name-display').textContent = "Click to upload files or drag and drop";
-                document.getElementById('accountNumberContainer').classList.add("hidden");
-                document.getElementById('hadMeterBeforeContainer').classList.remove("hidden");
-                document.getElementById('meterNumberContainer').classList.add("hidden");
-                document.getElementById('meterReasonSection').classList.add("hidden");
-                document.getElementById('otherReasonContainer').classList.add("hidden");
+                if (response.ok) {
+                    alert("Your meter application has been submitted successfully. A reference ticket will be sent to your email.");
+                    form.reset();
+                    document.getElementById('file-name-display').textContent = "Click to upload files or drag and drop";
+                } else {
+                    const errorData = await response.json();
+                    throw new Error(errorData.error || "Failed to process request.");
+                }
 
             } catch (networkError) {
-                console.error("Critical submission delivery node issue tracked:", networkError);
-                alert("Transmission Error: Connection timed out when contacting the cloud ledger endpoint. Please retry.");
+                console.error("Submission Error:", networkError);
+                alert("Transmission Error: Failed to contact the server. Please try again later.");
             } finally {
                 submitBtn.disabled = false;
                 submitBtn.innerHTML = `
