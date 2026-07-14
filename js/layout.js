@@ -69,7 +69,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     <img src="assets/logo.png" alt="Logo" class="h-9 w-auto" onerror="this.style.display='none'">
                     <div class="flex flex-col leading-none">
                         <span class="text-xl text-primary dark:text-white">SAVANNAH EDC</span>
-                        <span class="text-[10px] tracking-wide font-bold opacity-80 mt-0.5">A Subsidiary of <span class="text-orange-400 opacity-100">JED Plc</span></span>
+                        <span class="text-[10px] tracking-wide font-bold opacity-80 mt-0.5">A Subsidiary of <span class="text-orange-400 opacity-100">Jos Electricity Distribution Plc</span></span>
                     </div>
                 </a>
 

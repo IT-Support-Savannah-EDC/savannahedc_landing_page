@@ -28,21 +28,106 @@
     <div id="universal-navbar"></div>
 
     <main class="relative z-10 max-w-4xl mx-auto px-4 py-16 w-full space-y-12 flex-grow">
-        <section class="space-y-6 center">
-            <div class="text-center max-w-3xl mx-auto space-y-2">
+        <section class="space-y-6 text-center">
+            <div class="max-w-3xl mx-auto space-y-2">
                 <span class="text-xs font-bold tracking-widest text-primary dark:text-secondary uppercase">Payment Gateways</span>
                 <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight text-darkNavy dark:text-white">
                     Wema Bank Accounts
                 </h1>
-                <p class="text-sm text-slate-500 dark:text-slate-400 font-medium">Check your Accounts Wema Bank Account Number created for ease of payment processing.</p>
+                <p class="text-sm text-slate-500 dark:text-slate-400 font-medium">Check your Wema Bank Account Number created for ease of payment processing.</p>
             </div>
             
-            <div>
-                <h4 class="font-bold text-base text-darkNavy dark:text-white">This page is a work in progress</h4>
+            <div class="max-w-xl mx-auto mt-8 bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 p-6 md:p-8 rounded-3xl shadow-sm text-left transition-colors space-y-6">
+                <form id="search-form" onsubmit="searchWemaAccount(event)" class="space-y-4">
+                    <div class="space-y-1.5">
+                        <label for="searchQuery" class="text-xs font-bold text-slate-700 dark:text-slate-300">Enter Account Number or Meter Number</label>
+                        <div class="relative">
+                            <input type="text" id="searchQuery" name="searchQuery" required placeholder="e.g., 123-456 or 999/888"
+                                pattern="[0-9\/\-]+" 
+                                oninput="this.value = this.value.replace(/[^0-9\/\-]/g, '');"
+                                class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-3.5 text-sm font-semibold focus:outline-none focus:border-primary focus:border-2 dark:focus:border-secondary text-slate-800 dark:text-slate-100 transition-colors">
+                        </div>
+                    </div>
+
+                    <button type="submit" id="search-btn" class="w-full bg-primary hover:bg-blue-700 dark:bg-secondary dark:hover:bg-emerald-600 text-white font-bold text-sm py-3.5 px-6 rounded-xl transition shadow-md flex items-center justify-center gap-2">
+                        <span>Search Account</span>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"></path>
+                        </svg>
+                    </button>
+                </form>
+
+                <div id="result-container" class="hidden mt-6 pt-6 border-t border-slate-100 dark:border-slate-800 text-center animate-fade-in"></div>
             </div>
         </section>
     </main>
 
     <div id="universal-footer"></div>
+
+    <script>
+        // Connecting to your live Cloudflare API
+        const API_ENDPOINT = "https://wema-search-api.it-support-2ec.workers.dev";
+
+        async function searchWemaAccount(event) {
+            event.preventDefault();
+            
+            const searchInput = document.getElementById('searchQuery').value.trim();
+            const submitBtn = document.getElementById('search-btn');
+            const resultContainer = document.getElementById('result-container');
+            
+            // Activate Loading UI
+            submitBtn.disabled = true;
+            submitBtn.classList.add('opacity-75', 'cursor-not-allowed');
+            submitBtn.innerHTML = `<span>Searching Database...</span>`;
+            
+            resultContainer.classList.add('hidden');
+            resultContainer.innerHTML = '';
+
+            try {
+                const response = await fetch(`${API_ENDPOINT}?query=${encodeURIComponent(searchInput)}`);
+                const data = await response.json();
+
+                resultContainer.classList.remove('hidden');
+
+                if (response.ok && data.success) {
+                    // Success UI
+                    resultContainer.innerHTML = `
+                        <p class="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest mb-2">Your Wema Bank Account</p>
+                        <div class="text-3xl md:text-4xl font-extrabold text-primary dark:text-secondary tracking-wider bg-primary/5 dark:bg-secondary/10 py-4 px-6 rounded-2xl inline-block border border-primary/10 dark:border-secondary/20 select-all cursor-pointer" onclick="navigator.clipboard.writeText('${data.account}'); alert('Account copied to clipboard!');">
+                            ${data.account}
+                        </div>
+                        <p class="text-[11px] mt-3 text-slate-400">Click the account number above to copy it.</p>
+                    `;
+                } else {
+                    // Not Found UI
+                    resultContainer.innerHTML = `
+                        <div class="bg-rose-50 dark:bg-rose-500/10 border border-rose-200 dark:border-rose-900 rounded-2xl p-4">
+                            <p class="text-sm font-bold text-rose-600 dark:text-rose-400">Account Not Found</p>
+                            <p class="text-xs text-slate-600 dark:text-slate-400 mt-1">We couldn't find a Wema Bank account linked to "${searchInput}". Please double-check your account/meter number.</p>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                console.error("Fetch Execution Fault:", error);
+                resultContainer.classList.remove('hidden');
+                resultContainer.innerHTML = `
+                    <div class="bg-orange-50 dark:bg-orange-500/10 border border-orange-200 dark:border-orange-900 rounded-2xl p-4">
+                        <p class="text-sm font-bold text-orange-600 dark:text-orange-400">Connection Error</p>
+                        <p class="text-xs text-slate-600 dark:text-slate-400 mt-1">Unable to query database. Please check your internet connection.</p>
+                    </div>
+                `;
+            } finally {
+                // Restore Button UI
+                submitBtn.disabled = false;
+                submitBtn.classList.remove('opacity-75', 'cursor-not-allowed');
+                submitBtn.innerHTML = `
+                    <span>Search Account</span>
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"></path>
+                    </svg>
+                `;
+            }
+        }
+    </script>
 </body>
 </html>
