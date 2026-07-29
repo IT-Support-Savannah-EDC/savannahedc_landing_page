@@ -112,18 +112,25 @@ export async function onRequestPost(context) {
 
         // --- STEP 1.5: PERSIST SUBMISSION TO CLOUDFLARE D1 DATABASE ---
         if (context.env.DB) {
+            // 1. Generate standard UTC ISO timestamp
+            const submittedAt = new Date().toISOString();
+
+            // 2. Include 'submitted_at' in the column list and placeholder values
             const dbQuery = `
-                INSERT INTO form_submissions (id, form_type, payload, attachments) 
-                VALUES (?, ?, ?, ?)
+                INSERT INTO form_submissions (id, form_type, payload, attachments, submitted_at) 
+                VALUES (?, ?, ?, ?, ?)
             `;
+            
             const attachmentsJson = r2Attachments.length > 0 ? JSON.stringify(r2Attachments) : null;
 
+            // 3. Bind the timestamp as the 5th parameter
             await context.env.DB.prepare(dbQuery)
                 .bind(
                     ticketId,
                     formTitle,
                     JSON.stringify(textData),
-                    attachmentsJson
+                    attachmentsJson,
+                    submittedAt
                 )
                 .run();
         }

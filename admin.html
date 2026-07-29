@@ -52,6 +52,25 @@
                 .trim();
         }
 
+        // --- NIGERIAN TIMEZONE FORMATTER (WAT / Africa/Lagos) ---
+        function formatNigerianDate(dateString) {
+            if (!dateString) return 'N/A';
+            
+            const date = new Date(dateString);
+            if (isNaN(date.getTime())) return dateString; // Fallback if parsing fails
+
+            return date.toLocaleString('en-US', {
+                timeZone: 'Africa/Lagos',
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: true
+            });
+        }
+
         async function fetchData() {
             const formType = document.getElementById('formTypeFilter').value;
             const tbody = document.getElementById('tableBody');
@@ -85,18 +104,14 @@
                     payload = { raw: row.payload };
                 }
                 
-                // Format payload into readable key-value pairs
                 const readableData = Object.entries(payload)
-                                     .map(([key, value]) => `<b>${formatFieldName(key)}:</b> ${value}`)
-                                     .join('<br>');
+                                    .map(([key, value]) => `<b>${formatFieldName(key)}:</b> ${value}`)
+                                    .join('<br>');
 
-                // --- DYNAMIC MULTI-ATTACHMENT PARSING ---
                 let attachmentHTML = "None";
                 if (row.attachments) {
                     try {
                         const parsedAtt = typeof row.attachments === 'string' ? JSON.parse(row.attachments) : row.attachments;
-                        
-                        // Normalize single object vs array into a standard array
                         const attList = Array.isArray(parsedAtt) ? parsedAtt : (parsedAtt ? [parsedAtt] : []);
 
                         if (attList.length > 0) {
@@ -117,9 +132,12 @@
                     }
                 }
 
+                // --- UPDATED DATE DISPLAY IN WAT ---
+                const formattedDate = formatNigerianDate(row.submitted_at);
+
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
-                    <td class="p-3 border align-top whitespace-nowrap text-xs text-gray-700">${new Date(row.submitted_at).toLocaleString()}</td>
+                    <td class="p-3 border align-top whitespace-nowrap text-xs text-gray-700">${formattedDate}</td>
                     <td class="p-3 border align-top font-semibold capitalize text-sm">${row.form_type ? row.form_type.replace(/_/g, ' ') : ''}</td>
                     <td class="p-3 border align-top text-xs leading-relaxed">${readableData}</td>
                     <td class="p-3 border align-top text-xs min-w-[200px]">${attachmentHTML}</td>
@@ -131,7 +149,6 @@
         function exportCSV() {
             if (!currentData || currentData.length === 0) return alert("No data to export!");
 
-            // 1. Collect all unique payload keys across records
             const dynamicKeys = [];
             currentData.forEach(row => {
                 try {
@@ -144,8 +161,7 @@
                 } catch (e) {}
             });
 
-            // 2. Build Headers
-            const fixedHeaders = ["Ticket ID", "Submission Date", "Form Type", "Attachment Links"];
+            const fixedHeaders = ["Ticket ID", "Submission Date (WAT)", "Form Type", "Attachment Links"];
             const dynamicHeaders = dynamicKeys.map(key => formatFieldName(key));
             const allHeaders = [...fixedHeaders, ...dynamicHeaders];
 
@@ -155,7 +171,6 @@
                 return `"${strVal.replace(/"/g, '""')}"`;
             };
 
-            // 3. Build CSV Rows
             const rows = [];
             rows.push(allHeaders.map(escapeCSV).join(','));
 
@@ -165,7 +180,6 @@
                     payload = typeof row.payload === 'string' ? JSON.parse(row.payload) : (row.payload || {});
                 } catch (e) {}
 
-                // Extract all attachment URLs for CSV column
                 let attachmentUrls = "None";
                 if (row.attachments) {
                     try {
@@ -182,7 +196,8 @@
                     } catch(e) {}
                 }
 
-                const formattedDate = new Date(row.submitted_at).toLocaleString();
+                // --- UPDATED CSV DATE IN WAT ---
+                const formattedDate = formatNigerianDate(row.submitted_at);
                 const formattedType = row.form_type ? row.form_type.replace(/_/g, ' ') : '';
 
                 const rowData = [
@@ -200,7 +215,6 @@
                 rows.push(rowData.map(escapeCSV).join(','));
             });
 
-            // 4. Download file with UTF-8 BOM
             const csvString = rows.join('\n');
             const blob = new Blob(["\uFEFF" + csvString], { type: 'text/csv;charset=utf-8;' });
             const url = URL.createObjectURL(blob);
@@ -215,7 +229,6 @@
             URL.revokeObjectURL(url);
         }
 
-        // Load data on page load
         window.onload = fetchData;
     </script>
 </body>
