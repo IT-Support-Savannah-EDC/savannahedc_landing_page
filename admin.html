@@ -85,21 +85,28 @@
                     payload = { raw: row.payload };
                 }
                 
-                // Format the JSON data into a readable string for the dashboard view
                 const readableData = Object.entries(payload)
-                                     .map(([key, value]) => `<b>${formatFieldName(key)}:</b> ${value}`)
-                                     .join('<br>');
+                                    .map(([key, value]) => `<b>${formatFieldName(key)}:</b> ${value}`)
+                                    .join('<br>');
 
-                // Handle attachment link (supports both array and object formats)
+                // Robust Attachment Parsing (Handles both Array [...] and Object {...})
                 let attachmentHTML = "None";
                 if (row.attachments) {
                     try {
                         const parsedAtt = typeof row.attachments === 'string' ? JSON.parse(row.attachments) : row.attachments;
-                        const fileKey = Array.isArray(parsedAtt) ? parsedAtt[0]?.fileKey : parsedAtt?.fileKey;
-                        if (fileKey) {
-                            attachmentHTML = `<a href="/api/admin/attachment?fileKey=${encodeURIComponent(fileKey)}" target="_blank" class="text-blue-600 underline font-semibold">View File</a>`;
+                        
+                        // Extract fileKey whether it's an array or a single object
+                        const rawFileKey = Array.isArray(parsedAtt) ? parsedAtt[0]?.fileKey : parsedAtt?.fileKey;
+                        const fileName = Array.isArray(parsedAtt) ? (parsedAtt[0]?.fileName || "View File") : (parsedAtt?.fileName || "View File");
+
+                        if (rawFileKey && rawFileKey !== "undefined") {
+                            // encodeURIComponent ensures slashes (/) and parentheses () inside fileKey don't break URL routing
+                            const safeKey = encodeURIComponent(rawFileKey);
+                            attachmentHTML = `<a href="/api/admin/attachment?fileKey=${safeKey}" target="_blank" class="text-blue-600 underline font-semibold">View File (${fileName})</a>`;
                         }
-                    } catch(e) {}
+                    } catch(e) {
+                        console.error("Error parsing attachment column:", e);
+                    }
                 }
 
                 const tr = document.createElement('tr');
