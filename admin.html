@@ -2,48 +2,79 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-100 p-8">
 
-    <div class="max-w-6xl mx-auto bg-white p-6 rounded-lg shadow-md">
-        <h1 class="text-2xl font-bold mb-6">Form Submissions Dashboard</h1>
+    <div class="max-w-7xl mx-auto bg-white p-6 rounded-lg shadow-md">
+        <div class="flex justify-between items-center mb-6">
+            <h1 class="text-2xl font-bold text-gray-800">Form Submissions Dashboard</h1>
+            <span id="recordCounter" class="text-xs bg-gray-200 text-gray-700 px-3 py-1 rounded-full font-semibold">
+                Loading...
+            </span>
+        </div>
 
-        <!-- Controls -->
-        <div class="flex gap-4 mb-6 items-center">
-            <select id="formTypeFilter" class="border p-2 rounded">
-                <option value="all">All Forms</option>
-                <option value="kyc">Customer KYC</option>
-                <option value="meter_request">Get a Meter</option>
-                <option value="contact">Contact Us</option>
-            </select>
-            <button onclick="fetchData()" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Filter</button>
-            <button onclick="exportCSV()" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 ml-auto">Export to CSV</button>
+        <!-- Filter Bar -->
+        <div class="flex flex-wrap gap-4 mb-6 items-center bg-gray-50 p-4 rounded-lg border border-gray-200">
+            <!-- Dynamic Form Type Filter -->
+            <div>
+                <label class="block text-xs font-semibold text-gray-600 mb-1">Form Type</label>
+                <select id="formTypeFilter" onchange="applyFilters()" class="border p-2 rounded bg-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <option value="all">All Forms</option>
+                </select>
+            </div>
+
+            <!-- Start Date Filter -->
+            <div>
+                <label class="block text-xs font-semibold text-gray-600 mb-1">Start Date</label>
+                <input type="date" id="startDateFilter" onchange="applyFilters()" class="border p-2 rounded bg-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+            </div>
+
+            <!-- End Date Filter -->
+            <div>
+                <label class="block text-xs font-semibold text-gray-600 mb-1">End Date</label>
+                <input type="date" id="endDateFilter" onchange="applyFilters()" class="border p-2 rounded bg-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+            </div>
+
+            <!-- Reset Button -->
+            <div class="self-end">
+                <button onclick="resetFilters()" class="bg-gray-200 text-gray-700 px-3 py-2 rounded text-sm hover:bg-gray-300 transition">
+                    Reset Filters
+                </button>
+            </div>
+
+            <!-- Export Button (Respects Active Filters) -->
+            <div class="ml-auto self-end">
+                <button onclick="exportCSV()" class="bg-green-600 text-white px-4 py-2 rounded text-sm font-medium hover:bg-green-700 shadow-sm transition flex items-center gap-1">
+                    <span>📥</span> Export Filtered CSV
+                </button>
+            </div>
         </div>
 
         <!-- Data Table -->
         <div class="overflow-x-auto">
             <table class="table-auto w-full text-left border-collapse">
                 <thead>
-                    <tr class="bg-gray-200">
-                        <th class="p-3 border">Date</th>
+                    <tr class="bg-gray-200 text-gray-700 text-xs uppercase tracking-wider">
+                        <th class="p-3 border">Date (WAT)</th>
                         <th class="p-3 border">Type</th>
-                        <th class="p-3 border">Data</th>
+                        <th class="p-3 border">Submission Details</th>
                         <th class="p-3 border">Attachments</th>
                     </tr>
                 </thead>
                 <tbody id="tableBody">
-                    <!-- Rows will be injected here by JavaScript -->
+                    <!-- Rows injected dynamically -->
                 </tbody>
             </table>
         </div>
     </div>
 
     <script>
-        let currentData = [];
+        let allData = [];      // Stores all data fetched from backend
+        let filteredData = []; // Stores currently filtered dataset
 
-        // Helper function to convert camelCase/snake_case to human readable headers
         function formatFieldName(key) {
             return key
                 .replace(/([A-Z])/g, ' $1')
@@ -52,12 +83,11 @@
                 .trim();
         }
 
-        // --- NIGERIAN TIMEZONE FORMATTER (WAT / Africa/Lagos) ---
+        // Nigerian Time Zone Formatter (WAT / Africa/Lagos)
         function formatNigerianDate(dateString) {
             if (!dateString) return 'N/A';
-            
             const date = new Date(dateString);
-            if (isNaN(date.getTime())) return dateString; // Fallback if parsing fails
+            if (isNaN(date.getTime())) return dateString;
 
             return date.toLocaleString('en-US', {
                 timeZone: 'Africa/Lagos',
@@ -71,20 +101,91 @@
             });
         }
 
+        // Fetch records on load
         async function fetchData() {
-            const formType = document.getElementById('formTypeFilter').value;
             const tbody = document.getElementById('tableBody');
-            tbody.innerHTML = '<tr><td colspan="4" class="p-3 text-center">Loading...</td></tr>';
+            tbody.innerHTML = '<tr><td colspan="4" class="p-3 text-center text-gray-500">Loading submissions...</td></tr>';
 
             try {
-                const response = await fetch(`/api/admin/submissions?formType=${formType}`);
-                if (!response.ok) throw new Error("Network response was not ok");
+                // Fetch all data from endpoint
+                const response = await fetch(`/api/admin/submissions?formType=all`);
+                if (!response.ok) throw new Error("Failed to load submissions");
                 
-                currentData = await response.json();
-                renderTable(currentData);
+                allData = await response.json();
+                
+                // 1. Dynamically populate Form Types select box
+                populateFormTypes(allData);
+
+                // 2. Apply default filter (Show All)
+                applyFilters();
+
             } catch (error) {
                 tbody.innerHTML = `<tr><td colspan="4" class="p-3 text-center text-red-600">Error: ${error.message}</td></tr>`;
+                document.getElementById('recordCounter').innerText = '0 records';
             }
+        }
+
+        // Dynamically build Form Type dropdown based on DB contents
+        function populateFormTypes(data) {
+            const select = document.getElementById('formTypeFilter');
+            const selectedVal = select.value;
+
+            const types = new Set();
+            data.forEach(row => {
+                if (row.form_type) types.add(row.form_type);
+            });
+
+            select.innerHTML = '<option value="all">All Forms</option>';
+
+            Array.from(types).sort().forEach(type => {
+                const option = document.createElement('option');
+                option.value = type;
+                option.textContent = formatFieldName(type);
+                select.appendChild(option);
+            });
+
+            if (types.has(selectedVal)) {
+                select.value = selectedVal;
+            } else {
+                select.value = 'all';
+            }
+        }
+
+        // Filter logic: Type + Start Date + End Date
+        function applyFilters() {
+            const selectedType = document.getElementById('formTypeFilter').value;
+            const startDateVal = document.getElementById('startDateFilter').value;
+            const endDateVal = document.getElementById('endDateFilter').value;
+
+            const startMs = startDateVal ? new Date(startDateVal + "T00:00:00").getTime() : null;
+            const endMs = endDateVal ? new Date(endDateVal + "T23:59:59.999").getTime() : null;
+
+            filteredData = allData.filter(row => {
+                // Form Type filter
+                if (selectedType !== "all" && row.form_type !== selectedType) {
+                    return false;
+                }
+
+                // Date range filter
+                if (row.submitted_at) {
+                    const rowTime = new Date(row.submitted_at).getTime();
+                    if (startMs && rowTime < startMs) return false;
+                    if (endMs && rowTime > endMs) return false;
+                }
+
+                return true;
+            });
+
+            // Update UI
+            document.getElementById('recordCounter').innerText = `Showing ${filteredData.length} of ${allData.length} records`;
+            renderTable(filteredData);
+        }
+
+        function resetFilters() {
+            document.getElementById('formTypeFilter').value = 'all';
+            document.getElementById('startDateFilter').value = '';
+            document.getElementById('endDateFilter').value = '';
+            applyFilters();
         }
 
         function renderTable(data) {
@@ -92,7 +193,7 @@
             tbody.innerHTML = '';
 
             if (!data || data.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="4" class="p-3 text-center">No submissions found.</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="4" class="p-4 text-center text-gray-500">No submissions found matching the selected filters.</td></tr>';
                 return;
             }
 
@@ -105,8 +206,8 @@
                 }
                 
                 const readableData = Object.entries(payload)
-                                    .map(([key, value]) => `<b>${formatFieldName(key)}:</b> ${value}`)
-                                    .join('<br>');
+                                     .map(([key, value]) => `<b>${formatFieldName(key)}:</b> ${value}`)
+                                     .join('<br>');
 
                 let attachmentHTML = "None";
                 if (row.attachments) {
@@ -128,16 +229,13 @@
                             }
                         }
                     } catch(e) {
-                        console.error("Error parsing attachments for row:", row.id, e);
+                        console.error("Error parsing attachments:", e);
                     }
                 }
 
-                // --- UPDATED DATE DISPLAY IN WAT ---
-                const formattedDate = formatNigerianDate(row.submitted_at);
-
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
-                    <td class="p-3 border align-top whitespace-nowrap text-xs text-gray-700">${formattedDate}</td>
+                    <td class="p-3 border align-top whitespace-nowrap text-xs text-gray-700">${formatNigerianDate(row.submitted_at)}</td>
                     <td class="p-3 border align-top font-semibold capitalize text-sm">${row.form_type ? row.form_type.replace(/_/g, ' ') : ''}</td>
                     <td class="p-3 border align-top text-xs leading-relaxed">${readableData}</td>
                     <td class="p-3 border align-top text-xs min-w-[200px]">${attachmentHTML}</td>
@@ -146,11 +244,15 @@
             });
         }
 
+        // Export only currently filtered data to CSV
         function exportCSV() {
-            if (!currentData || currentData.length === 0) return alert("No data to export!");
+            if (!filteredData || filteredData.length === 0) {
+                return alert("No records match the current filter criteria to export!");
+            }
 
+            // Extract headers dynamically from filtered data
             const dynamicKeys = [];
-            currentData.forEach(row => {
+            filteredData.forEach(row => {
                 try {
                     const payload = typeof row.payload === 'string' ? JSON.parse(row.payload) : (row.payload || {});
                     Object.keys(payload).forEach(key => {
@@ -174,7 +276,7 @@
             const rows = [];
             rows.push(allHeaders.map(escapeCSV).join(','));
 
-            currentData.forEach(row => {
+            filteredData.forEach(row => {
                 let payload = {};
                 try {
                     payload = typeof row.payload === 'string' ? JSON.parse(row.payload) : (row.payload || {});
@@ -196,14 +298,10 @@
                     } catch(e) {}
                 }
 
-                // --- UPDATED CSV DATE IN WAT ---
-                const formattedDate = formatNigerianDate(row.submitted_at);
-                const formattedType = row.form_type ? row.form_type.replace(/_/g, ' ') : '';
-
                 const rowData = [
                     row.id || '',
-                    formattedDate,
-                    formattedType,
+                    formatNigerianDate(row.submitted_at),
+                    row.form_type ? row.form_type.replace(/_/g, ' ') : '',
                     attachmentUrls
                 ];
 
@@ -220,7 +318,7 @@
             const url = URL.createObjectURL(blob);
             
             const link = document.createElement("a");
-            const filename = `submissions_export_${new Date().toISOString().split('T')[0]}.csv`;
+            const filename = `filtered_submissions_${new Date().toISOString().split('T')[0]}.csv`;
             link.setAttribute("href", url);
             link.setAttribute("download", filename);
             document.body.appendChild(link);
