@@ -33,6 +33,7 @@ export async function onRequestPost(context) {
         // Dynamic storage for all extracted data
         let textData = {};
         let attachmentsArray = [];
+        let r2Attachments = [];
         
         // Auto-discovery variables
         let customerEmail = "";
@@ -53,10 +54,28 @@ export async function onRequestPost(context) {
                     for (let i = 0; i < bytes.byteLength; i++) {
                         binary += String.fromCharCode(bytes[i]);
                     }
+                    
+                    // Attach to email payload
                     attachmentsArray.push({
                         filename: value.name || `${key}_attachment`,
                         content: btoa(binary)
                     });
+
+                    // Upload attachment to Cloudflare R2 if BUCKET binding is configured
+                    if (context.env.BUCKET) {
+                        const sanitizedFormTitle = formTitle.toLowerCase().replace(/[^a-z0-9]/g, '-');
+                        const sanitizedFileName = (value.name || key).replace(/\s+/g, '_');
+                        const fileKey = `${sanitizedFormTitle}/${Date.now()}-${sanitizedFileName}`;
+                        
+                        await context.env.BUCKET.put(fileKey, arrayBuffer, {
+                            httpMetadata: { contentType: value.type || 'application/octet-stream' }
+                        });
+
+                        r2Attachments.push({
+                            fileKey: fileKey,
+                            fileName: value.name || `${key}_attachment`
+                        });
+                    }
                 }
             } else {
                 // It's a regular text field
@@ -87,6 +106,24 @@ export async function onRequestPost(context) {
         }
 
         const ticketId = `SEDC-${Math.floor(100000 + Math.random() * 900000)}`;
+
+        // --- STEP 1.5: PERSIST SUBMISSION TO CLOUDFLARE D1 DATABASE ---
+        if (context.env.DB) {
+            const dbQuery = `
+                INSERT INTO form_submissions (id, form_type, payload, attachments) 
+                VALUES (?, ?, ?, ?)
+            `;
+            const attachmentsJson = r2Attachments.length > 0 ? JSON.stringify(r2Attachments) : null;
+
+            await context.env.DB.prepare(dbQuery)
+                .bind(
+                    ticketId,
+                    formTitle,
+                    JSON.stringify(textData),
+                    attachmentsJson
+                )
+                .run();
+        }
 
         // --- STEP 2: GENERATE DYNAMIC HTML ROWS FOR THE TABLE ---
         let dataRowsHtml = '';
@@ -225,7 +262,7 @@ export async function onRequestPost(context) {
             sendEmail(staffPayload)
         ]);
 
-        return new Response(JSON.stringify({ success: true, message: 'Submission fully processed and emails sent.' }), {
+        return new Response(JSON.stringify({ success: true, message: 'Submission fully processed, persisted to D1/R2, and emails sent.' }), {
             status: 200,
             headers: { 
                 'Content-Type': 'application/json',
