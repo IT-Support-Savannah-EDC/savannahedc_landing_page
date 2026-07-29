@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 p-8">
+
+    <div class="max-w-6xl mx-auto bg-white p-6 rounded-lg shadow-md">
+        <h1 class="text-2xl font-bold mb-6">Form Submissions Dashboard</h1>
+
+        <!-- Controls -->
+        <div class="flex gap-4 mb-6 items-center">
+            <select id="formTypeFilter" class="border p-2 rounded">
+                <option value="all">All Forms</option>
+                <option value="kyc">Customer KYC</option>
+                <option value="meter_request">Get a Meter</option>
+                <option value="contact">Contact Us</option>
+            </select>
+            <button onclick="fetchData()" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Filter</button>
+            <button onclick="exportCSV()" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 ml-auto">Export to CSV</button>
+        </div>
+
+        <!-- Data Table -->
+        <div class="overflow-x-auto">
+            <table class="table-auto w-full text-left border-collapse">
+                <thead>
+                    <tr class="bg-gray-200">
+                        <th class="p-3 border">Date</th>
+                        <th class="p-3 border">Type</th>
+                        <th class="p-3 border">Data (JSON)</th>
+                        <th class="p-3 border">Attachment</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+                    <!-- Rows will be injected here by JavaScript -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        let currentData = [];
+
+        async function fetchData() {
+            const formType = document.getElementById('formTypeFilter').value;
+            const tbody = document.getElementById('tableBody');
+            tbody.innerHTML = '<tr><td colspan="4" class="p-3 text-center">Loading...</td></tr>';
+
+            try {
+                const response = await fetch(`/api/admin/submissions?formType=${formType}`);
+                if (!response.ok) throw new Error("Network response was not ok");
+                
+                currentData = await response.json();
+                renderTable(currentData);
+            } catch (error) {
+                tbody.innerHTML = `<tr><td colspan="4" class="p-3 text-center text-red-600">Error: ${error.message}</td></tr>`;
+            }
+        }
+
+        function renderTable(data) {
+            const tbody = document.getElementById('tableBody');
+            tbody.innerHTML = '';
+
+            if (data.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="4" class="p-3 text-center">No submissions found.</td></tr>';
+                return;
+            }
+
+            data.forEach(row => {
+                const payload = JSON.parse(row.payload); // Parse the dynamic JSON data
+                
+                // Format the JSON data into a readable string for the table
+                const readableData = Object.entries(payload)
+                                     .map(([key, value]) => `<b>${key}:</b> ${value}`)
+                                     .join('<br>');
+
+                // Handle attachment link
+                let attachmentHTML = "None";
+                if (row.attachments) {
+                    const attachmentsObj = JSON.parse(row.attachments);
+                    if (attachmentsObj.fileKey) {
+                        attachmentHTML = `<a href="/api/admin/attachment?fileKey=${attachmentsObj.fileKey}" target="_blank" class="text-blue-600 underline">View File</a>`;
+                    }
+                }
+
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td class="p-3 border align-top">${new Date(row.submitted_at).toLocaleString()}</td>
+                    <td class="p-3 border align-top font-semibold capitalize">${row.form_type.replace('_', ' ')}</td>
+                    <td class="p-3 border align-top text-sm">${readableData}</td>
+                    <td class="p-3 border align-top">${attachmentHTML}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function exportCSV() {
+            if (currentData.length === 0) return alert("No data to export!");
+
+            let csvContent = "data:text/csv;charset=utf-8,ID,Date,Type,Payload,Attachment\n";
+            
+            currentData.forEach(row => {
+                // Escape quotes for CSV format
+                const safePayload = row.payload ? row.payload.replace(/"/g, '""') : "";
+                const safeAttachment = row.attachments ? row.attachments.replace(/"/g, '""') : "";
+                
+                csvContent += `${row.id},${row.submitted_at},${row.form_type},"${safePayload}","${safeAttachment}"\n`;
+            });
+
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", `submissions_${new Date().toISOString().split('T')[0]}.csv`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        // Load all data on page load
+        window.onload = fetchData;
+    </script>
+</body>
+</html>
