@@ -61,11 +61,14 @@ export async function onRequestPost(context) {
                         content: btoa(binary)
                     });
 
-                    // Upload attachment to Cloudflare R2 if BUCKET binding is configured
-                    if (context.env.BUCKET) {
+                    // Fail-safe R2 Upload Check
+                    if (!context.env.BUCKET) {
+                        console.error("CRITICAL: R2 'BUCKET' binding is not defined in context.env!")
+                    } else {
+                        // Flatten fileKey (replace slashes with hyphens) to prevent URL routing issues
                         const sanitizedFormTitle = formTitle.toLowerCase().replace(/[^a-z0-9]/g, '-');
-                        const sanitizedFileName = (value.name || key).replace(/\s+/g, '_');
-                        const fileKey = `${sanitizedFormTitle}/${Date.now()}-${sanitizedFileName}`;
+                        const sanitizedFileName = (value.name || key).replace(/[^a-zA-Z0-9._-]/g, '_');
+                        const fileKey = `${sanitizedFormTitle}_${Date.now()}_${sanitizedFileName}`;
                         
                         await context.env.BUCKET.put(fileKey, arrayBuffer, {
                             httpMetadata: { contentType: value.type || 'application/octet-stream' }
