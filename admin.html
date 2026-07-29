@@ -30,7 +30,7 @@
                         <th class="p-3 border">Date</th>
                         <th class="p-3 border">Type</th>
                         <th class="p-3 border">Data</th>
-                        <th class="p-3 border">Attachment</th>
+                        <th class="p-3 border">Attachments</th>
                     </tr>
                 </thead>
                 <tbody id="tableBody">
@@ -43,7 +43,7 @@
     <script>
         let currentData = [];
 
-        // Helper function to turn camelCase or snake_case keys into human-readable headers
+        // Helper function to convert camelCase/snake_case to human readable headers
         function formatFieldName(key) {
             return key
                 .replace(/([A-Z])/g, ' $1')
@@ -85,27 +85,35 @@
                     payload = { raw: row.payload };
                 }
                 
+                // Format payload into readable key-value pairs
                 const readableData = Object.entries(payload)
-                                    .map(([key, value]) => `<b>${formatFieldName(key)}:</b> ${value}`)
-                                    .join('<br>');
+                                     .map(([key, value]) => `<b>${formatFieldName(key)}:</b> ${value}`)
+                                     .join('<br>');
 
-                // Robust Attachment Parsing (Handles both Array [...] and Object {...})
+                // --- DYNAMIC MULTI-ATTACHMENT PARSING ---
                 let attachmentHTML = "None";
                 if (row.attachments) {
                     try {
                         const parsedAtt = typeof row.attachments === 'string' ? JSON.parse(row.attachments) : row.attachments;
                         
-                        // Extract fileKey whether it's an array or a single object
-                        const rawFileKey = Array.isArray(parsedAtt) ? parsedAtt[0]?.fileKey : parsedAtt?.fileKey;
-                        const fileName = Array.isArray(parsedAtt) ? (parsedAtt[0]?.fileName || "View File") : (parsedAtt?.fileName || "View File");
+                        // Normalize single object vs array into a standard array
+                        const attList = Array.isArray(parsedAtt) ? parsedAtt : (parsedAtt ? [parsedAtt] : []);
 
-                        if (rawFileKey && rawFileKey !== "undefined") {
-                            // encodeURIComponent ensures slashes (/) and parentheses () inside fileKey don't break URL routing
-                            const safeKey = encodeURIComponent(rawFileKey);
-                            attachmentHTML = `<a href="/api/admin/attachment?fileKey=${safeKey}" target="_blank" class="text-blue-600 underline font-semibold">View File (${fileName})</a>`;
+                        if (attList.length > 0) {
+                            const links = attList.map((att, index) => {
+                                if (!att || !att.fileKey || att.fileKey === "undefined") return null;
+                                
+                                const safeKey = encodeURIComponent(att.fileKey);
+                                const displayName = att.fileName || `Attachment ${index + 1}`;
+                                return `<a href="/api/admin/attachment?fileKey=${safeKey}" target="_blank" class="text-blue-600 underline font-semibold block my-1 hover:text-blue-800">📎 ${displayName}</a>`;
+                            }).filter(Boolean);
+
+                            if (links.length > 0) {
+                                attachmentHTML = links.join('');
+                            }
                         }
                     } catch(e) {
-                        console.error("Error parsing attachment column:", e);
+                        console.error("Error parsing attachments for row:", row.id, e);
                     }
                 }
 
@@ -114,7 +122,7 @@
                     <td class="p-3 border align-top whitespace-nowrap text-xs text-gray-700">${new Date(row.submitted_at).toLocaleString()}</td>
                     <td class="p-3 border align-top font-semibold capitalize text-sm">${row.form_type ? row.form_type.replace(/_/g, ' ') : ''}</td>
                     <td class="p-3 border align-top text-xs leading-relaxed">${readableData}</td>
-                    <td class="p-3 border align-top text-xs">${attachmentHTML}</td>
+                    <td class="p-3 border align-top text-xs min-w-[200px]">${attachmentHTML}</td>
                 `;
                 tbody.appendChild(tr);
             });
@@ -123,7 +131,7 @@
         function exportCSV() {
             if (!currentData || currentData.length === 0) return alert("No data to export!");
 
-            // 1. Auto-discover all unique payload keys across all current records
+            // 1. Collect all unique payload keys across records
             const dynamicKeys = [];
             currentData.forEach(row => {
                 try {
@@ -136,20 +144,18 @@
                 } catch (e) {}
             });
 
-            // 2. Build Header Columns
-            const fixedHeaders = ["Ticket ID", "Submission Date", "Form Type", "Attachment Link"];
+            // 2. Build Headers
+            const fixedHeaders = ["Ticket ID", "Submission Date", "Form Type", "Attachment Links"];
             const dynamicHeaders = dynamicKeys.map(key => formatFieldName(key));
             const allHeaders = [...fixedHeaders, ...dynamicHeaders];
 
-            // Helper function to safely escape values for CSV standard format
             const escapeCSV = (val) => {
                 if (val === null || val === undefined) return '""';
-                // Replace internal newlines with spaces so single multi-line cells don't break CSV row structure
                 const strVal = String(val).replace(/\r?\n|\r/g, ' ');
                 return `"${strVal.replace(/"/g, '""')}"`;
             };
 
-            // 3. Construct CSV Data Rows
+            // 3. Build CSV Rows
             const rows = [];
             rows.push(allHeaders.map(escapeCSV).join(','));
 
@@ -159,14 +165,19 @@
                     payload = typeof row.payload === 'string' ? JSON.parse(row.payload) : (row.payload || {});
                 } catch (e) {}
 
-                // Extract direct Attachment download URL for non-tech staff
-                let attachmentUrl = "None";
+                // Extract all attachment URLs for CSV column
+                let attachmentUrls = "None";
                 if (row.attachments) {
                     try {
                         const parsedAtt = typeof row.attachments === 'string' ? JSON.parse(row.attachments) : row.attachments;
-                        const fileKey = Array.isArray(parsedAtt) ? parsedAtt[0]?.fileKey : parsedAtt?.fileKey;
-                        if (fileKey) {
-                            attachmentUrl = `${window.location.origin}/api/admin/attachment?fileKey=${encodeURIComponent(fileKey)}`;
+                        const attList = Array.isArray(parsedAtt) ? parsedAtt : (parsedAtt ? [parsedAtt] : []);
+
+                        const urls = attList
+                            .filter(att => att && att.fileKey && att.fileKey !== "undefined")
+                            .map(att => `${window.location.origin}/api/admin/attachment?fileKey=${encodeURIComponent(att.fileKey)}`);
+
+                        if (urls.length > 0) {
+                            attachmentUrls = urls.join(" ; ");
                         }
                     } catch(e) {}
                 }
@@ -174,15 +185,13 @@
                 const formattedDate = new Date(row.submitted_at).toLocaleString();
                 const formattedType = row.form_type ? row.form_type.replace(/_/g, ' ') : '';
 
-                // Build base columns
                 const rowData = [
                     row.id || '',
                     formattedDate,
                     formattedType,
-                    attachmentUrl
+                    attachmentUrls
                 ];
 
-                // Append each dynamic form key's value in correct column order
                 dynamicKeys.forEach(key => {
                     const val = (payload[key] !== undefined && payload[key] !== null) ? payload[key] : '';
                     rowData.push(val);
@@ -191,7 +200,7 @@
                 rows.push(rowData.map(escapeCSV).join(','));
             });
 
-            // 4. Create Blob with UTF-8 BOM (\uFEFF) for native Excel compatibility
+            // 4. Download file with UTF-8 BOM
             const csvString = rows.join('\n');
             const blob = new Blob(["\uFEFF" + csvString], { type: 'text/csv;charset=utf-8;' });
             const url = URL.createObjectURL(blob);
@@ -206,7 +215,7 @@
             URL.revokeObjectURL(url);
         }
 
-        // Load all data on page load
+        // Load data on page load
         window.onload = fetchData;
     </script>
 </body>
