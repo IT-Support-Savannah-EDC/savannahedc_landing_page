@@ -29,7 +29,7 @@
                     <tr class="bg-gray-200">
                         <th class="p-3 border">Date</th>
                         <th class="p-3 border">Type</th>
-                        <th class="p-3 border">Data (JSON)</th>
+                        <th class="p-3 border">Data</th>
                         <th class="p-3 border">Attachment</th>
                     </tr>
                 </thead>
@@ -42,6 +42,15 @@
 
     <script>
         let currentData = [];
+
+        // Helper function to turn camelCase or snake_case keys into human-readable headers
+        function formatFieldName(key) {
+            return key
+                .replace(/([A-Z])/g, ' $1')
+                .replace(/[_-]/g, ' ')
+                .replace(/^./, str => str.toUpperCase())
+                .trim();
+        }
 
         async function fetchData() {
             const formType = document.getElementById('formTypeFilter').value;
@@ -63,59 +72,131 @@
             const tbody = document.getElementById('tableBody');
             tbody.innerHTML = '';
 
-            if (data.length === 0) {
+            if (!data || data.length === 0) {
                 tbody.innerHTML = '<tr><td colspan="4" class="p-3 text-center">No submissions found.</td></tr>';
                 return;
             }
 
             data.forEach(row => {
-                const payload = JSON.parse(row.payload); // Parse the dynamic JSON data
+                let payload = {};
+                try {
+                    payload = typeof row.payload === 'string' ? JSON.parse(row.payload) : (row.payload || {});
+                } catch(e) {
+                    payload = { raw: row.payload };
+                }
                 
-                // Format the JSON data into a readable string for the table
+                // Format the JSON data into a readable string for the dashboard view
                 const readableData = Object.entries(payload)
-                                     .map(([key, value]) => `<b>${key}:</b> ${value}`)
+                                     .map(([key, value]) => `<b>${formatFieldName(key)}:</b> ${value}`)
                                      .join('<br>');
 
-                // Handle attachment link
+                // Handle attachment link (supports both array and object formats)
                 let attachmentHTML = "None";
                 if (row.attachments) {
-                    const attachmentsObj = JSON.parse(row.attachments);
-                    if (attachmentsObj.fileKey) {
-                        attachmentHTML = `<a href="/api/admin/attachment?fileKey=${attachmentsObj.fileKey}" target="_blank" class="text-blue-600 underline">View File</a>`;
-                    }
+                    try {
+                        const parsedAtt = typeof row.attachments === 'string' ? JSON.parse(row.attachments) : row.attachments;
+                        const fileKey = Array.isArray(parsedAtt) ? parsedAtt[0]?.fileKey : parsedAtt?.fileKey;
+                        if (fileKey) {
+                            attachmentHTML = `<a href="/api/admin/attachment?fileKey=${encodeURIComponent(fileKey)}" target="_blank" class="text-blue-600 underline font-semibold">View File</a>`;
+                        }
+                    } catch(e) {}
                 }
 
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
-                    <td class="p-3 border align-top">${new Date(row.submitted_at).toLocaleString()}</td>
-                    <td class="p-3 border align-top font-semibold capitalize">${row.form_type.replace('_', ' ')}</td>
-                    <td class="p-3 border align-top text-sm">${readableData}</td>
-                    <td class="p-3 border align-top">${attachmentHTML}</td>
+                    <td class="p-3 border align-top whitespace-nowrap text-xs text-gray-700">${new Date(row.submitted_at).toLocaleString()}</td>
+                    <td class="p-3 border align-top font-semibold capitalize text-sm">${row.form_type ? row.form_type.replace(/_/g, ' ') : ''}</td>
+                    <td class="p-3 border align-top text-xs leading-relaxed">${readableData}</td>
+                    <td class="p-3 border align-top text-xs">${attachmentHTML}</td>
                 `;
                 tbody.appendChild(tr);
             });
         }
 
         function exportCSV() {
-            if (currentData.length === 0) return alert("No data to export!");
+            if (!currentData || currentData.length === 0) return alert("No data to export!");
 
-            let csvContent = "data:text/csv;charset=utf-8,ID,Date,Type,Payload,Attachment\n";
-            
+            // 1. Auto-discover all unique payload keys across all current records
+            const dynamicKeys = [];
             currentData.forEach(row => {
-                // Escape quotes for CSV format
-                const safePayload = row.payload ? row.payload.replace(/"/g, '""') : "";
-                const safeAttachment = row.attachments ? row.attachments.replace(/"/g, '""') : "";
-                
-                csvContent += `${row.id},${row.submitted_at},${row.form_type},"${safePayload}","${safeAttachment}"\n`;
+                try {
+                    const payload = typeof row.payload === 'string' ? JSON.parse(row.payload) : (row.payload || {});
+                    Object.keys(payload).forEach(key => {
+                        if (!dynamicKeys.includes(key)) {
+                            dynamicKeys.push(key);
+                        }
+                    });
+                } catch (e) {}
             });
 
-            const encodedUri = encodeURI(csvContent);
+            // 2. Build Header Columns
+            const fixedHeaders = ["Ticket ID", "Submission Date", "Form Type", "Attachment Link"];
+            const dynamicHeaders = dynamicKeys.map(key => formatFieldName(key));
+            const allHeaders = [...fixedHeaders, ...dynamicHeaders];
+
+            // Helper function to safely escape values for CSV standard format
+            const escapeCSV = (val) => {
+                if (val === null || val === undefined) return '""';
+                // Replace internal newlines with spaces so single multi-line cells don't break CSV row structure
+                const strVal = String(val).replace(/\r?\n|\r/g, ' ');
+                return `"${strVal.replace(/"/g, '""')}"`;
+            };
+
+            // 3. Construct CSV Data Rows
+            const rows = [];
+            rows.push(allHeaders.map(escapeCSV).join(','));
+
+            currentData.forEach(row => {
+                let payload = {};
+                try {
+                    payload = typeof row.payload === 'string' ? JSON.parse(row.payload) : (row.payload || {});
+                } catch (e) {}
+
+                // Extract direct Attachment download URL for non-tech staff
+                let attachmentUrl = "None";
+                if (row.attachments) {
+                    try {
+                        const parsedAtt = typeof row.attachments === 'string' ? JSON.parse(row.attachments) : row.attachments;
+                        const fileKey = Array.isArray(parsedAtt) ? parsedAtt[0]?.fileKey : parsedAtt?.fileKey;
+                        if (fileKey) {
+                            attachmentUrl = `${window.location.origin}/api/admin/attachment?fileKey=${encodeURIComponent(fileKey)}`;
+                        }
+                    } catch(e) {}
+                }
+
+                const formattedDate = new Date(row.submitted_at).toLocaleString();
+                const formattedType = row.form_type ? row.form_type.replace(/_/g, ' ') : '';
+
+                // Build base columns
+                const rowData = [
+                    row.id || '',
+                    formattedDate,
+                    formattedType,
+                    attachmentUrl
+                ];
+
+                // Append each dynamic form key's value in correct column order
+                dynamicKeys.forEach(key => {
+                    const val = (payload[key] !== undefined && payload[key] !== null) ? payload[key] : '';
+                    rowData.push(val);
+                });
+
+                rows.push(rowData.map(escapeCSV).join(','));
+            });
+
+            // 4. Create Blob with UTF-8 BOM (\uFEFF) for native Excel compatibility
+            const csvString = rows.join('\n');
+            const blob = new Blob(["\uFEFF" + csvString], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            
             const link = document.createElement("a");
-            link.setAttribute("href", encodedUri);
-            link.setAttribute("download", `submissions_${new Date().toISOString().split('T')[0]}.csv`);
+            const filename = `submissions_export_${new Date().toISOString().split('T')[0]}.csv`;
+            link.setAttribute("href", url);
+            link.setAttribute("download", filename);
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
+            URL.revokeObjectURL(url);
         }
 
         // Load all data on page load
