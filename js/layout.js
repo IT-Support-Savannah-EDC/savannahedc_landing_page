@@ -185,7 +185,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const globalFooterHTML = `
         <footer class="bg-white dark:bg-slate-950 text-slate-500 dark:text-slate-400 py-6 px-4 text-center text-xs border-t border-slate-200 dark:border-slate-900 transition-colors mt-auto relative z-10">
             <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
-                <p>Savannah EDC HQ, Bauchi Street Adjacent Ministry of Works, Gombe, Gombe State, Nigeria.</p>
+                <p>Bauchi Road adjacent Ministry of Works, Gombe, Gombe State, Nigeria.</p>
                 <p>&copy; 2026 Savannah Electricity Distribution Company Ltd.</p>
             </div>
         </footer>
