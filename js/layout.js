@@ -88,6 +88,7 @@ document.addEventListener("DOMContentLoaded", () => {
                             <div class="p-1.5 space-y-0.5 bg-white dark:bg-slate-900 rounded-2xl relative z-10 overflow-hidden">
                                 <a href="who-we-are.html" class="block px-4 py-2.5 text-xs font-bold rounded-xl ${currentPath === 'who-we-are.html' ? 'bg-primary/5 text-primary dark:text-secondary' : 'text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800/60'} transition">Who We Are</a>
                                 <a href="management-team.html" class="block px-4 py-2.5 text-xs font-bold rounded-xl ${currentPath === 'management-team.html' ? 'bg-primary/5 text-primary dark:text-secondary' : 'text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800/60'} transition">Management Team</a>
+                                <a href="directors.html" class="block px-4 py-2.5 text-xs font-bold rounded-xl ${currentPath === 'directors.html' ? 'bg-primary/5 text-primary dark:text-secondary' : 'text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800/60'} transition">Directors</a>
                             </div>
                         </div>
                     </div>

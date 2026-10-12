@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Directors | Savannah EDC</title>
+
+    <link rel="icon" type="image/png" href="assets/logo.png">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: { primary: '#004DC2', secondary: '#5DB922', darkNavy: '#0A1931' },
+                    fontFamily: { sans: ['Montserrat', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+    <script src="js/theme.js"></script>
+    <script src="js/layout.js"></script>
+</head>
+<body class="bg-[#F8FAFC] dark:bg-[#050C18] text-slate-900 dark:text-slate-100 min-h-screen flex flex-col relative overflow-x-hidden transition-colors duration-300">
+
+    <div id="universal-navbar"></div>
+
+    <main class="relative z-10 max-w-6xl mx-auto px-4 py-16 w-full space-y-12 flex-grow">
+        <section class="space-y-8">
+            <div class="text-center max-w-2xl mx-auto space-y-2">
+                <span class="text-xs font-bold tracking-widest text-primary dark:text-secondary uppercase">Leadership</span>
+                <h1 class="text-3xl md:text-5xl font-extrabold text-darkNavy dark:text-white">Directors</h1>
+                <p class="text-sm text-slate-500 dark:text-slate-400 font-medium">Meet our Directors.</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                
+                <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800/80 rounded-3xl overflow-hidden shadow-sm flex flex-col group">
+                    <div class="relative aspect-[4/5] bg-slate-100 dark:bg-slate-800 overflow-hidden">
+                        <img src="assets/directors/ibrahim-sani-bello.jpg" alt="Chairman" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    </div>
+                    <div class="p-6 space-y-4 flex flex-col flex-grow">
+                        <div class="space-y-1">
+                            <h3 class="text-xl font-black tracking-tight text-darkNavy dark:text-white">Mr. Ibrahim Sani Bello</h3>
+                            <p class="text-xs font-bold text-primary dark:text-secondary uppercase tracking-wider">Chairman</p>
+                        </div>
+                        <button onclick="openProfile('ibrahim')" class="mt-auto w-full bg-slate-50 dark:bg-slate-800 text-darkNavy dark:text-white hover:bg-primary hover:text-white border border-slate-100 dark:border-slate-700/50 font-bold py-3 px-4 rounded-xl text-xs tracking-wider transition">
+                            View Profile
+                        </button>
+                    </div>
+                </div>
+
+                <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800/80 rounded-3xl overflow-hidden shadow-sm flex flex-col group">
+                    <div class="relative aspect-[4/5] bg-slate-100 dark:bg-slate-800 overflow-hidden">
+                        <img src="assets/directors/zulkifl-abba.jpg" alt="Director" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    </div>
+                    <div class="p-6 space-y-4 flex flex-col flex-grow">
+                        <div class="space-y-1">
+                            <h3 class="text-xl font-black tracking-tight text-darkNavy dark:text-white">Mr. Zulkifl Abba</h3>
+                            <p class="text-xs font-bold text-primary dark:text-secondary uppercase tracking-wider">Director</p>
+                        </div>
+                        <button onclick="openProfile('zulkifl')" class="mt-auto w-full bg-slate-50 dark:bg-slate-800 text-darkNavy dark:text-white hover:bg-primary hover:text-white border border-slate-100 dark:border-slate-700/50 font-bold py-3 px-4 rounded-xl text-xs tracking-wider transition">
+                            View Profile
+                        </button>
+                    </div>
+                </div>
+
+                <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800/80 rounded-3xl overflow-hidden shadow-sm flex flex-col group">
+                    <div class="relative aspect-[4/5] bg-slate-100 dark:bg-slate-800 overflow-hidden">
+                        <img src="assets/directors/ahmed-sani-bello.jpg" alt="Director" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    </div>
+                    <div class="p-6 space-y-4 flex flex-col flex-grow">
+                        <div class="space-y-1">
+                            <h3 class="text-xl font-black tracking-tight text-darkNavy dark:text-white">Mr. Ahmed Sani Bello</h3>
+                            <p class="text-xs font-bold text-primary dark:text-secondary uppercase tracking-wider">Director</p>
+                        </div>
+                        <button onclick="openProfile('ahmed')" class="mt-auto w-full bg-slate-50 dark:bg-slate-800 text-darkNavy dark:text-white hover:bg-primary hover:text-white border border-slate-100 dark:border-slate-700/50 font-bold py-3 px-4 rounded-xl text-xs tracking-wider transition">
+                            View Profile
+                        </button>
+                    </div>
+                </div>
+
+                <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800/80 rounded-3xl overflow-hidden shadow-sm flex flex-col group">
+                    <div class="relative aspect-[4/5] bg-slate-100 dark:bg-slate-800 overflow-hidden">
+                        <img src="assets/directors/suleiman-sani-bello.jpg" alt="Director" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    </div>
+                    <div class="p-6 space-y-4 flex flex-col flex-grow">
+                        <div class="space-y-1">
+                            <h3 class="text-xl font-black tracking-tight text-darkNavy dark:text-white">Mr. Suleiman Sani Bello</h3>
+                            <p class="text-xs font-bold text-primary dark:text-secondary uppercase tracking-wider">Director</p>
+                        </div>
+                        <button onclick="openProfile('suleiman')" class="mt-auto w-full bg-slate-50 dark:bg-slate-800 text-darkNavy dark:text-white hover:bg-primary hover:text-white border border-slate-100 dark:border-slate-700/50 font-bold py-3 px-4 rounded-xl text-xs tracking-wider transition">
+                            View Profile
+                        </button>
+                    </div>
+                </div>
+
+                <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800/80 rounded-3xl overflow-hidden shadow-sm flex flex-col group">
+                    <div class="relative aspect-[4/5] bg-slate-100 dark:bg-slate-800 overflow-hidden">
+                        <img src="assets/directors/alhaji-babangida-inuwa.jpg" alt="Director" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    </div>
+                    <div class="p-6 space-y-4 flex flex-col flex-grow">
+                        <div class="space-y-1">
+                            <h3 class="text-xl font-black tracking-tight text-darkNavy dark:text-white">Alhaji Babangida Inuwa</h3>
+                            <p class="text-xs font-bold text-primary dark:text-secondary uppercase tracking-wider">Director</p>
+                        </div>
+                        <button onclick="openProfile('babangida')" class="mt-auto w-full bg-slate-50 dark:bg-slate-800 text-darkNavy dark:text-white hover:bg-primary hover:text-white border border-slate-100 dark:border-slate-700/50 font-bold py-3 px-4 rounded-xl text-xs tracking-wider transition">
+                            View Profile
+                        </button>
+                    </div>
+                </div>
+
+                <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800/80 rounded-3xl overflow-hidden shadow-sm flex flex-col group">
+                    <div class="relative aspect-[4/5] bg-slate-100 dark:bg-slate-800 overflow-hidden">
+                        <img src="assets/directors/" alt="Director" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    </div>
+                    <div class="p-6 space-y-4 flex flex-col flex-grow">
+                        <div class="space-y-1">
+                            <h3 class="text-xl font-black tracking-tight text-darkNavy dark:text-white">Mr. Ayodeji Gbeleyi</h3>
+                            <p class="text-xs font-bold text-primary dark:text-secondary uppercase tracking-wider">Director</p>
+                        </div>
+                        <button onclick="openProfile('ayodeji')" class="mt-auto w-full bg-slate-50 dark:bg-slate-800 text-darkNavy dark:text-white hover:bg-primary hover:text-white border border-slate-100 dark:border-slate-700/50 font-bold py-3 px-4 rounded-xl text-xs tracking-wider transition">
+                            View Profile
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <div id="profile-modal" class="fixed inset-0 z-50 hidden opacity-0 transition-all duration-300 pointer-events-none grid place-items-center p-4">
+        <div onclick="closeProfile()" class="absolute inset-0 bg-darkNavy/40 dark:bg-black/60 backdrop-blur-sm"></div>
+        
+        <div class="bg-white dark:bg-slate-900 w-full max-w-xl max-h-[85vh] rounded-3xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-2xl relative z-10 transform scale-95 transition-transform duration-300 flex flex-col">
+            
+            <div class="p-6 space-y-5 overflow-y-auto flex-grow">
+                <div class="flex items-start justify-between gap-4">
+                    <div class="flex items-center gap-4">
+                        <img id="modal-img" src="" alt="Executive" class="w-16 h-16 rounded-2xl object-cover border border-slate-200 dark:border-slate-700 flex-shrink-0">
+                        <div>
+                            <h3 id="modal-name" class="text-xl font-black text-darkNavy dark:text-white leading-tight"></h3>
+                            <p id="modal-title" class="text-xs font-bold text-primary dark:text-secondary tracking-wide uppercase mt-0.5"></p>
+                        </div>
+                    </div>
+                    <button onclick="closeProfile()" class="p-2 rounded-xl bg-slate-50 dark:bg-slate-800 text-slate-400 hover:text-slate-600 dark:hover:text-white transition flex-shrink-0">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path></svg>
+                    </button>
+                </div>
+                <div class="border-t border-slate-100 dark:border-slate-800 pt-4">
+                    <div id="modal-bio" class="text-sm leading-relaxed text-slate-600 dark:text-slate-400 font-medium space-y-4"></div>
+                </div>
+            </div>
+            
+            <div class="p-4 bg-slate-50 dark:bg-slate-950 border-t border-slate-100 dark:border-slate-800/80 flex justify-end flex-shrink-0">
+                <button onclick="closeProfile()" class="bg-darkNavy dark:bg-slate-800 text-white font-bold py-2.5 px-5 rounded-xl text-xs transition">Close Profile Window</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Store your rich multi-paragraph bios easily using template literals ``
+        const teamProfiles = {
+            ibrahim: {
+                name: "Alhaji Ibrahim Sani Bello", //[cite: 1]
+                title: "Chairman", //[cite: 1]
+                image: "assets/directors/ibrahim-sani-bello.jpg", //[cite: 2]
+                bio: `
+                    <p>Alhaji Ibrahim Bello is a law graduate from the University of Maiduguri, after which he attended the University of Wales Cardiff to obtain his MBA. He obtained his qualification at the Nigerian Law school on his return back to Nigeria.</p>
+                    <p>Ibrahim was the Managing Director of Allstream Energy Solutions Limited, a company that specializes in Telecommunication Infrastructure managed services, Sales and Distribution of Petroleum products, and Haulage & Logistics Services. Following this, he was Project Co-ordinator and one of the promoters & founding Directors of Mainstream Energy Solutions Limited, who successfully won the concession of the Kainji and Jebba hydropower stations, currently the largest Hydropower Generation Company in Nigeria, in the landmark privatization scheme by the Federal Government in 2013.</p>
+                    <p>He is currently a Director at Allstream Energy Solutions Limited, Chairman of Highland Integrated Electricity Services Limited, and Chairman of Jos Electricity Distribution Plc.</p>
+                ` //[cite: 1]
+            },
+            zulkifl: {
+                name: "Mr. Zulkifil Abba", //[cite: 1]
+                title: "Director", //[cite: 1]
+                image: "assets/directors/zulkifl-abba.jpg", //[cite: 2]
+                bio: `
+                    <p>With an M.Sc. in Energy Studies with specialization in International Oil and Gas Management from the University of Dundee in Scotland, Zulkifil has over 20 years’ vast business experience in Energy, Project Finance and Business Development. He also obtained a Bachelor of Science Degree (B.Sc.) in Economics, and an OND in Accountancy from the University of Maiduguri in Nigeria.</p>
+                    <p>Following his extensive exposure in the Nigerian Oil and Gas Industry, he has advised and partnered with State Governments on Energy projects under Public Private Partnerships (PPP), ranging from Oil & Gas, Power Generation and Renewable Energy. Zulkifil is one of the promoters and founding Directors of Mainstream Energy Solutions Limited, who successfully won the concession of the Kianji and Jebba Hydro Power stations, currently the largest Hydropower Generation Company in Nigeria, in the landmark privatization scheme by the Federal Government in 2013.</p>
+                    <p>He is a Director at Highland Integrated Electricity Services Limited, an Investment Holding company that acquired the majority shareholding in Jos Electricity Distribution Company where he also serves as a Board Director and Chairman of the Finance and General-Purpose Committee (F&FGPC) of the Company. Zulkifil also serves on the Boards of major companies such as Petroflow Integrated Consultants Limited a Sub-surface and Surface and Facilities Engineering Services Company and Kainji Aquaculture Limited- which has been outfitted for modern day fish farming.</p>
+                    <p>He is also a member of the following professional bodies: Member, Society for Petroleum Engineers (SPE); Member, Association of Independent Petroleum Negotiators (AIPN); Member, International Association for Energy Economics (IAEE); Member, Scottish Oil Club; Member, Energy Institute, United Kingdom; Member, Institute of Directors, Nigeria.</p>
+                ` //[cite: 1]
+            },
+            ahmed: {
+                name: "Mr. Ahmed Sani Bello", //[cite: 1]
+                title: "Director", //[cite: 1]
+                image: "assets/directors/ahmed-sani-bello.jpg", //[cite: 2]
+                bio: `
+                    <p>Ahmed Sani Bello is an astute industrialist with an unparallel record of traversing unfamiliar terrain for economic prosperity. He holds a Bachelor of Science degree from the School of Business of Virginia Commonwealth University Richmond, Virginia, U.S.A.</p>
+                    <p>He has extensive experience in the Oil & Gas (downstream) sector, telecommunication maintenance, food & beverages sector, agribusiness value chain, mining sector, and education sector. He is currently the Vice Chairman of Allstream Energy Solutions Limited.</p>
+                    <p>He is also on the Board of Directors of Apex Soya Oil Limited, Hadiraf Cereal & Oil Mill, Goldsbog Mining, Sbeelink Limited, SanBell Investment and Sani Bello Foundation, Highland Integrated Electricity Services Limited and Jos Electricity Distribution Plc. He is an art collector and loves to read about ancient archeological artifacts.</p>
+                ` //[cite: 1]
+            },
+            suleiman: {
+                name: "Mr. Suleiman Sani Bello", //[cite: 1]
+                title: "Director", //[cite: 1]
+                image: "assets/directors/suleiman-sani-bello.jpg", //[cite: 2]
+                bio: `
+                    <p>Suleiman is the Chairman of Sublime Group Limited and also serves as the Chief Executive Officer. His background is diverse, shows strength of vision and relentless entrepreneurial zeal. This includes corporate leadership positions as Director and Chairman of Hydropolis Investment Limited and Dornier Aviation respectively.</p>
+                    <p>He's also a promoter and pioneer Director at Mainstream Energy Solutions Limited and a Director at Highland Integrated Electricity Services Limited, and Jos Electricity Distribution Plc.</p>
+                    <p>He holds a combined honors degree in Bachelor of Arts and Bachelor of Information Technology from the American Intercontinental University, London. He also holds an MCM degree from Bucks University in the United Kingdom and a Doctorate in Business Management from the African Institute of Science Administration and commercial Studies.</p>
+                ` //[cite: 1]
+            },
+            babangida: {
+                name: "Alhaji Babangida Inuwa", //[cite: 1]
+                title: "Director", //[cite: 1]
+                image: "assets/directors/alhaji-babangida-inuwa.jpg", //[cite: 2]
+                bio: `
+                    <p>Babangida Inuwa holds a Bachelor of Science degree in Political Science and Administration from the University of Maiduguri in 1986. He joined the services of Department of State Services (DSS) upon completion of his NYSC in 1987. Being an experienced intelligence operative, he attended several professional courses and training workshops while in service before his voluntary withdrawal of his services from DSS in order to pursue his personal dreams in April 1997.</p>
+                    <p>Apart from being the Chairman and Chief Executive Officer of TELEMAX Engineering Services Ltd (ICT Hub operators a company initiated by the Kaduna State Government), he is equally a Chairman of many Companies and a sitting Director on so many other Boards amongst which are Executive Director Conexel Nigeria Limited Director and later Managing Director of I-net Global Services Limited. Director Power Hub Energy, an Oil & Gas company (Upstream) Founder, Chairman/ CEO of X2 Nigeria Limited which services include Real Estate & Properties, Telecoms, Consultancy, Textiles and Project Management, Chairman/ CEO Salbag Ventures Limited.</p>
+                    <p>Director Safomar S/A Nigeria Limited (an AviationTechnical & Consultancy Services Company). Chairman Vineton & Vinetress Energy Ltd, a global leader in the design and manufacturing of Organic Rankine Cycle (ORC) turbines, which transform heat into electricity and thermal power from renewable sources (biomass, geothermal, solar) or from waste heat created by industrial processes, engines or gas turbines. Chairman Dornier Aviation Nigeria (Hajj Airlift Committee) a position he has held since February 2015. He also sits on the Board of Jos Electricity Distribution Plc.</p>
+                ` //[cite: 1]
+            },
+            ayodeji: {
+                name: "Mr. Ayodeji Gbeleyi", //[cite: 1]
+                title: "Director", //[cite: 1]
+                image: "assets/directors/ayodeji-gbeleyi.jpg", //[cite: 1, 2]
+                bio: `
+                    <p>Ayodeji Gbeleyi is the current Director-General (DG) of the Bureau of Public Enterprises (BPE) in Nigeria. He was, until his appointment as the DG of BPE, the Managing Director/CEO of GA Capital Limited, a boutique financial advisory firm.</p>
+                    <p>He is an award-winning Chartered Accountant, a Fellow of both Institute of Chartered Accountants of Nigeria (ICAN) and the Chartered Institute of Taxation Nigeria (CITN), and MBA holder from the University of Navarra (IESE), Spain, a Member of the Chartered Institute of Directors (CIoD, and a registered Capital Market Operator by the Security and Exchange Commission (SEC).</p>
+                    <p>Ayodeji Gbeleyi is an alumnus of executive programmes at the prestigious London Business School, Havard Kennedy School of Government, Wharton School, University of Pennsylvania and Lagos Business School. He has over thirty (30) years of post-qualification hands-on experience in diverse sectors and multi-cultural work environment, including manufacturing, fast-moving consumer goods, investment & commercial banking, project finance, telecoms, infrastructure and public administration.</p>
+                    <p>He was a commissioner for Finance in the Lagos State Executive Council. He was also Chairman of the Board of Directors of Northwest Quadrant Development Limited; previously Chairman of the Board of Directors Axa-Mansard Health Limited, Federal Mortgage Bank of Nigeria, and Yola Electricity Distribution Company Plc. He has also served as a Member of the BusinessDay Editorial Advisory Board, Lagos Chambers of Commerce & Industries (LCCI), etc. He also sits on the Board of Jos Electricity Distribution Plc.</p>
+                ` //[cite: 1]
+            }
+        };
+
+        const modal = document.getElementById('profile-modal');
+        const modalBody = modal.querySelector('.transform');
+        const modalName = document.getElementById('modal-name');
+        const modalTitle = document.getElementById('modal-title');
+        const modalImg = document.getElementById('modal-img');
+        const modalBio = document.getElementById('modal-bio');
+
+        function openProfile(id) {
+            const profile = teamProfiles[id];
+            
+            // If ID matches data array, load it dynamically
+            if (profile) {
+                modalName.innerText = profile.name;
+                modalTitle.innerText = profile.title;
+                modalImg.src = profile.image;
+                
+                // .innerHTML allows the multiple custom <p> tags to render beautifully
+                modalBio.innerHTML = profile.bio; 
+                
+                modal.classList.remove('hidden', 'pointer-events-none');
+                setTimeout(() => {
+                    modal.classList.add('opacity-100');
+                    modalBody.classList.remove('scale-95');
+                    modalBody.classList.add('scale-100');
+                }, 10);
+            }
+        }
+
+        function closeProfile() {
+            modal.classList.remove('opacity-100');
+            modalBody.classList.remove('scale-100');
+            modalBody.classList.add('scale-95');
+            setTimeout(() => { modal.classList.add('hidden', 'pointer-events-none'); }, 300);
+        }
+    </script>
+
+    <div id="universal-footer"></div>
+</body>
+</html>
