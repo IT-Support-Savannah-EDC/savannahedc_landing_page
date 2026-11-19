@@ -74,7 +74,7 @@
                     
                     <div class="space-y-1.5">
                         <label for="address" class="text-xs font-bold text-slate-700 dark:text-slate-300">Address <span class="text-rose-500">*</span></label>
-                        <input type="text" id="address" name="address" placeholder="123 Main Street"
+                        <input type="text" id="address" name="address" required placeholder="123 Main Street"
                             class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-3 text-xs font-semibold focus:outline-none focus:border-primary focus:border-2 dark:focus:border-secondary text-slate-800 dark:text-slate-100 transition-colors">
                     </div>
 
@@ -90,7 +90,7 @@
                             <input type="file" id="attachments" name="attachments" accept=".png, .jpg, .jpeg, .pdf" onchange="validateFileSize(this)"
                                 class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-20">
                             <div class="text-center space-y-1 pointer-events-none z-10">
-                                <p class="text-xs font-bold text-primary dark:text-secondary">Click to upload files or drag and drop</p>
+                                <p id="file-name-display" class="text-xs font-bold text-primary dark:text-secondary">Click to upload files or drag and drop</p>
                                 <p class="text-[10px] text-slate-400">Accepted formats: PNG, JPG, PDF (Maximum data capacity: 10MB)</p>
                             </div>
                         </div>
@@ -149,7 +149,6 @@
                             </div>
                         </a>
 
-                        <!-- LinkedIn -->
                         <a href="https://www.linkedin.com/company/savannahedc" target="_blank" rel="noopener noreferrer" class="flex items-center gap-4 p-4 bg-slate-50 dark:bg-slate-800/80 hover:bg-[#0A66C2]/5 dark:hover:bg-[#0A66C2]/10 rounded-xl border border-slate-100 dark:border-slate-700 transition group">
                             <div class="text-[#0A66C2] group-hover:scale-110 transition-transform flex-shrink-0">
                                 <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/></svg>
@@ -219,13 +218,61 @@
         </div>
     </main>
 
+    <!-- Ticket Confirmation Modal -->
+    <div id="ticket-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-slate-950/60 backdrop-blur-sm" role="dialog" aria-modal="true" aria-labelledby="ticket-modal-title">
+        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl max-w-md w-full p-6 md:p-8 shadow-2xl space-y-5 text-center relative">
+            <div class="mx-auto w-14 h-14 rounded-2xl bg-secondary/15 text-secondary flex items-center justify-center">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+            </div>
+
+            <div class="space-y-1.5">
+                <h3 id="ticket-modal-title" class="text-xl font-extrabold text-darkNavy dark:text-white tracking-tight">Submission Received!</h3>
+                <p class="text-xs text-slate-500 dark:text-slate-400 font-medium leading-relaxed">
+                    Your inquiry has been logged and assigned to our support team.
+                </p>
+            </div>
+
+            <div class="bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 space-y-2">
+                <span class="text-[10px] font-bold uppercase tracking-widest text-slate-400 block">Your Ticket Reference ID</span>
+                <div class="flex items-center justify-center gap-3">
+                    <span id="modal-ticket-id" class="text-2xl font-extrabold tracking-wider text-primary dark:text-secondary select-all">---</span>
+                    <button type="button" id="copy-ticket-btn" onclick="copyTicketId()"
+                        class="px-3 py-1.5 rounded-lg bg-primary/10 hover:bg-primary/20 dark:bg-secondary/15 dark:hover:bg-secondary/25 text-primary dark:text-secondary text-[11px] font-bold transition flex items-center gap-1.5">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.666 3.888A2.25 2.25 0 0013.5 2.25h-3c-1.03 0-1.9.693-2.166 1.638m7.332 0c.055.194.084.4.084.612v0a.75.75 0 01-.75.75H9a.75.75 0 01-.75-.75v0c0-.212.03-.418.084-.612m7.332 0c.646.049 1.288.11 1.927.184 1.1.128 1.907 1.077 1.907 2.185V19.5a2.25 2.25 0 01-2.25 2.25H6.75A2.25 2.25 0 014.5 19.5V6.257c0-1.108.806-2.057 1.907-2.185a48.208 48.208 0 011.927-.184" />
+                        </svg>
+                        <span id="copy-btn-text">Copy ID</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="bg-amber-500/10 border border-amber-500/30 rounded-2xl p-3.5 text-left flex items-start gap-2.5">
+                <svg class="w-4 h-4 text-amber-600 dark:text-amber-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
+                </svg>
+                <p class="text-[11px] font-semibold text-slate-700 dark:text-slate-300 leading-relaxed">
+                    Please <span class="font-extrabold text-darkNavy dark:text-white">save or copy this Ticket ID</span> for tracking purposes. You will need it to check your request status via SEDC AI or Customer Care.
+                </p>
+            </div>
+
+            <button type="button" onclick="closeTicketModal()"
+                class="w-full bg-primary hover:bg-blue-700 dark:bg-secondary dark:hover:bg-emerald-600 text-white font-bold text-xs py-3.5 px-6 rounded-xl transition shadow-md">
+                Done
+            </button>
+        </div>
+    </div>
+
     <script>
         function validateFileSize(inputElement) {
             const warningBlock = document.getElementById('size-warning');
             const submitBtn = document.getElementById('submit-btn');
+            const nameDisplay = document.getElementById('file-name-display');
             const targetFile = inputElement.files[0];
 
             if (targetFile) {
+                nameDisplay.textContent = `Selected: ${targetFile.name}`;
                 const calculatedMegaBytes = targetFile.size / (1024 * 1024);
                 if (calculatedMegaBytes > 10) {
                     warningBlock.classList.remove('hidden');
@@ -237,29 +284,60 @@
                     submitBtn.classList.remove('opacity-50', 'cursor-not-allowed');
                 }
             } else {
+                nameDisplay.textContent = "Click to upload files or drag and drop";
                 warningBlock.classList.add('hidden');
                 submitBtn.disabled = false;
                 submitBtn.classList.remove('opacity-50', 'cursor-not-allowed');
             }
         }
 
+        function showTicketModal(ticketRef) {
+            const modal = document.getElementById('ticket-modal');
+            const idSpan = document.getElementById('modal-ticket-id');
+            const copyText = document.getElementById('copy-btn-text');
+            idSpan.textContent = ticketRef || "Generated";
+            copyText.textContent = "Copy ID";
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeTicketModal() {
+            const modal = document.getElementById('ticket-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        async function copyTicketId() {
+            const ticketText = document.getElementById('modal-ticket-id').textContent.trim();
+            const copyText = document.getElementById('copy-btn-text');
+            try {
+                await navigator.clipboard.writeText(ticketText);
+                copyText.textContent = "Copied!";
+                setTimeout(() => { copyText.textContent = "Copy ID"; }, 2500);
+            } catch (_) {
+                const range = document.createRange();
+                range.selectNode(document.getElementById('modal-ticket-id'));
+                window.getSelection().removeAllRanges();
+                window.getSelection().addRange(range);
+                copyText.textContent = "Selected";
+            }
+        }
+
+        document.getElementById('ticket-modal').addEventListener('click', (e) => {
+            if (e.target.id === 'ticket-modal') closeTicketModal();
+        });
+
         async function handleAppsScriptSubmission(event) {
             event.preventDefault();
             const form = event.target;
             const submitBtn = document.getElementById('submit-btn');
             
-            // Disable button and show loading state
             submitBtn.disabled = true;
             submitBtn.innerText = "Submitting...";
             submitBtn.classList.add('opacity-75');
 
             try {
-                // Build FormData directly from the HTML form. 
-                // This automatically captures all inputs, including the file attachment.
                 const payloadData = new FormData(form);
-
-                // Send the data to our new Cloudflare API endpoint
-                // Notice we do NOT need mode: 'no-cors' or specific Content-Type headers here
                 const response = await fetch('/api/contact', {
                     method: 'POST',
                     body: payloadData
@@ -268,17 +346,18 @@
                 const result = await response.json();
 
                 if (response.ok && result.success) {
-                    alert("Submission logged successfully! Thank you for reaching out to us. We will get back to you shortly.");
+                    const ticketRef = result.ticket_ref || result.ticketId;
                     form.reset();
+                    document.getElementById('file-name-display').textContent = "Click to upload files or drag and drop";
+                    showTicketModal(ticketRef);
                 } else {
                     throw new Error(result.error || "Unknown error occurred.");
                 }
 
             } catch (networkError) {
                 console.error("Critical submission delivery node issue tracked:", networkError);
-                alert("Transmission Error: We encountered an issue routing your request. Please check your connection and try again.");
+                alert("Transmission Error: " + (networkError.message || "We encountered an issue routing your request. Please check your connection and try again."));
             } finally {
-                // Reset the button state
                 submitBtn.disabled = false;
                 submitBtn.innerHTML = `
                     <span>Submit</span>
