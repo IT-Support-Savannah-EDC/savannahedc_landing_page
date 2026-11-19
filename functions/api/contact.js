@@ -1,17 +1,28 @@
 /**
  * functions/api/contact.js (savannahedc.com Cloudflare Pages)
- * Thin proxy forwarding all website form submissions to SEDC Orchestrator.
+ * Uses a Cloudflare Service Binding (`env.ORCHESTRATOR`) to invoke
+ * `sedc-orchestrator` directly without triggering Cloudflare Error 1042.
  */
 
 export async function onRequestPost(context) {
     const { request, env } = context;
 
     try {
-        if (!env.ORCHESTRATOR_PORTAL_URL || !env.PORTAL_INGEST_SECRET) {
+        if (!env.PORTAL_INGEST_SECRET) {
             return Response.json(
                 {
                     ok: false,
-                    error: "Portal gateway is not configured on the web server.",
+                    error: "PORTAL_INGEST_SECRET is not configured on Cloudflare Pages.",
+                },
+                { status: 500 }
+            );
+        }
+
+        if (!env.ORCHESTRATOR && !env.ORCHESTRATOR_PORTAL_URL) {
+            return Response.json(
+                {
+                    ok: false,
+                    error: "ORCHESTRATOR service binding is not configured on Cloudflare Pages.",
                 },
                 { status: 500 }
             );
@@ -20,14 +31,23 @@ export async function onRequestPost(context) {
         const contentType = request.headers.get("content-type") || "";
         const rawBody = await request.arrayBuffer();
 
-        const upstreamResponse = await fetch(env.ORCHESTRATOR_PORTAL_URL, {
-            method: "POST",
-            headers: {
-                "Content-Type": contentType,
-                "X-Portal-Secret": env.PORTAL_INGEST_SECRET,
-            },
-            body: rawBody,
-        });
+        const forwardHeaders = {
+            "Content-Type": contentType,
+            "X-Portal-Secret": env.PORTAL_INGEST_SECRET,
+        };
+
+        // Call Worker directly via Service Binding (avoids Cloudflare Error 1042)
+        const upstreamResponse = env.ORCHESTRATOR
+            ? await env.ORCHESTRATOR.fetch("https://sedc-orchestrator.internal/api/portal/submit", {
+                method: "POST",
+                headers: forwardHeaders,
+                body: rawBody,
+            })
+            : await fetch(env.ORCHESTRATOR_PORTAL_URL, {
+                method: "POST",
+                headers: forwardHeaders,
+                body: rawBody,
+            });
 
         const responseText = await upstreamResponse.text();
         let data;
