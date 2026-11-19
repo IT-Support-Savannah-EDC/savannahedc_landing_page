@@ -1,8 +1,18 @@
 /**
  * functions/api/contact.js (savannahedc.com Cloudflare Pages)
- * Uses Cloudflare Service Binding (`env.ORCHESTRATOR`) and normalizes
- * responses for both legacy Apps Script handlers and SEDC AI clients.
+ * Uses Cloudflare Service Binding (`env.ORCHESTRATOR`) to route all website
+ * form submissions directly to `sedc-orchestrator` and returns `ticket_ref`.
  */
+
+const corsHeaders = {
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Methods": "POST, OPTIONS",
+    "Access-Control-Allow-Headers": "Content-Type",
+};
+
+export async function onRequestOptions() {
+    return new Response(null, { status: 204, headers: corsHeaders });
+}
 
 export async function onRequestPost(context) {
     const { request, env } = context;
@@ -15,7 +25,7 @@ export async function onRequestPost(context) {
                     result: "error",
                     error: "PORTAL_INGEST_SECRET is not configured on Cloudflare Pages.",
                 },
-                { status: 500 }
+                { status: 500, headers: corsHeaders }
             );
         }
 
@@ -26,7 +36,7 @@ export async function onRequestPost(context) {
                     result: "error",
                     error: "ORCHESTRATOR service binding is not configured on Cloudflare Pages.",
                 },
-                { status: 500 }
+                { status: 500, headers: corsHeaders }
             );
         }
 
@@ -62,7 +72,6 @@ export async function onRequestPost(context) {
             };
         }
 
-        // Include legacy Apps Script success flags so existing frontend handlers succeed
         if (upstreamResponse.ok && data && data.ok) {
             data = {
                 ...data,
@@ -75,7 +84,10 @@ export async function onRequestPost(context) {
             data.result = "error";
         }
 
-        return Response.json(data, { status: upstreamResponse.status });
+        return Response.json(data, {
+            status: upstreamResponse.status,
+            headers: corsHeaders,
+        });
     } catch (err) {
         console.error("Pages proxy error:", err.message);
         return Response.json(
@@ -84,7 +96,7 @@ export async function onRequestPost(context) {
                 result: "error",
                 error: `Proxy fetch failed: ${err.message}`,
             },
-            { status: 502 }
+            { status: 502, headers: corsHeaders }
         );
     }
 }
