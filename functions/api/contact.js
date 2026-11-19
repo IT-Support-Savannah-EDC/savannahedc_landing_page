@@ -1,7 +1,7 @@
 /**
  * functions/api/contact.js (savannahedc.com Cloudflare Pages)
- * Uses a Cloudflare Service Binding (`env.ORCHESTRATOR`) to invoke
- * `sedc-orchestrator` directly without triggering Cloudflare Error 1042.
+ * Uses Cloudflare Service Binding (`env.ORCHESTRATOR`) and normalizes
+ * responses for both legacy Apps Script handlers and SEDC AI clients.
  */
 
 export async function onRequestPost(context) {
@@ -12,6 +12,7 @@ export async function onRequestPost(context) {
             return Response.json(
                 {
                     ok: false,
+                    result: "error",
                     error: "PORTAL_INGEST_SECRET is not configured on Cloudflare Pages.",
                 },
                 { status: 500 }
@@ -22,6 +23,7 @@ export async function onRequestPost(context) {
             return Response.json(
                 {
                     ok: false,
+                    result: "error",
                     error: "ORCHESTRATOR service binding is not configured on Cloudflare Pages.",
                 },
                 { status: 500 }
@@ -36,7 +38,6 @@ export async function onRequestPost(context) {
             "X-Portal-Secret": env.PORTAL_INGEST_SECRET,
         };
 
-        // Call Worker directly via Service Binding (avoids Cloudflare Error 1042)
         const upstreamResponse = env.ORCHESTRATOR
             ? await env.ORCHESTRATOR.fetch("https://sedc-orchestrator.internal/api/portal/submit", {
                 method: "POST",
@@ -56,8 +57,22 @@ export async function onRequestPost(context) {
         } catch {
             data = {
                 ok: false,
+                result: "error",
                 error: `Upstream Worker returned HTTP ${upstreamResponse.status}: ${responseText.slice(0, 200)}`,
             };
+        }
+
+        // Include legacy Apps Script success flags so existing frontend handlers succeed
+        if (upstreamResponse.ok && data && data.ok) {
+            data = {
+                ...data,
+                success: true,
+                result: "success",
+                status: "success",
+                ticketId: data.ticket_ref,
+            };
+        } else if (data && !data.result) {
+            data.result = "error";
         }
 
         return Response.json(data, { status: upstreamResponse.status });
@@ -66,6 +81,7 @@ export async function onRequestPost(context) {
         return Response.json(
             {
                 ok: false,
+                result: "error",
                 error: `Proxy fetch failed: ${err.message}`,
             },
             { status: 502 }
