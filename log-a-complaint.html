@@ -269,6 +269,52 @@
         </div>
     </main>
 
+    <!-- Ticket Confirmation Modal -->
+    <div id="ticket-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-slate-950/60 backdrop-blur-sm" role="dialog" aria-modal="true" aria-labelledby="ticket-modal-title">
+        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl max-w-md w-full p-6 md:p-8 shadow-2xl space-y-5 text-center relative">
+            <div class="mx-auto w-14 h-14 rounded-2xl bg-secondary/15 text-secondary flex items-center justify-center">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+            </div>
+
+            <div class="space-y-1.5">
+                <h3 id="ticket-modal-title" class="text-xl font-extrabold text-darkNavy dark:text-white tracking-tight">Complaint Logged!</h3>
+                <p class="text-xs text-slate-500 dark:text-slate-400 font-medium leading-relaxed">
+                    Your complaint has been logged and assigned to the appropriate resolution team.
+                </p>
+            </div>
+
+            <div class="bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 space-y-2">
+                <span class="text-[10px] font-bold uppercase tracking-widest text-slate-400 block">Your Ticket Reference ID</span>
+                <div class="flex items-center justify-center gap-3">
+                    <span id="modal-ticket-id" class="text-2xl font-extrabold tracking-wider text-primary dark:text-secondary select-all">---</span>
+                    <button type="button" id="copy-ticket-btn" onclick="copyTicketId()"
+                        class="px-3 py-1.5 rounded-lg bg-primary/10 hover:bg-primary/20 dark:bg-secondary/15 dark:hover:bg-secondary/25 text-primary dark:text-secondary text-[11px] font-bold transition flex items-center gap-1.5">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.666 3.888A2.25 2.25 0 0013.5 2.25h-3c-1.03 0-1.9.693-2.166 1.638m7.332 0c.055.194.084.4.084.612v0a.75.75 0 01-.75.75H9a.75.75 0 01-.75-.75v0c0-.212.03-.418.084-.612m7.332 0c.646.049 1.288.11 1.927.184 1.1.128 1.907 1.077 1.907 2.185V19.5a2.25 2.25 0 01-2.25 2.25H6.75A2.25 2.25 0 014.5 19.5V6.257c0-1.108.806-2.057 1.907-2.185a48.208 48.208 0 011.927-.184" />
+                        </svg>
+                        <span id="copy-btn-text">Copy ID</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="bg-amber-500/10 border border-amber-500/30 rounded-2xl p-3.5 text-left flex items-start gap-2.5">
+                <svg class="w-4 h-4 text-amber-600 dark:text-amber-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
+                </svg>
+                <p class="text-[11px] font-semibold text-slate-700 dark:text-slate-300 leading-relaxed">
+                    Please <span class="font-extrabold text-darkNavy dark:text-white">save or copy this Ticket ID</span> for tracking purposes. You will need it to monitor your complaint status via SEDC AI or Customer Care.
+                </p>
+            </div>
+
+            <button type="button" onclick="closeTicketModal()"
+                class="w-full bg-primary hover:bg-blue-700 dark:bg-secondary dark:hover:bg-emerald-600 text-white font-bold text-xs py-3.5 px-6 rounded-xl transition shadow-md">
+                Done
+            </button>
+        </div>
+    </div>
+
     <script>
         // --- 1. DYNAMIC DROPDOWN LOGIC ---
         const complaintOptions = {
@@ -348,16 +394,50 @@
             }
         }
 
-        // --- 3. FORM SUBMISSION TO CLOUDFLARE WORKER ---
-        // Replace this URL with your actual Cloudflare Worker route
-        const WORKER_ENDPOINT = "https://savannahedc-landing-page.pages.dev/api/contact";
+        // --- 3. TICKET MODAL HELPERS ---
+        function showTicketModal(ticketRef) {
+            const modal = document.getElementById('ticket-modal');
+            const idSpan = document.getElementById('modal-ticket-id');
+            const copyText = document.getElementById('copy-btn-text');
+            idSpan.textContent = ticketRef || "Generated";
+            copyText.textContent = "Copy ID";
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeTicketModal() {
+            const modal = document.getElementById('ticket-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        async function copyTicketId() {
+            const ticketText = document.getElementById('modal-ticket-id').textContent.trim();
+            const copyText = document.getElementById('copy-btn-text');
+            try {
+                await navigator.clipboard.writeText(ticketText);
+                copyText.textContent = "Copied!";
+                setTimeout(() => { copyText.textContent = "Copy ID"; }, 2500);
+            } catch (_) {
+                const range = document.createRange();
+                range.selectNode(document.getElementById('modal-ticket-id'));
+                window.getSelection().removeAllRanges();
+                window.getSelection().addRange(range);
+                copyText.textContent = "Selected";
+            }
+        }
+
+        document.getElementById('ticket-modal').addEventListener('click', (e) => {
+            if (e.target.id === 'ticket-modal') closeTicketModal();
+        });
+
+        // --- 4. FORM SUBMISSION TO CLOUDFLARE WORKER ---
+        const WORKER_ENDPOINT = "/api/contact";
 
         async function submitToCloudflareWorker(event) {
             event.preventDefault();
             const form = event.target;
             const submitBtn = document.getElementById('submit-btn');
-            
-            // Build FormData exactly as contact.js expects it
             const formData = new FormData(form);
 
             submitBtn.disabled = true;
@@ -367,26 +447,27 @@
             try {
                 const response = await fetch(WORKER_ENDPOINT, {
                     method: "POST",
-                    body: formData 
-                    // Note: Do NOT set Content-Type header when sending FormData; 
-                    // the browser automatically sets it to multipart/form-data with the correct boundary.
+                    body: formData
                 });
 
-                if (response.ok) {
-                    alert("Your complaint has been logged successfully. A reference ticket will be sent to your email.");
+                const result = await response.json();
+
+                if (response.ok && (result.success || result.ok)) {
+                    const ticketRef = result.ticket_ref || result.ticketId;
                     form.reset();
                     document.getElementById('file-name-display').textContent = "Click to upload files or drag and drop";
                     document.getElementById('subCategory').disabled = true;
                     document.getElementById('subCategory').innerHTML = '<option value="" disabled selected>Select a category first</option>';
                     document.getElementById('otherInputContainer').classList.add("hidden");
+                    document.getElementById('otherIssue').required = false;
+                    showTicketModal(ticketRef);
                 } else {
-                    const errorData = await response.json();
-                    throw new Error(errorData.error || "Failed to process request.");
+                    throw new Error(result.error || "Failed to process request.");
                 }
 
             } catch (networkError) {
                 console.error("Submission Error:", networkError);
-                alert("Transmission Error: Failed to contact the server. Please try again later.");
+                alert("Transmission Error: " + (networkError.message || "Failed to contact the server. Please try again later."));
             } finally {
                 submitBtn.disabled = false;
                 submitBtn.innerHTML = `
