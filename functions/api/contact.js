@@ -1,7 +1,6 @@
 /**
  * functions/api/contact.js (savannahedc.com Cloudflare Pages)
- * Thin proxy that forwards all website form submissions (Contact Us,
- * Customer Data / KYC, Get a Meter, and future forms) to SEDC Orchestrator (SEDC  AI).
+ * Thin proxy forwarding all website form submissions to SEDC Orchestrator.
  */
 
 export async function onRequestPost(context) {
@@ -19,25 +18,35 @@ export async function onRequestPost(context) {
         }
 
         const contentType = request.headers.get("content-type") || "";
+        const rawBody = await request.arrayBuffer();
 
-        // Forward raw multipart body & boundary untouched to sedc-orchestrator
         const upstreamResponse = await fetch(env.ORCHESTRATOR_PORTAL_URL, {
             method: "POST",
             headers: {
                 "Content-Type": contentType,
                 "X-Portal-Secret": env.PORTAL_INGEST_SECRET,
             },
-            body: request.body,
+            body: rawBody,
         });
 
-        const data = await upstreamResponse.json();
+        const responseText = await upstreamResponse.text();
+        let data;
+        try {
+            data = JSON.parse(responseText);
+        } catch {
+            data = {
+                ok: false,
+                error: `Upstream Worker returned HTTP ${upstreamResponse.status}: ${responseText.slice(0, 200)}`,
+            };
+        }
+
         return Response.json(data, { status: upstreamResponse.status });
     } catch (err) {
         console.error("Pages proxy error:", err.message);
         return Response.json(
             {
                 ok: false,
-                error: "Unable to reach the SEDC ticketing server. Please try again.",
+                error: `Proxy fetch failed: ${err.message}`,
             },
             { status: 502 }
         );
